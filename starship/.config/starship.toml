@@ -1,0 +1,6 @@
+scan_timeout = 10
+
+[ruby]
+  disabled=true
+[python]
+  disabled=true
