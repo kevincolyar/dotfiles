@@ -135,9 +135,9 @@ elif [[ "$PLATFORM" == "Darwin" ]]; then
     alias l="ls -lAhG"
     alias ll="ls -lGh"
     alias la="ls -lAGh"
-    alias vim=nvim
   fi
   alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
+  alias vim=nvim
 fi
 
 # apt
