@@ -250,11 +250,12 @@ fi
 # Command-line Fuzzy Finder (eg, command history)
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# Syntax Highlighting (MUST BE AT END OF .zshrc)
+# Syntax Highlighting and Autocomplete (MUST BE AT END OF .zshrc)
 if [[ "$PLATFORM" == "Linux" ]]; then
   . /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 elif [[ "$PLATFORM" == "Darwin" ]]; then
   . /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  . /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
 
 # Turn on starship prompt
