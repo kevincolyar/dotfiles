@@ -1,3 +1,5 @@
 doom/.doom.d/custom.el
 cmus/.config/cmus
+ranger/.config/ranger/bookmarks
+ranger/.config/ranger/history
 .DS_Store

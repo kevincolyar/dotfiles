@@ -138,6 +138,7 @@ elif [[ "$PLATFORM" == "Darwin" ]]; then
   fi
   alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
   alias vim=nvim
+  alias emacs="emacs -nw"
 fi
 
 # apt
@@ -160,6 +161,9 @@ alias glg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset 
 
 # docker
 alias dc='docker compose'
+
+# kubernetes
+alias k8='kubectl'
 
 # Other
 alias vi='vim'
