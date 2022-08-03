@@ -66,6 +66,9 @@
 ;; Set nose-mode when using pyton
 (add-hook! python-mode (nose-mode))
 
+;; LSP
+(setq lsp-ui-doc-show-with-cursor 1)
+
 ;; Disable git in dired, enabled causes delay in navigating
 (setq dired-git-info-mode nil)
 
