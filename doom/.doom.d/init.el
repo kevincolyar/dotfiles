@@ -137,7 +137,7 @@
        ;;idris             ; a language you can depend on
        json              ; At least it ain't XML
        ;;(java +meghanada) ; the poster child for carpal tunnel syndrome
-       javascript        ; all(hope(abandon(ye(who(enter(here))))))
+       (javascript +lsp)        ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
        ;;latex             ; writing papers in Emacs has never been so fun
@@ -158,7 +158,7 @@
        ;;raku              ; the artist formerly known as perl6
        ;;rest              ; Emacs as a REST client
        ;;rst               ; ReST in peace
-       (ruby +rails)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
+       (ruby +rails +lsp)     ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        (rust +lsp)              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good
        ;;(scheme +guile)   ; a fully conniving family of lisps
