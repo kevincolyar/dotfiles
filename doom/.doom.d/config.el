@@ -66,6 +66,9 @@
 ;; Set nose-mode when using pyton
 (add-hook! python-mode (nose-mode))
 
+;; Relative Line Numbers
+(setq display-line-numbers-type 'relative)
+
 ;; LSP
 (setq lsp-ui-doc-show-with-cursor 1)
 
