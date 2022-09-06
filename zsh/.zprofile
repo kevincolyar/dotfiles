@@ -61,7 +61,7 @@ path=(
   $HOME/bin/ssh
   $HOME/bin/mount
   $HOME/.emacs.d/bin
-  /usr/local/opt/grep/libexec/gnubin
+  /opt/homebrew/opt/grep/libexec/gnubin
   /usr/local/sbin
   /usr/local/{bin,sbin}
   $path
