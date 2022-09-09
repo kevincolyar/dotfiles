@@ -8,6 +8,7 @@
 # Exports
 #-------------------------------------------------------------------------------------
 
+export TERMINFO_DIRS=$TERMINFO_DIRS:$HOME/.local/share/terminfo
 export PLATFORM=$(uname)
 export EDITOR='vim'
 export GREP_COLOR='1;33'
