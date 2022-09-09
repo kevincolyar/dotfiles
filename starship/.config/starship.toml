@@ -4,3 +4,5 @@ scan_timeout = 10
   disabled=true
 [python]
   disabled=true
+[nodejs]
+  disabled=true
