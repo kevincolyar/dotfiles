@@ -102,6 +102,9 @@ alt - b : open /Applications/Brave\ Browser.app
 alt - a : open /Applications/Alacritty.app
 
 # Spotify
-next : spt pb -n
+next     : spt pb -n
 previous : spt pb -p
-play : spt pb -t
+play     : spt pb -t
+f7       : spt pb -p
+f8       : spt pb -t
+f9       : spt pb -n
