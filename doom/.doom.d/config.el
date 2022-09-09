@@ -54,8 +54,10 @@
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
 
-;; Make SPC menu show up faster
-(setq which-key-idle-delay 0.4)
+;; which-key
+(setq
+  which-key-idle-delay 0.2
+  which-key-frame-max-height 25)
 
 ;; Disable quit confirmation
 (setq confirm-kill-emacs nil)
@@ -70,7 +72,16 @@
 (setq display-line-numbers-type 'relative)
 
 ;; LSP
-(setq lsp-ui-doc-show-with-cursor 1)
+;; -----------------------------------------------------------------------------
+
+;; (setq lsp-ui-doc-show-with-cursor 1)
+(setq lsp-rust-analyzer-server-display-inlay-hints t)
+
+;; Show code actions in lsp-ui-sideline
+(setq lsp-ui-sideline-show-code-actions 't)
+
+;; Turn off docs in mode line
+(setq lsp-eldoc-enable-hover nil)
 
 ;; Disable git in dired, enabled causes delay in navigating
 (setq dired-git-info-mode nil)
