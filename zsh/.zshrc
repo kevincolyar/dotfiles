@@ -265,7 +265,7 @@ elif [[ "$PLATFORM" == "Darwin" ]]; then
   elif [[ -d /usr/local/share ]]; then
     . /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
     . /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-  end
+  fi
 fi
 
 # Turn on starship prompt
