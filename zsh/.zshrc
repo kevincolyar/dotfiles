@@ -259,8 +259,13 @@ fi
 if [[ "$PLATFORM" == "Linux" ]]; then
   . /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 elif [[ "$PLATFORM" == "Darwin" ]]; then
-  . /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-  . /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  if [[ -d /opt/homebrew/share ]]; then
+    . /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    . /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  elif [[ -d /usr/local/share ]]; then
+    . /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    . /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  end
 fi
 
 # Turn on starship prompt
