@@ -7,10 +7,10 @@
 
 # Exports
 #-------------------------------------------------------------------------------------
-
+export GPG_TTY=`tty` # Required by gnupg-vim
 export TERMINFO_DIRS=$TERMINFO_DIRS:$HOME/.local/share/terminfo
 export PLATFORM=$(uname)
-export EDITOR='vim'
+export EDITOR='nvim'
 export GREP_COLOR='1;33'
 # export PAGER='most'
 export PAGER='less -r'
