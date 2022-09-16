@@ -2,7 +2,7 @@ require('tokyonight').setup({
 	transparent = true
 })
 
--- TODO: Why can't this be in config/catppuccin.lua?
+-- TODO: Why can't this be in plugin/after/catppuccin.lua?
 require("catppuccin").setup({
 	transparent_background = true,
   integrations = {

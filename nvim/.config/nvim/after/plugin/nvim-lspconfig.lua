@@ -1,4 +1,4 @@
-local mappings = require('mappings')
+local mappings = require('kevincolyar/mappings')
 
 local lsp_flags = {
   -- This is the default in Nvim 0.7+

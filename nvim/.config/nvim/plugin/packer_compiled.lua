@@ -85,52 +85,28 @@ _G.packer_plugins = {
     url = "https://github.com/catppuccin/nvim"
   },
   ["cmp-buffer"] = {
-    after_files = { "/Users/kevinc/.local/share/nvim/site/pack/packer/opt/cmp-buffer/after/plugin/cmp_buffer.lua" },
-    load_after = {
-      ["nvim-cmp"] = true
-    },
-    loaded = false,
-    needs_bufread = false,
-    path = "/Users/kevinc/.local/share/nvim/site/pack/packer/opt/cmp-buffer",
+    loaded = true,
+    path = "/Users/kevinc/.local/share/nvim/site/pack/packer/start/cmp-buffer",
     url = "https://github.com/hrsh7th/cmp-buffer"
   },
   ["cmp-nvim-lsp"] = {
-    after = { "nvim-lspconfig" },
-    after_files = { "/Users/kevinc/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp/after/plugin/cmp_nvim_lsp.lua" },
-    load_after = {
-      ["nvim-cmp"] = true
-    },
-    loaded = false,
-    needs_bufread = false,
-    path = "/Users/kevinc/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lsp",
+    loaded = true,
+    path = "/Users/kevinc/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
     url = "https://github.com/hrsh7th/cmp-nvim-lsp"
   },
   ["cmp-nvim-lua"] = {
-    after_files = { "/Users/kevinc/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lua/after/plugin/cmp_nvim_lua.lua" },
-    load_after = {
-      ["nvim-cmp"] = true
-    },
-    loaded = false,
-    needs_bufread = false,
-    path = "/Users/kevinc/.local/share/nvim/site/pack/packer/opt/cmp-nvim-lua",
+    loaded = true,
+    path = "/Users/kevinc/.local/share/nvim/site/pack/packer/start/cmp-nvim-lua",
     url = "https://github.com/hrsh7th/cmp-nvim-lua"
   },
   ["cmp-path"] = {
-    after_files = { "/Users/kevinc/.local/share/nvim/site/pack/packer/opt/cmp-path/after/plugin/cmp_path.lua" },
-    load_after = {
-      ["nvim-cmp"] = true
-    },
-    loaded = false,
-    needs_bufread = false,
-    path = "/Users/kevinc/.local/share/nvim/site/pack/packer/opt/cmp-path",
+    loaded = true,
+    path = "/Users/kevinc/.local/share/nvim/site/pack/packer/start/cmp-path",
     url = "https://github.com/hrsh7th/cmp-path"
   },
   ["feline.nvim"] = {
-    config = { "require('config.feline')" },
-    load_after = {},
     loaded = true,
-    needs_bufread = false,
-    path = "/Users/kevinc/.local/share/nvim/site/pack/packer/opt/feline.nvim",
+    path = "/Users/kevinc/.local/share/nvim/site/pack/packer/start/feline.nvim",
     url = "https://github.com/feline-nvim/feline.nvim"
   },
   ["follow-md-links.nvim"] = {
@@ -144,7 +120,6 @@ _G.packer_plugins = {
     url = "https://github.com/rafamadriz/friendly-snippets"
   },
   ["gitsigns.nvim"] = {
-    config = { "require('config.gitsigns')" },
     loaded = true,
     path = "/Users/kevinc/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
     url = "https://github.com/lewis6991/gitsigns.nvim"
@@ -160,11 +135,8 @@ _G.packer_plugins = {
     url = "https://github.com/ThePrimeagen/harpoon"
   },
   ["lspkind-nvim"] = {
-    after = { "nvim-cmp" },
-    loaded = false,
-    needs_bufread = false,
-    only_cond = false,
-    path = "/Users/kevinc/.local/share/nvim/site/pack/packer/opt/lspkind-nvim",
+    loaded = true,
+    path = "/Users/kevinc/.local/share/nvim/site/pack/packer/start/lspkind-nvim",
     url = "https://github.com/onsails/lspkind-nvim"
   },
   ["mason-lspconfig.nvim"] = {
@@ -173,24 +145,16 @@ _G.packer_plugins = {
     url = "https://github.com/williamboman/mason-lspconfig.nvim"
   },
   ["mason.nvim"] = {
-    config = { "require('config.mason')" },
     loaded = true,
     path = "/Users/kevinc/.local/share/nvim/site/pack/packer/start/mason.nvim",
     url = "https://github.com/williamboman/mason.nvim"
   },
   ["nvim-cmp"] = {
-    after = { "cmp-nvim-lua", "cmp-nvim-lsp", "cmp-buffer", "cmp-path" },
-    config = { "require('config.nvim-cmp')" },
-    load_after = {
-      ["lspkind-nvim"] = true
-    },
-    loaded = false,
-    needs_bufread = false,
-    path = "/Users/kevinc/.local/share/nvim/site/pack/packer/opt/nvim-cmp",
+    loaded = true,
+    path = "/Users/kevinc/.local/share/nvim/site/pack/packer/start/nvim-cmp",
     url = "https://github.com/hrsh7th/nvim-cmp"
   },
   ["nvim-cursorline"] = {
-    config = { "require('config.nvim-cursorline')" },
     loaded = true,
     path = "/Users/kevinc/.local/share/nvim/site/pack/packer/start/nvim-cursorline",
     url = "https://github.com/yamatsum/nvim-cursorline"
@@ -206,14 +170,8 @@ _G.packer_plugins = {
     url = "https://github.com/mfussenegger/nvim-lint"
   },
   ["nvim-lspconfig"] = {
-    after = { "rust-tools.nvim" },
-    config = { "require('config.nvim-lspconfig')" },
-    load_after = {
-      ["cmp-nvim-lsp"] = true
-    },
-    loaded = false,
-    needs_bufread = false,
-    path = "/Users/kevinc/.local/share/nvim/site/pack/packer/opt/nvim-lspconfig",
+    loaded = true,
+    path = "/Users/kevinc/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
   },
   ["nvim-notify"] = {
@@ -232,13 +190,11 @@ _G.packer_plugins = {
     url = "https://github.com/kyazdani42/nvim-web-devicons"
   },
   ["org-bullets.nvim"] = {
-    config = { "\27LJ\2\n9\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\16org-bullets\frequire\0" },
     loaded = true,
     path = "/Users/kevinc/.local/share/nvim/site/pack/packer/start/org-bullets.nvim",
     url = "https://github.com/akinsho/org-bullets.nvim"
   },
   orgmode = {
-    config = { "require('config.orgmode')" },
     loaded = true,
     path = "/Users/kevinc/.local/share/nvim/site/pack/packer/start/orgmode",
     url = "https://github.com/nvim-orgmode/orgmode"
@@ -254,13 +210,8 @@ _G.packer_plugins = {
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
   ["rust-tools.nvim"] = {
-    config = { "require('config.rust-tools')" },
-    load_after = {
-      ["nvim-lspconfig"] = true
-    },
-    loaded = false,
-    needs_bufread = true,
-    path = "/Users/kevinc/.local/share/nvim/site/pack/packer/opt/rust-tools.nvim",
+    loaded = true,
+    path = "/Users/kevinc/.local/share/nvim/site/pack/packer/start/rust-tools.nvim",
     url = "https://github.com/simrat39/rust-tools.nvim"
   },
   sonokai = {
@@ -269,7 +220,6 @@ _G.packer_plugins = {
     url = "https://github.com/sainnhe/sonokai"
   },
   ["telescope.nvim"] = {
-    config = { "require('config.telescope')" },
     loaded = true,
     path = "/Users/kevinc/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
@@ -305,13 +255,11 @@ _G.packer_plugins = {
     url = "https://github.com/vim-test/vim-test"
   },
   ["which-key.nvim"] = {
-    config = { "require('config.which-key')" },
     loaded = true,
     path = "/Users/kevinc/.local/share/nvim/site/pack/packer/start/which-key.nvim",
     url = "https://github.com/folke/which-key.nvim"
   },
   ["wilder.nvim"] = {
-    config = { "require('config/wilder')" },
     loaded = true,
     path = "/Users/kevinc/.local/share/nvim/site/pack/packer/start/wilder.nvim",
     url = "https://github.com/gelguy/wilder.nvim"
@@ -319,54 +267,6 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: mason.nvim
-time([[Config for mason.nvim]], true)
-require('config.mason')
-time([[Config for mason.nvim]], false)
--- Config for: which-key.nvim
-time([[Config for which-key.nvim]], true)
-require('config.which-key')
-time([[Config for which-key.nvim]], false)
--- Config for: gitsigns.nvim
-time([[Config for gitsigns.nvim]], true)
-require('config.gitsigns')
-time([[Config for gitsigns.nvim]], false)
--- Config for: org-bullets.nvim
-time([[Config for org-bullets.nvim]], true)
-try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\16org-bullets\frequire\0", "config", "org-bullets.nvim")
-time([[Config for org-bullets.nvim]], false)
--- Config for: wilder.nvim
-time([[Config for wilder.nvim]], true)
-require('config/wilder')
-time([[Config for wilder.nvim]], false)
--- Config for: telescope.nvim
-time([[Config for telescope.nvim]], true)
-require('config.telescope')
-time([[Config for telescope.nvim]], false)
--- Config for: nvim-cursorline
-time([[Config for nvim-cursorline]], true)
-require('config.nvim-cursorline')
-time([[Config for nvim-cursorline]], false)
--- Config for: orgmode
-time([[Config for orgmode]], true)
-require('config.orgmode')
-time([[Config for orgmode]], false)
--- Load plugins in order defined by `after`
-time([[Sequenced loading]], true)
-vim.cmd [[ packadd catppuccin ]]
-vim.cmd [[ packadd feline.nvim ]]
-
--- Config for: feline.nvim
-require('config.feline')
-
-time([[Sequenced loading]], false)
-vim.cmd [[augroup packer_load_aucmds]]
-vim.cmd [[au!]]
-  -- Event lazy-loads
-time([[Defining lazy-load event autocommands]], true)
-vim.cmd [[au VimEnter * ++once lua require("packer.load")({'lspkind-nvim'}, { event = "VimEnter *" }, _G.packer_plugins)]]
-time([[Defining lazy-load event autocommands]], false)
-vim.cmd("augroup END")
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then

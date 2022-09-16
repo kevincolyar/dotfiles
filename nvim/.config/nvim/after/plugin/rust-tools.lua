@@ -1,5 +1,5 @@
 local rt = require("rust-tools")
-local mappings = require('mappings')
+local mappings = require('kevincolyar.mappings')
 
 rt.setup({
   server = {
