@@ -62,6 +62,7 @@ path=(
   $HOME/bin/mount
   $HOME/.emacs.d/bin
   /opt/homebrew/opt/grep/libexec/gnubin
+  /usr/local/opt/grep/libexec/gnubin
   /usr/local/sbin
   /usr/local/{bin,sbin}
   $path
@@ -137,4 +138,9 @@ if [[ ! -d "$TMPPREFIX" ]]; then
 fi
 
 # Homebrew
-eval "$(/opt/homebrew/bin/brew shellenv)"
+if [[ -d /opt/homebrew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+if [[ -d /usr/local/Homebrew ]]; then
+  eval "$(/usr/local/Homebrew/bin/brew shellenv)"
+fi
