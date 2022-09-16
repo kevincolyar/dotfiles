@@ -2,7 +2,7 @@ local conf_files = {
 	"globals.lua",
 	"options.vim",
 	"autocommands.vim",
-	"mappings.lua",
+	-- "mappings.lua",
 	"plugins.vim",
 	"colorschemes.lua"
 }
@@ -12,3 +12,7 @@ for _, name in ipairs(conf_files) do
 	local cmd = "source " .. path
 	vim.cmd(cmd)
 end
+
+local path = string.format("%s/lua/%s", vim.fn.stdpath("config"), 'mappings.lua')
+vim.cmd("source " .. path)
+
