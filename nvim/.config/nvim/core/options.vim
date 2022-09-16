@@ -52,7 +52,6 @@ tnoremap <C-j> <C-\><C-n>
 
 let test#strategy = "dispatch"
 
-set spell
 set spelllang=en
 set spellsuggest=best,9
 
