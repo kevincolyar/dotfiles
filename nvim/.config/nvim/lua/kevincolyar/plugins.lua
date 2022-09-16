@@ -51,6 +51,7 @@ return require('packer').startup(function(use)
  
   -- Git
   use 'tpope/vim-fugitive'
+  use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
   use { "lewis6991/gitsigns.nvim" }
   -- use { 'f-person/git-blame.nvim' }
   
@@ -71,6 +72,13 @@ return require('packer').startup(function(use)
   use { 'jamessan/vim-gnupg' }
   use { 'jghauser/follow-md-links.nvim' }
   use { 'folke/which-key.nvim' }
+  use({
+    "iamcco/markdown-preview.nvim",
+    run = function() vim.fn["mkdp#util#install"]() end,
+  })
+  use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
+
+
 end)
 
 

@@ -27,6 +27,7 @@ vim.keymap.set('n', '<leader>ta', "<cmd>:TestSuite<cr>")
 -- Git
 vim.keymap.set('n', '<leader>gb', "<cmd>:Git blame<cr>")
 vim.keymap.set('n', '<leader>gs', "<cmd>:Git status<cr>")
+vim.keymap.set('n', '<leader>gg', "<cmd>:Neogit<cr>")
 
 -- LSP
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions

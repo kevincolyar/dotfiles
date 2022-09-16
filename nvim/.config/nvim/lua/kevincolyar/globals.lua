@@ -25,7 +25,7 @@ vim.opt.expandtab = true
 
 vim.opt.signcolumn = 'yes'
 
-vim.opt.swapfile = true
+vim.opt.swapfile = false
 
 -- vim.opt.backupdir =~/.cache/vim " Directory to store backup files.
 
