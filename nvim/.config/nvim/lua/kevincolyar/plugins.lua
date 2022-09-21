@@ -11,6 +11,7 @@ return require('packer').startup(function(use)
   use { "catppuccin/nvim", as = "catppuccin" }
   use { 'feline-nvim/feline.nvim' }
   use { 'yamatsum/nvim-cursorline'}
+  use { 'lukas-reineke/indent-blankline.nvim'}
 
   -- File navigation
   use { 
@@ -42,10 +43,13 @@ return require('packer').startup(function(use)
   use { "hrsh7th/cmp-buffer" }
   -- use { "hrsh7th/cmp-omni" }
   use { 'L3MON4D3/LuaSnip' } -- Snippets plugin
-  -- use { 'saadparwaiz1/cmp_luasnip' }  -- Snippets source for nvim-cmp
+  use { 'saadparwaiz1/cmp_luasnip' }  -- Snippets source for nvim-cmp
   use { 'rafamadriz/friendly-snippets' }
+
+  -- Other LSP
   use { 'simrat39/rust-tools.nvim' }
   use { 'mfussenegger/nvim-dap' }
+  use { 'j-hui/fidget.nvim' }
 
   -- Snippets
  
@@ -75,9 +79,9 @@ return require('packer').startup(function(use)
   use({
     "iamcco/markdown-preview.nvim",
     run = function() vim.fn["mkdp#util#install"]() end,
+    setup = function() vim.g.mkdp_filetypes = { "markdown" } end, 
+    ft = { "markdown" }
   })
-  use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
-
 
 end)
 

@@ -36,6 +36,10 @@ vim.opt.updatetime=500
 
 -- let test#strategy = "dispatch"
 -- vim.g.test.strategy = 'dispatch'
+vim.cmd([[let g:test#strategy = "harpoon"]])
 
 vim.opt.spelllang=en
 vim.opt.spellsuggest="best,9"
+
+vim.opt.list = true
+-- vim.opt.listchars:append "eol:↴"
