@@ -115,8 +115,8 @@ alias cat='bat'
 
 # Exa instead of ls
 alias ls="exa --git"
-alias l="exa -lg"
-alias ll="exa -lg"
+alias l="exa -lgh"
+alias ll="exa -lgah"
 
 alias ..='cd ..'
 alias less="less -R"
@@ -133,9 +133,9 @@ if [[ "$PLATFORM" == "Linux" ]]; then
 elif [[ "$PLATFORM" == "Darwin" ]]; then
   if ! type exa > /dev/null; then
     alias ls="ls -FGh"
-    alias l="ls -lAhG"
+    alias l="ls -lahG"
     alias ll="ls -lGh"
-    alias la="ls -lAGh"
+    alias la="ls -laGh"
   fi
   alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
   alias vim=nvim
