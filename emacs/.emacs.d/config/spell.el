@@ -13,16 +13,9 @@
 ;;   (flyspell-incorrect ((t (:underline (:color "#f1fa8c" :style wave)))))
 ;;   (flyspell-duplicate ((t (:underline (:color "#50fa7b" :style wave)))))
   
- 
-;; (use-package flyspell-correct
-;;   :after flyspell
-;;   :init '(flyspell-mode)
-;;   :bind (:map flyspell-mode-map ("z=" . flyspell-correct-wrapper)))
-
-;; (use-package flyspell-correct-ivy
-;;   :after flyspell-correct)
 
 (use-package flyspell
+  :defer 5
   :diminish
   :if (executable-find "aspell")
   :hook
@@ -57,3 +50,9 @@
       (progn
         (global-set-key (kbd "C-M-;") 'flyspell-correct-at-point)))
     (setq flyspell-correct-interface #'flyspell-correct-ivy)))
+
+;; TODO: This is triggering in insert mode
+;; (use-package flyspell-correct
+;;   :after flyspell
+;;   :init '(flyspell-mode)
+;;   :bind (:map flyspell-mode-map ("z=" . flyspell-correct-wrapper)))

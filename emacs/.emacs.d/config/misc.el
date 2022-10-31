@@ -11,6 +11,7 @@
   (magic-display-buffer-function #'magic-display-buffer-same-window-except-diff-v1))
 
 (use-package git-gutter
+  :defer t
   :init
   (global-git-gutter-mode))
 
@@ -31,6 +32,9 @@
   (add-hook 'dumb-jump-after-jump-hook #'better-jumper-set-jump))
 
 (use-package helpful
+  :after evil
+  :init
+  (setq evil-lookup-func #'helpful-at-point)
   :custom
   (counsel-describe-function-function #'helpful-callable)
   (counsel-describe-variable-function #'helpful-variable)
@@ -39,42 +43,6 @@
   ([remap describe-command] . helpful-command)
   ([remap desribe-variable] . counsel-describe-variable)
   ([remap describe-key] . helpful-key))
-
-;; (use-package marginalia
-;;   :ensure t
-;;   :config
-;;   (marginalia-mode))
-
-;; (use-package embark
-;;   :ensure t
-
-;;   ;; :bind
-;;   ;; (("C-." . embark-act)         ;; pick some comfortable binding
-;;   ;;  ("C-;" . embark-dwim)        ;; good alternative: M-.
-;;   ;;  ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
-
-;;   :init
-
-;;   ;; Optionally replace the key help with a completing-read interface
-;;   (setq prefix-help-command #'embark-prefix-help-command)
-
-;;   :config
-
-;;   ;; Hide the mode line of the Embark live/completions buffers
-;;   (add-to-list 'display-buffer-alist
-;;                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
-;;                  nil
-;;                  (window-parameters (mode-line-format . none)))))
-
-;; ;; Consult users will also want the embark-consult package.
-;; (use-package embark-consult
-;;   :ensure t
-;;   :after (embark consult)
-;;   :demand t ; only necessary if you have the hook below
-;;   ;; if you want to have consult previews as you move around an
-;;   ;; auto-updating embark collect buffer
-;;   :hook
-;;   (embark-collect-mode . consult-preview-at-point-mode))
 
 (defun efs/display-startup-time ()
   (message "Emacs loaded in %s with %d garbage collections."
@@ -85,8 +53,13 @@
 
 (add-hook 'emacs-startup-hook #'efs/display-startup-time)
 
-
 (use-package beacon
   :init (beacon-mode 1))
 
 (use-package editorconfig)
+
+;; Manage garbage collection
+(use-package gcmh
+  :demand
+  :config
+  (gcmh-mode 1))

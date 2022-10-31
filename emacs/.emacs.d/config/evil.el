@@ -15,6 +15,11 @@
   (evil-global-set-key 'motion "j" 'evil-next-visual-line)
   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
 
+  (evil-global-set-key 'normal "K" 'helpful-at-point)
+
+  ;; (evil-define-key 'normal 'lsp-mode "K" 'lsp-describe-thing-at-point)
+  (evil-define-key 'normal 'lsp-mode "K" 'lsp-ui-doc-glance)
+
   (evil-set-initial-state 'messages-buffer-mode 'normal)
   (evil-set-initial-state 'dashboard-mode 'normal)
 
@@ -24,3 +29,13 @@
   :after evil
   :config
   (evil-collection-init))
+
+(use-package evil-commentary
+  :init (evil-commentary-mode))
+
+(setq evil-emacs-state-cursor '("firebrick" box)) 
+(setq evil-normal-state-cursor '("firebrick" box)) 
+(setq evil-visual-state-cursor '("cyan" box))
+(setq evil-insert-state-cursor '("cyan" box))
+(setq evil-replace-state-cursor '("red" bar))
+(setq evil-operator-state-cursor '("red" hollow))

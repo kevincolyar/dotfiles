@@ -1,6 +1,7 @@
-(use-package rust-mode)
-(add-hook 'rust-mode-hook #'lsp)
-(use-package rustic)
+(use-package rust-mode
+  :defer t)
+(use-package rustic
+  :defer t)
 
 (general-define-key
  :states 'normal
@@ -8,5 +9,6 @@
  :prefix ","
  "tt" '(rustic-cargo-current-test :which-key "Test Current")
  "ta" '(rustic-cargo-test :which-key "Test All")
- "K"  '(lsp-ui-doc-glance)
  )
+
+(add-hook 'rust-mode-hook #'lsp)

@@ -15,50 +15,46 @@
   )
 
 (kevincolyar/leader-keys
-  ":"   'counsel-M-x
+  ":"   'execute-extended-command
   "TAB" 'evil-switch-to-windows-last-buffer
-  ;; "/"   'counsel-projectile-rg
-  "/"   'counsel-rg
-  "*"   'counsel-projectile-rg
   "?"   'beacon-blink
 
   "t"   '(:ignore t :which-key "Toggles")
-  "tt"  '(counsel-load-theme :which-key "choose theme")
 
   ;; "p" '(:keymap projectile-command-map :package projectile :which-key "Project")
-  "pf" 'counsel-projectile-find-file
-  "l" '(:keymap lsp-command-map :package lsp :which-key "LSP")
+  ;; "l" '(:keymap lsp-command-map :package lsp :which-key "LSP")
 
   "b"   '(:ignore t :which-key "Buffers")
-  "bb"  'counsel-switch-buffer
   "be"  'eval-buffer
 
   "c"   '(:ignore t :which-key "Code")
   "ca"  'lsp-execute-code-action
   "ce"  'flycheck-list-errors
+  "cd"  'xref-find-definitions
+  "cD"  'lsp-describe-thing-at-point
+  "cr"  'xref-find-references
 
   "ea" 'embark-act
 
   "h"   '(:ignore t :which-key "Help")
+  "hs"  'describe-symbol
   "hd"  '(:ignore t :which-key "Describe")
   "hdb" 'describe-bindings
   "hdf" 'describe-function
   "hdk" 'describe-key
   "hdv" 'describe-variable
   "hds" 'describe-symbol
+  "hdm" 'describe-mode
 
   "f"  '(:ignore t :which-key "Files")
   "fs" 'save-buffer
-  "ff" 'counsel-find-file
-  "fr" 'counsel-recentf
 
   "g"  '(:ignore t :which-key "git")
   "gg" 'magit-status
   "gb" 'magit-blame-addition
 
   "s"  '(:ignore t :which-key "Search")
-  "sl"  'ivy-resume
-  "ss"  'swiper-thing-at-point
+  ;; "ss"  'swiper-thing-at-point
 
   "z="  'flyspell-correct-at-point)
 

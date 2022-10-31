@@ -1,9 +1,13 @@
-
 (use-package markdown-mode
-  :ensure t
+  :defer t
   :mode ("README\\.md\\'" . gfm-mode)
   :init (setq markdown-command "multimarkdown"))
 
-(use-package dockerfile-mode)
+(use-package dockerfile-mode :defer t)
+(use-package yaml-mode :defer t)
+(use-package toml-mode :defer t)
+(use-package lua-mode :defer t)
 
-(use-package yaml-mode)
+;; Code folding
+(use-package origami
+  :init (global-origami-mode))

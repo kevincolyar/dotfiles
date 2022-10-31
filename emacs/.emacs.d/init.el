@@ -23,36 +23,37 @@
 (load "~/.emacs.d/config/globals.el")
 (load "~/.emacs.d/config/evil.el")
 (load "~/.emacs.d/config/ui.el")
+(load "~/.emacs.d/config/key-mapping.el")
 
 ;; Command/File/Buffer Completion  (eg: ivy, helm, ido, etc)
-(load "~/.emacs.d/config/ivy.el")
-;; (load "~/.emacs.d/config/vertico.el")
-
-;; Code Completion (eg: company, corfu, etc)
-;; (load "~/.emacs.d/config/completion.el")
-(load "~/.emacs.d/config/corfu.el")
+;; (load "~/.emacs.d/config/ivy.el")
+;; (load "~/.emacs.d/config/selectrum.el")
+(load "~/.emacs.d/config/vertico.el")
+(load "~/.emacs.d/config/marginalia.el")
+(load "~/.emacs.d/config/orderless.el")
 
 (load "~/.emacs.d/config/misc.el")
 (load "~/.emacs.d/config/projectile.el")
 (load "~/.emacs.d/config/lsp.el")
+;; (load "~/.emacs.d/config/dap.el")
+(load "~/.emacs.d/config/tree-sitter.el")
 ;; (load "~/.emacs.d/config/ruby.el")
 ;; (load "~/.emacs.d/config/python.el")
 (load "~/.emacs.d/config/rust.el")
+(load "~/.emacs.d/config/typescript.el")
 (load "~/.emacs.d/config/langs.el")
-(load "~/.emacs.d/config/key-mapping.el")
+(load "~/.emacs.d/config/flycheck.el")
 (load "~/.emacs.d/config/spell.el")
+(load "~/.emacs.d/config/yas-snippet.el")
+(load "~/.emacs.d/config/dumb-jump.el")
 (load "~/.emacs.d/config/orgmode.el")
+(load "~/.emacs.d/config/embark.el")
+(load "~/.emacs.d/config/tramp.el")
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(better-defaults selectrum yasnippet xclip which-key use-package undo-tree undo-fu-session undo-fu tree-sitter-langs rustic rainbow-delimiters org-bullets no-littering marginalia magit lsp-ui lsp-ivy ivy-rich helpful git-gutter-fringe general flycheck evil-terminal-cursor-changer evil-commentary evil-collection embark-consult dumb-jump doom-themes doom-modeline dockerfile-mode dap-mode counsel-projectile company command-log-mode all-the-icons)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+;; Code Completion (eg: company, corfu, etc)
+;; (load "~/.emacs.d/config/company.el")
+(load "~/.emacs.d/config/corfu.el")
+
+;; Don't let Emacs' customi system pollute our configs
+(setq custom-file "~/.emacs.d/custom-vars.el")
+(load custom-file 'noerror 'nomessage)

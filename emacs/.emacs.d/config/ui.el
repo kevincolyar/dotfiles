@@ -6,14 +6,8 @@
              :init (doom-modeline-mode 1)
              :custom ((doom-modeline-height 15)))
 
-;; Run the following interactively on a new install
-;; M-x all-the-icons-install-fonts
-;; TODO: Not sure if this is required for terminal emacs
-
-(use-package all-the-icons
-  :if (display-graphic-p))
-
 (use-package rainbow-delimiters
+  :defer t
   :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; (use-package doom-themes
@@ -28,6 +22,10 @@
   :config
   ;; (load-theme 'kaolin-dark t)
   (load-theme 'kaolin-shiva t))
+
+;; (use-package catppuccin-theme
+;;   :config
+;;   (load-theme 'catppuccin-mocha t))
 
 ;; Make background transparent
 (set-face-background 'default "unspecified-bg")
