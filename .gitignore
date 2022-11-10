@@ -25,5 +25,6 @@ emacs/.emacs.d/custom-vars.el
 emacs/.emacs.d/projects
 emacs/.emacs.d/tramp-*
 emacs/.emacs.d/\#*
+emacs/.emacs.d/quelpa
 
 nvim/.config/nvim/undodir
