@@ -71,12 +71,13 @@
 
   :general
   (nmap
+    :keymaps 'override
     :prefix "SPC"
 
     ;; ":"   'consult-M-x
     "/"   'consult-ripgrep ;; TODO: not working
-    ;; "/"   'consult-grep
     "*"   'consult-ripgrep-symbol-at-point
+    ;; "/"   'consult-grep
     "pf" 'consult-projectile-find-file
 
     "bb"  'consult-buffer
@@ -84,12 +85,12 @@
     "tt"  '(consult-load-theme :which-key "choose theme")
 
     "ff" 'find-file
+    "fd" 'delete-file
     "fr" 'consult-recent-file))
 
 (use-package consult-dir :defer t)
 (use-package consult-projectile :defer t)
 (use-package consult-flycheck :defer t)
-(use-package consult-lsp :defer t)
 (use-package consult-lsp :defer t)
 (use-package consult-yasnippet :defer t)
 

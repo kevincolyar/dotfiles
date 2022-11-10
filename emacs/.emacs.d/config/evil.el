@@ -32,10 +32,3 @@
 
 (use-package evil-commentary
   :init (evil-commentary-mode))
-
-(setq evil-emacs-state-cursor '("firebrick" box)) 
-(setq evil-normal-state-cursor '("firebrick" box)) 
-(setq evil-visual-state-cursor '("cyan" box))
-(setq evil-insert-state-cursor '("cyan" box))
-(setq evil-replace-state-cursor '("red" bar))
-(setq evil-operator-state-cursor '("red" hollow))

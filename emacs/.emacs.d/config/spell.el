@@ -42,14 +42,7 @@
             (apply oldfun args))
         (advice-remove #'message message-off))))
   :config
-  (advice-add #'ispell-init-process :around #'message-off-advice)
-  (use-package flyspell-correct-ivy
-    :bind ("C-M-:" . flyspell-correct-at-point)
-    :config
-    (when (eq system-type 'darwin)
-      (progn
-        (global-set-key (kbd "C-M-;") 'flyspell-correct-at-point)))
-    (setq flyspell-correct-interface #'flyspell-correct-ivy)))
+  (advice-add #'ispell-init-process :around #'message-off-advice))
 
 ;; TODO: This is triggering in insert mode
 ;; (use-package flyspell-correct

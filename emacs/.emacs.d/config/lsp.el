@@ -18,10 +18,12 @@
 ;; optionally
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode)
-  :bind ("K" . lsp-describe-thing-at-point)
+  :general
+  (nmap
+    :keymaps 'lsp-ui-mode-map
+    "" #'lsp-describe-thing-at-point)
   :custom (lsp-ui-doc-position 'bottom))
 
-(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
 (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 
 (setq

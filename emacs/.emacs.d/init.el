@@ -27,7 +27,6 @@
 
 ;; Command/File/Buffer Completion  (eg: ivy, helm, ido, etc)
 ;; (load "~/.emacs.d/config/ivy.el")
-;; (load "~/.emacs.d/config/selectrum.el")
 (load "~/.emacs.d/config/vertico.el")
 (load "~/.emacs.d/config/marginalia.el")
 (load "~/.emacs.d/config/orderless.el")
@@ -51,9 +50,9 @@
 (load "~/.emacs.d/config/tramp.el")
 
 ;; Code Completion (eg: company, corfu, etc)
-;; (load "~/.emacs.d/config/company.el")
-(load "~/.emacs.d/config/corfu.el")
+(load "~/.emacs.d/config/company.el")
+;; (load "~/.emacs.d/config/corfu.el")
 
-;; Don't let Emacs' customi system pollute our configs
+;; Don't let Emacs' customize system pollute our configs
 (setq custom-file "~/.emacs.d/custom-vars.el")
 (load custom-file 'noerror 'nomessage)

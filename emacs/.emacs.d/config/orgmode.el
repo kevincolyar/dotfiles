@@ -10,6 +10,7 @@
    org-refile-allow-creating-parent-nodes 'confirm
    org-log-done 'time
    org-html-checkbox-type 'html
+   org-reverse-note-order t ; Refiles to top of subheading
    org-todo-keyword-faces
    '(
      ("HOLD" . "orange")

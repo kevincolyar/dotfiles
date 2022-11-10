@@ -19,18 +19,6 @@
   :init
   (xclip-mode 1))
 
-(use-package dumb-jump
-  :init
-  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
-  (setq xref-show-definitions-function #'xref-show-definitions-completing-read)
-  :commands dumb-jump-result-follow
-  :config
-  (setq
-   dumb-jump-prefer-searcher 'rg
-   dumb-jump-aggressive nil
-   dumb-jump-selector 'ivy)
-  (add-hook 'dumb-jump-after-jump-hook #'better-jumper-set-jump))
-
 (use-package helpful
   :after evil
   :init
