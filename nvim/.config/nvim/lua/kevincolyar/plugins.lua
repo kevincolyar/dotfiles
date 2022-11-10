@@ -9,9 +9,10 @@ return require('packer').startup(function(use)
   use { 'gelguy/wilder.nvim' }
   use { 'kyazdani42/nvim-web-devicons' }
   use { "catppuccin/nvim", as = "catppuccin" }
-  use { 'feline-nvim/feline.nvim' }
+  -- use { 'feline-nvim/feline.nvim' }
   use { 'yamatsum/nvim-cursorline'}
   use { 'lukas-reineke/indent-blankline.nvim'}
+  use { 'xiyaowong/nvim-transparent' }
 
   -- File navigation
   use { 
@@ -31,6 +32,7 @@ return require('packer').startup(function(use)
   use { "neovim/nvim-lspconfig" }
   use { "williamboman/mason.nvim" }
   use { "williamboman/mason-lspconfig.nvim" }
+  use { "jose-elias-alvarez/null-ls.nvim" }
 
   -- auto-completion engine
   use { "onsails/lspkind-nvim" }
