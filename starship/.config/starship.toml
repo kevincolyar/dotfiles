@@ -1,8 +1,10 @@
 scan_timeout = 10
 
-[ruby]
-  disabled=true
-[python]
-  disabled=true
-[nodejs]
+# [ruby]
+#   disabled=true
+# [python]
+#   disabled=true
+# [nodejs]
+#   disabled=true
+[docker_context]
   disabled=true

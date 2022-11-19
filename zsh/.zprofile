@@ -75,6 +75,10 @@ dev() {
     echo "Loading pyenv $python_version"
     path=($PYENV_ROOT/bin $path)
     eval "$(pyenv init -)"
+
+    function pip-install-save() { 
+      pip install $1 && pip freeze | grep $1 >> requirements.txt
+    }
   fi
 
   # pyvenv
