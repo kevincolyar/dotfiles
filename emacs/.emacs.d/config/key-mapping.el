@@ -48,6 +48,8 @@
 
   "f"  '(:ignore t :which-key "Files")
   "fs" 'save-buffer
+  "fd" 'delete-file
+  "fc" 'copy-file
 
   "g"  '(:ignore t :which-key "git")
   "gg" 'magit-status
