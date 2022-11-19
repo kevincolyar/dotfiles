@@ -2,4 +2,5 @@ doom/.doom.d/custom.el
 cmus/.config/cmus
 ranger/.config/ranger/bookmarks
 ranger/.config/ranger/history
+zsh/cache
 .DS_Store
