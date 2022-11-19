@@ -15,7 +15,7 @@ vim.keymap.set('n', '<leader><tab>', "<C-6>")                                   
 vim.keymap.set('n', '<leader>ff', "<cmd>lua require('telescope.builtin').find_files()<cr>")
 vim.keymap.set('n', '<leader>bb', "<cmd>lua require('telescope.builtin').buffers()<cr>")
 vim.keymap.set('n', '<leader>fs', "<cmd>:w<cr>")
-vim.keymap.set('n', '<leader>pf', "<cmd>lua require('telescope.builtin').git_files()<cr>")
+vim.keymap.set('n', '<leader>pf', "<cmd>lua require('telescope.builtin').git_files()<cr>", {desc='Project Files'})
 
 --  Packer
 vim.keymap.set('n', '<leader>pi', "<cmd>:PackerInstall<cr>")

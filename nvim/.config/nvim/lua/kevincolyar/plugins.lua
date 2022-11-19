@@ -8,8 +8,10 @@ return require('packer').startup(function(use)
   use { 'rcarriga/nvim-notify' }
   use { 'gelguy/wilder.nvim' }
   use { 'kyazdani42/nvim-web-devicons' }
-  use { "catppuccin/nvim", as = "catppuccin" }
-  -- use { 'feline-nvim/feline.nvim' }
+  -- use { "catppuccin/nvim", as = "catppuccin" }
+  use { 'feline-nvim/feline.nvim' }
+  -- use { 'shaunsingh/nord.nvim'}
+  use { 'EdenEast/nightfox.nvim' }
   use { 'yamatsum/nvim-cursorline'}
   use { 'lukas-reineke/indent-blankline.nvim'}
   use { 'xiyaowong/nvim-transparent' }

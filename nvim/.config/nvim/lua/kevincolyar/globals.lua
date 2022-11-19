@@ -47,11 +47,17 @@ vim.opt.updatetime=500
 -- vim.g.test.strategy = 'dispatch'
 vim.cmd([[let g:test#strategy = "harpoon"]])
 
-vim.opt.spelllang=en
-vim.opt.spellsuggest="best,9"
+vim.cmd([[set spell!]])
+vim.g.spelllang=en_us
+vim.g.spellsuggest="best,9"
+
+-- Ignore case when completing/searchin in command line, etc
+vim.opt.ignorecase = true
+vim.opt.wildignorecase = true
 
 vim.opt.list = true
 -- vim.opt.listchars:append "eol:↴"
---
-vim.opt.laststatus = 0
-vim.opt.ruler = false
+
+-- Hide Status Line
+-- vim.opt.laststatus = 0
+-- vim.opt.ruler = false
