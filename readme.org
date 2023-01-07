@@ -9,3 +9,12 @@ git clone git://github.com/kevincolyar/dotfiles ~/.dotfiles
 #+begin_src sh
 stow
 #+end_src
+
+* Notes
+
+Disable OpenGL on older laptop, for wezterm
+
+#+begin_src sh
+systemctl --user unset-environment LIBGL_ALWAYS_SOFTWARE
+#+end_src
+
