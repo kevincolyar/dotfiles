@@ -111,7 +111,6 @@ stty -ixon
 #-------------------------------------------------------------------------------------
 
 # Bat instead of cat
-alias cat='bat'
 
 # Exa instead of ls
 alias ls="exa --git"
@@ -130,6 +129,7 @@ if [[ "$PLATFORM" == "Linux" ]]; then
     alias la='ls -lAGh --color'
   fi
   alias du="ncdu -rr -x --exclude .git --exclude node_modules"
+  alias cat='batcat'
 elif [[ "$PLATFORM" == "Darwin" ]]; then
   if ! type exa > /dev/null; then
     alias ls="ls -FGh"
@@ -140,6 +140,7 @@ elif [[ "$PLATFORM" == "Darwin" ]]; then
   alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
   alias vim=nvim
   alias emacs="emacs -nw"
+  alias cat='bat'
 fi
 
 # apt
@@ -168,6 +169,7 @@ alias k8='kubectl'
 
 # Other
 alias vi='vim'
+alias vim='nvim'
 alias cask="brew cask"
 alias be='noglob bundle exec'
 
