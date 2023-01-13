@@ -28,3 +28,4 @@ emacs/.emacs.d/\#*
 emacs/.emacs.d/quelpa
 
 nvim/.config/nvim/undodir
+nvim/.config/nvim/spell
