@@ -55,7 +55,7 @@ vim.g.spellsuggest="best,9"
 vim.opt.ignorecase = true
 vim.opt.wildignorecase = true
 
-vim.opt.list = true
+-- vim.opt.list = true
 -- vim.opt.listchars:append "eol:↴"
 
 -- Hide Status Line
