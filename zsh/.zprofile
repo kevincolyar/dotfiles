@@ -6,36 +6,18 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
-#
-# Browser
-#
-
-#
 # Language
-#
-
+#-------------------------------------------------------------------------------------
 if [[ -z "$LANG" ]]; then
   export LANG='en_US.UTF-8'
 fi
 
-#
 # Paths
-#
+#-------------------------------------------------------------------------------------
 
 # Ensure path arrays do not contain duplicates.
 typeset -gU cdpath fpath mailpath path
 
-# Set the the list of directories that cd searches.
-# cdpath=(
-#   $cdpath
-# )
-
-# Set the list of directories that Zsh searches for programs.
-# path=(
-# #  /usr/local/{bin,sbin}
-#   $path
-# )
-#
 
 find-up () {
   path=$(pwd)
@@ -47,13 +29,6 @@ find-up () {
 }
 
 export PYENV_ROOT="$HOME/.pyenv"
-
-# nvm
-# !!! This is a source of some shell startup slowness
-# !!! Make sure node is not installed via brew or apt
-# !!! TODO: Force zsh to push nvm node path in front of /usr/bin /usr/local/bin
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
 path=(
   ./bin
@@ -68,6 +43,8 @@ path=(
   $path
 )
 
+# Dev Runtime Helper
+#-------------------------------------------------------------------------------------
 dev() {
   # pyenv
   python_version=$(find-up .python-version)
@@ -113,24 +90,8 @@ dev() {
   export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
 }
 
-#
-# Less
-#
-
-# Set the default Less options.
-# Mouse-wheel scrolling has been disabled by -X (disable screen clearing).
-# Remove -X and -F (exit if the content fits on one screen) to enable it.
-export LESS='-F -g -i -M -R -S -w -X -z-4'
-
-# Set the Less input preprocessor.
-if (( $+commands[lesspipe.sh] )); then
-  export LESSOPEN='| /usr/bin/env lesspipe.sh %s 2>&-'
-fi
-
-#
 # Temporary Files
-#
-
+#-------------------------------------------------------------------------------------
 if [[ ! -d "$TMPDIR" ]]; then
   export TMPDIR="/tmp/$USER"
   mkdir -p -m 700 "$TMPDIR"
@@ -142,6 +103,7 @@ if [[ ! -d "$TMPPREFIX" ]]; then
 fi
 
 # Homebrew
+#-------------------------------------------------------------------------------------
 if [[ -d /opt/homebrew ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi

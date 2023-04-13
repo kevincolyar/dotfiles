@@ -17,6 +17,11 @@ vim.wo.number = true
 vim.wo.relativenumber = true
 
 vim.cmd([[let g:test#python#runner = "nose"]])
+-- vim.cmd [[colorscheme nordfox]]
+-- vim.cmd [[colorscheme kanagawa]]
+-- vim.cmd [[colorscheme rasmus]]
+vim.opt.background = "dark"
+vim.cmd [[colorscheme oxocarbon]]
 
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
@@ -41,14 +46,14 @@ vim.opt.incsearch = true
 vim.opt.timeoutlen=500
 
  -- For CursorHold events
-vim.opt.updatetime=500 
+vim.opt.updatetime=500
 
 -- let test#strategy = "dispatch"
 -- vim.g.test.strategy = 'dispatch'
 vim.cmd([[let g:test#strategy = "harpoon"]])
 
 vim.cmd([[set spell!]])
-vim.g.spelllang=en_us
+vim.g.spelllang="en_us"
 vim.g.spellsuggest="best,9"
 
 -- Ignore case when completing/searchin in command line, etc

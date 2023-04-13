@@ -5,23 +5,91 @@ return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
   -- UI
-  -- use { 'rcarriga/nvim-notify' }
-  use { 'gelguy/wilder.nvim' }
   use { 'kyazdani42/nvim-web-devicons' }
-  -- use { "catppuccin/nvim", as = "catppuccin" }
-  use { 'feline-nvim/feline.nvim' }
-  -- use { 'shaunsingh/nord.nvim'}
-  use { 'EdenEast/nightfox.nvim' }
-  use { 'yamatsum/nvim-cursorline'}
-  -- use { 'lukas-reineke/indent-blankline.nvim'} -- Show indent lines
-  use { 'xiyaowong/nvim-transparent' }
-  use { }
+  -- use { 'feline-nvim/feline.nvim' }
+  -- use { 'EdenEast/nightfox.nvim' }
+  -- use { 'sainnhe/everforest' }
+  -- use { 'rebelot/kanagawa.nvim' }
+  -- use { 'kvrohit/rasmus.nvim' }
+  use {'nyoom-engineering/oxocarbon.nvim'}
+
+  use {
+    'gelguy/wilder.nvim',
+    config = function()
+      local wilder = require('wilder')
+
+      wilder.setup({
+        modes = {':'},
+        next_key = '<C-j>',
+        previous_key = '<C-k>',
+      })
+
+      wilder.set_option('renderer', wilder.popupmenu_renderer({
+        highlighter = wilder.basic_highlighter(),
+        left = {' ', wilder.popupmenu_devicons()},
+        right = {' ', wilder.popupmenu_scrollbar()},
+        -- pumblend = 30,
+      }))
+    end
+  }
+
+  use {
+    'freddiehaddad/feline.nvim',
+    config = function()
+      require('feline').setup()
+      require('feline').winbar.setup()
+    end
+  }
+
+  -- use {
+  --   'yamatsum/nvim-cursorline',
+  --   config = function()
+  --     require('nvim-cursorline').setup {
+  --       cursorline = {
+  --         enable = true,
+  --         timeout = 300,
+  --         number = false,
+  --       },
+  --       cursorword = {
+  --         enable = true,
+  --         min_length = 3,
+  --         hl = { underline = false },
+  --       }
+  --     }
+  --   end
+  -- }
+  use {
+    'xiyaowong/nvim-transparent',
+    config = function()
+      require("transparent").setup({
+        extra_groups = {
+          'all'
+        }
+      })
+    end
+  }
 
   -- File navigation
   use {
     'nvim-telescope/telescope.nvim',
     tag = '0.1.0',
-    requires = { {'nvim-lua/plenary.nvim'} }
+    requires = { {'nvim-lua/plenary.nvim'} },
+    config = function()
+      local actions = require('telescope.actions')
+
+      require('telescope').setup{
+        defaults = {
+          layout_strategy = "vertical",
+          mappings = {
+            i = {
+              ["<esc>"] = actions.close,
+              ["<C-j>"] = actions.move_selection_next,
+              ["<C-k>"] = actions.move_selection_previous
+            }
+          }
+        },
+      }
+    end
   }
 
   -- Dev
@@ -40,33 +108,60 @@ return require('packer').startup(function(use)
       {'williamboman/mason-lspconfig.nvim'},
 
       -- Autocompletion
-      {'hrsh7th/nvim-cmp'},
-      {'hrsh7th/cmp-buffer'},
-      {'hrsh7th/cmp-path'},
-      {'saadparwaiz1/cmp_luasnip'},
-      {'hrsh7th/cmp-nvim-lsp'},
-      {'hrsh7th/cmp-nvim-lua'},
+      {'hrsh7th/nvim-cmp'},         -- Required
+      {'hrsh7th/cmp-nvim-lsp'},     -- Required
+      {'hrsh7th/cmp-buffer'},       -- Optional
+      {'hrsh7th/cmp-path'},         -- Optional
+      {'saadparwaiz1/cmp_luasnip'}, -- Optional
+      {'hrsh7th/cmp-nvim-lua'},     -- Optional
 
       -- Snippets
       {'L3MON4D3/LuaSnip'},
       {'rafamadriz/friendly-snippets'},
-    }
+    },
+    config = function()
+      local lsp = require('lsp-zero')
+
+      lsp.preset('recommended')
+      lsp.ensure_installed({
+        'tsserver',
+        'eslint',
+        'rust_analyzer'
+      })
+
+      lsp.nvim_workspace()
+      lsp.setup()
+
+      vim.diagnostic.config({
+        -- virtual_text = true
+      })
+    end
   }
+
   use({
     "glepnir/lspsaga.nvim",
     branch = "main",
     config = function()
-      local saga = require("lspsaga")
-
-      saga.init_lsp_saga({
-        -- your configuration
-      })
+      require("lspsaga").setup({})
     end,
+    requires = {
+      {"nvim-tree/nvim-web-devicons"},
+      --Please make sure you install markdown and markdown_inline parser
+      {"nvim-treesitter/nvim-treesitter"}
+    }
   })
 
   -- Languages
   use "tpope/vim-rails"
   use "vim-ruby/vim-ruby"
+  use {
+    'saecki/crates.nvim',
+    tag = 'v0.3.0',
+    requires = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      require('crates').setup()
+    end,
+  }
 
   -- auto-completion engine
   use { "onsails/lspkind-nvim" }
@@ -83,35 +178,72 @@ return require('packer').startup(function(use)
   use { 'rafamadriz/friendly-snippets' }
 
   -- Other LSP
-  use { 'simrat39/rust-tools.nvim' }
   use { 'mfussenegger/nvim-dap' }
-  use { 'j-hui/fidget.nvim' }
-
-  -- Snippets
+  use {
+    'simrat39/rust-tools.nvim',
+    config = function()
+      require("rust-tools").setup({
+        tools = { 
+          inlay_hints = {
+            auto = true
+          }
+        }
+      })
+    end
+  }
+  use({
+    'j-hui/fidget.nvim',
+    setup = function()
+      window = {
+        blend = 0
+      }
+    end
+  })
 
   -- Git
-  use 'tpope/vim-fugitive'
+  use { 'tpope/vim-fugitive' }
   use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
-  use { "lewis6991/gitsigns.nvim" }
-  -- use { 'f-person/git-blame.nvim' }
-
-  -- Themes
-  use { 'folke/tokyonight.nvim' }
-  use { 'ellisonleao/gruvbox.nvim' }
-  use { 'sainnhe/sonokai' }
-
-  -- Org
-  use { 'nvim-orgmode/orgmode' }
-  use {'akinsho/org-bullets.nvim' }
+  use {
+    "lewis6991/gitsigns.nvim",
+    config = function()
+      require('gitsigns').setup({
+        signs = {
+          add = { hl = "GitSignsAdd", text = "+", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
+          change = { hl = "GitSignsChange", text = "~", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
+          delete = { hl = "GitSignsDelete", text = "_", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn" },
+          topdelete = { hl = "GitSignsDelete", text = "‾", numhl = "GitSignsDeleteNr", linehl = "GitSignsDeleteLn" },
+          changedelete = { hl = "GitSignsChange", text = "│", numhl = "GitSignsChangeNr", linehl = "GitSignsChangeLn" },
+        }
+      })
+    end
+  }
+  use {
+    'rhysd/git-messenger.vim',
+    setup = function()
+      vim.keymap.set('n', '<leader>gm', "<cmd>:GitMessenger<cr>")
+    end
+  }
 
   -- Testing
   use { 'ThePrimeagen/harpoon' }
   use { 'tpope/vim-dispatch' }
 
   -- Misc
-  use { 'jamessan/vim-gnupg' }
   use { 'jghauser/follow-md-links.nvim' }
-  use { 'folke/which-key.nvim' }
+  use {
+    'folke/which-key.nvim',
+    config = function()
+      require("which-key").register({
+        b = { name = "Buffers" },
+        c = { name = "Code" },
+        f = { name = "Files" },
+        g = { name = "Git" },
+        p = { name = "Packer" },
+        s = { name = "Search" },
+        t = { name = "Test" },
+      }, { prefix = "<leader>" })
+    end
+  }
   use({
     "iamcco/markdown-preview.nvim",
     run = function() vim.fn["mkdp#util#install"]() end,

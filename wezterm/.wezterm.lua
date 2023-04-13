@@ -14,7 +14,7 @@ return {
    -- font = wezterm.font('FuraMono Nerd Font'),
    -- font = wezterm.font('SauceCode Pro Nerd Font Regular'),
    -- font = wezterm.font('Fisa Code', { weight = 'Thin' }),
-   font_size = 15,
+   font_size = 16,
    window_background_opacity = 0.92,
    harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
 }

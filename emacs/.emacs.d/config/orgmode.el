@@ -31,11 +31,12 @@
              "a"  'org-agenda
              "s"  '(:ignore t :which-key "Subtree")
              "sa" 'org-archive-subtree
-             "si" 'org-insert-todo-heading-respect-content
+             "si" 'evil-org-org-insert-todo-heading-respect-content-below
              "sl" 'org-demote-subtree
              "sh" 'org-promote-subtree
              "sn" 'org-toggle-narrow-to-subtree
              "ss" 'org-sparse-tree
+             "S"  'org-search-view
              "sj" 'org-move-subtree-down
              "sk" 'org-move-subtree-up
              "ds" 'org-schedule

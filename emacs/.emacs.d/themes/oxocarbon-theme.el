@@ -6,7 +6,8 @@
 
     ;; Specify the color palette, color columns correspond to each of the classes above.
     (oxocarbon-bg  "#161616")
-    (oxocarbon-fg  "#f2f4f8")
+    ;; (oxocarbon-fg  "#f2f4f8")
+    (oxocarbon-fg  "#c0c0c0")
 
     (oxocarbon-base00  "#161616")
     (oxocarbon-base01  "#262626")
