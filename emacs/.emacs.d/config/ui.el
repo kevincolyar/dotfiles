@@ -24,7 +24,9 @@
 ;   (load-theme 'kaolin-shiva t))
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(load-theme 'oxocarbon t)
+(use-package autothemer
+  :config
+  (load-theme 'oxocarbon t))
 
 ;; (use-package catppuccin-theme
 ;;   :config
