@@ -58,6 +58,7 @@ vim.g.spellsuggest="best,9"
 
 -- Ignore case when completing/searchin in command line, etc
 vim.opt.ignorecase = true
+vim.opt.smartcase = true
 vim.opt.wildignorecase = true
 
 -- vim.opt.list = true
