@@ -12,25 +12,10 @@ export TERMINFO_DIRS=$TERMINFO_DIRS:$HOME/.local/share/terminfo
 export PLATFORM=$(uname)
 export EDITOR='nvim'
 export GREP_COLOR='1;33'
-# export PAGER='most'
-export PAGER='less -r'
-# export PAGER="/bin/sh -c \"col -b | vim -c 'set ft=man ts=8 nomod nolist nonu noma' -\""
+# export PAGER='less -r'
+export PAGER='most'
 
-# Oracle
-#export ORACLE_HOME=~/Library/Oracle/instantclient_11_2
-#export DYLD_LIBRARY_PATH=$ORACLE_HOME
 export -U DIAG_ADR_ENABLED=off  # Disable creation of oradiag directory
-
-# Source Prezto.
-# This loads rbenv, pyenv, nvm into PATH
-#if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-#    source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-#    compinit
-#
-#    # ZPrezto Fixes
-#    alias rm='nocorrect rm'
-#fi
-
 
 export REPORTTIME=10 # print elapsed time when more than 10 seconds
 
@@ -70,7 +55,6 @@ setopt NO_LIST_BEEP
 setopt LOCAL_OPTIONS # allow functions to have local options
 setopt LOCAL_TRAPS # allow functions to have local traps
 setopt PROMPT_SUBST
-# setopt CORRECT
 unsetopt correct_all
 setopt COMPLETE_IN_WORD
 setopt IGNORE_EOF
@@ -119,7 +103,6 @@ alias ll="exa -lgah"
 
 alias ..='cd ..'
 alias less="less -R"
-# alias grep='grep --color=auto'
 
 if [[ "$PLATFORM" == "Linux" ]]; then
   if ! type exa >> /dev/null; then
@@ -238,9 +221,6 @@ zstyle ':completion:*' matcher-list '' \
        'm:{a-z\-}={A-Z\_}' \
        'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
        'r:|?=** m:{a-z\-}={A-Z\_}'
-
-# Load Prompt
-# . $HOME/.zsh/steeef.zsh-theme
 
 # Reset prompt if we're on a dumb terminal (Emacs TRAMP)
 [ $TERM = "dumb" ] && unsetopt zle && PS1='$ '

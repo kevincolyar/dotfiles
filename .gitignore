@@ -7,6 +7,9 @@ cmus/.config/cmus
 ranger/.config/ranger/bookmarks
 ranger/.config/ranger/history
 
+zsh/cache
+.DS_Store
+
 emacs/.emacs.d/var
 emacs/.emacs.d/undo-fu-session
 emacs/.emacs.d/transient
@@ -28,3 +31,4 @@ emacs/.emacs.d/\#*
 emacs/.emacs.d/quelpa
 
 nvim/.config/nvim/undodir
+nvim/.config/nvim/spell

@@ -1,7 +1,7 @@
 (use-package undo-fu)
 
 (use-package undo-fu-session
-  :init (global-undo-fu-session-mode)
+  :init (undo-fu-session-global-mode)
   :config
   (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'")))
 
