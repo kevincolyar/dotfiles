@@ -30,9 +30,10 @@
 (load "~/.emacs.d/config/vertico.el")
 (load "~/.emacs.d/config/marginalia.el")
 (load "~/.emacs.d/config/orderless.el")
-
 (load "~/.emacs.d/config/misc.el")
 (load "~/.emacs.d/config/projectile.el")
+
+;; Development
 (load "~/.emacs.d/config/lsp.el")
 ;; (load "~/.emacs.d/config/dap.el")
 (load "~/.emacs.d/config/tree-sitter.el")
@@ -45,6 +46,8 @@
 (load "~/.emacs.d/config/spell.el")
 (load "~/.emacs.d/config/yas-snippet.el")
 (load "~/.emacs.d/config/dumb-jump.el")
+
+;; Org
 (load "~/.emacs.d/config/orgmode.el")
 (load "~/.emacs.d/config/embark.el")
 (load "~/.emacs.d/config/tramp.el")

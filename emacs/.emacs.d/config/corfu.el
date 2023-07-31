@@ -26,7 +26,7 @@
   :init
   (global-corfu-mode)
   (corfu-terminal-mode)
-  (corfu-doc-terminal-mode)
+  ;; (corfu-doc-terminal-mode)
   (corfu-history-mode)
   :config
   (corfu-mode))
@@ -44,11 +44,20 @@
 ;; (quelpa '(popon :fetcher git
 ;;                 :url "https://codeberg.org/akib/emacs-popon.git"))
 
-(use-package popon)
+;; (use-package popon)
 
 (quelpa '(corfu-terminal
           :fetcher git
           :url "https://codeberg.org/akib/emacs-corfu-terminal.git"))
-(quelpa '(corfu-doc-terminal
-          :fetcher git
-          :url "https://codeberg.org/akib/emacs-corfu-doc-terminal.git"))
+;; (quelpa '(corfu-doc-terminal
+;;           :fetcher git
+;;           :url "https://codeberg.org/akib/emacs-corfu-doc-terminal.git"))
+
+
+(use-package kind-icon
+  :ensure t
+  :after corfu
+  :custom
+  (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
+  :config
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))

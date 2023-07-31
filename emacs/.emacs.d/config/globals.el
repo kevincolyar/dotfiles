@@ -1,6 +1,9 @@
+(use-package auto-package-update)
 (use-package better-defaults)
 (use-package no-littering)
+(use-package exec-path-from-shell)
 
+(exec-path-from-shell-initialize) ; Load path from shell $PATH
 (scroll-bar-mode -1) ; Disable the visible scrollbar
 (tool-bar-mode -1) ; Disable the Toolbar
 (tooltip-mode -1) ; Disable tooltips
