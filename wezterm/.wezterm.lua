@@ -15,6 +15,18 @@ return {
    -- font = wezterm.font('SauceCode Pro Nerd Font Regular'),
    -- font = wezterm.font('Fisa Code', { weight = 'Thin' }),
    font_size = 16,
-   window_background_opacity = 0.92,
+   window_background_opacity = 0.88,
+   macos_window_background_blur = 40,
    harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
+
+   -- Disable Italic
+   font_rules = {
+     {
+       italic = true,
+       font = wezterm.font {
+         family = "Fisa Code",
+         italic = false
+       },
+     },
+   }
 }
