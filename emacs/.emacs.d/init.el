@@ -8,11 +8,6 @@
 (unless package-archive-contents
   (package-refresh-contents))
 
-;; Initialize use-package on non-Linux platforms
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
-
-(require 'use-package)
 (setq use-package-always-ensure t)
 
 ;; Load private config
