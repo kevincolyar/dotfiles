@@ -1,6 +1,7 @@
 ;;Ivy is an interactive interface for completion in Emacs
 ;; https://github.com/abo-abo/swiper#ivy
 (use-package ivy
+             :ensure t
              :diminish
              :bind (("C-s" . swiper)
                     :map ivy-minibuffer-map
@@ -22,6 +23,7 @@
 ;; Counsel takes this further, providing versions of common Emacs commands that are customised to make the best use of Ivy.
 ;; https://github.com/abo-abo/swiper#counsel
 (use-package counsel
+  :ensure t
   :bind (("M-x" . counsel-M-x)
 	 ("C-x b" . counsel-ibuffer)
 	 ("C-x Cf" . counsel-find-file)
@@ -45,16 +47,19 @@
   (setq ivy-initial-inputs-alist nil))
 
 (use-package counsel-projectile
+  :ensure t
   :after projectile
   :config
   (counsel-projectile-mode 1)
   (setq counsel-projectile-rg-initial-input '(ivy-thing-at-point)))
 
 (use-package ivy-rich
+  :ensure t
   :init
   (ivy-rich-mode 1))
 
 (use-package flyspell-correct-ivy
+  :ensure t
   :after flyspell-correct)
 
 ;; TODO: Doomemacs ivy setup:
@@ -63,4 +68,5 @@
 ;; Smex
 ;; Smex is a M-x enhancement for Emacs.
 ;; Built on top of Ido, it provides a convenient interface to your recently and most frequently used commands. And to all the other commands, too.
-(use-package smex)
+(use-package smex
+  :ensure t)

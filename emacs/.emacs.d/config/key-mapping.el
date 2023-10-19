@@ -14,6 +14,12 @@
     :global-prefix "C-SPC")
   )
 
+(defun search-web ()
+  "Promt for search query and open it in the web browser."
+  (interactive)
+  (let ((query (read-string "Query: ")))
+    (browse-url (concat "https://search.brave.com/search?q=" query))))
+
 (kevincolyar/leader-keys
   ":"   'execute-extended-command
   "TAB" 'evil-switch-to-windows-last-buffer
@@ -28,23 +34,25 @@
   "be"  'eval-buffer
 
   "c"   '(:ignore t :which-key "Code")
-  "ca"  'lsp-execute-code-action
-  "ce"  'flycheck-list-errors
+  ;; "ca"  'lsp-execute-code-action
+  "ca"  'eglot-code-actions
+  ;; "ce"  'flycheck-list-errors
+  "ce"  'flymake-show-buffer-diagnostics
   "cd"  'xref-find-definitions
-  "cD"  'lsp-describe-thing-at-point
+  ;; "cD"  'lsp-describe-thing-at-point
   "cr"  'xref-find-references
+  "cR"  'eglot-rename
 
   "ea" 'embark-act
 
-  "h"   '(:ignore t :which-key "Help")
-  "hs"  'describe-symbol
-  "hd"  '(:ignore t :which-key "Describe")
-  "hdb" 'describe-bindings
-  "hdf" 'describe-function
-  "hdk" 'describe-key
-  "hdv" 'describe-variable
-  "hds" 'describe-symbol
-  "hdm" 'describe-mode
+  "h"  '(:ignore t :which-key "Help")
+  "hb" 'describe-bindings
+  "hc" 'describe-command
+  "hf" 'describe-function
+  "hk" 'describe-key
+  "hv" 'describe-variable
+  "hs" 'describe-symbol
+  "hm" 'describe-mode
 
   "f"  '(:ignore t :which-key "Files")
   "fs" 'save-buffer
@@ -57,6 +65,11 @@
 
   "s"  '(:ignore t :which-key "Search")
   ;; "ss"  'swiper-thing-at-point
+
+  "tt"  '(consult-theme :which-key "choose theme")
+
+  "w"   '(:ignore t :which-key "Web")
+  "ws"  'search-web
 
   "z="  'flyspell-correct-at-point)
 

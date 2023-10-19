@@ -7,7 +7,9 @@
   :hook (
 	 (rust-mode . lsp)
 	 (python-mode . lsp)
+	 (python-ts-mode . lsp)
 	 (typescript-mode . lsp)
+	 (javascript-ts-mode . lsp)
 	 ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration))
   :commands (lsp lsp-deffered))

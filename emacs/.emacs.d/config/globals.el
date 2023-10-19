@@ -1,13 +1,13 @@
-(use-package auto-package-update)
-(use-package better-defaults)
-(use-package no-littering)
-(use-package exec-path-from-shell)
+(use-package auto-package-update :ensure t)
+(use-package better-defaults :ensure t)
+(use-package no-littering :ensure t)
+(use-package exec-path-from-shell :ensure t)
 
 (exec-path-from-shell-initialize) ; Load path from shell $PATH
-(scroll-bar-mode -1) ; Disable the visible scrollbar
+; (scroll-bar-mode -1) ; Disable the visible scrollbar
 (tool-bar-mode -1) ; Disable the Toolbar
 (tooltip-mode -1) ; Disable tooltips
-(set-fringe-mode 10) ;
+; (set-fringe-mode 10) ;
 (menu-bar-mode -1) ; Disable menu bar
 (global-hl-line-mode 1) ;; Highlight cursor line
 (column-number-mode)
@@ -22,16 +22,17 @@
 (setq global-auto-revert-non-file-buffers t) ; Also revert dired buffers
 
 ;; store all backup and autosave files in the tmp dir
-; (setq backup-directory-alist `(("." . "~/.emacs.d/backups")))
-; (setq auto-save-file-name-transforms `(("." . "~/.emacs.d/backups")) t)
-; (setq backup-by-copying t)
-; (setq delete-old-versions t
-;   kept-new-versions 6
-;   kept-old-versions 2
-;   version-control t)
+(setq backup-directory-alist `(("." . "~/.emacs.d/backups")))
+;; (setq auto-save-file-name-transforms `(("." . "~/.emacs.d/backups")) t)
+(setq backup-by-copying t)
+(setq delete-old-versions t
+      kept-new-versions 6
+      kept-old-versions 2
+      version-control t)
 
 (setq
  fill-column  80
+ tab-width 2
  visible-bell nil
  ring-bell-function 'ignore
  )                         ; Set width for automatic line breaks

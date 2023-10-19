@@ -6,6 +6,7 @@
 ;;   :init
 ;;   (marginalia-mode))
 (use-package marginalia
+  :ensure t
   :general
   (:keymaps 'minibuffer-local-map
             "M-A" 'marginalia-cycle)

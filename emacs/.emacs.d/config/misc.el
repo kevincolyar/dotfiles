@@ -19,17 +19,25 @@
   :init
   (xclip-mode 1))
 
+(use-package chatgpt-shell
+  :ensure t
+  :config
+  ;; file ~/.authinfo has this line:
+  ;;  machine api.openai.com password OPENAI_KEY
+  (setq chatgpt-shell-openai-key
+        (auth-source-pick-first-password :host "api.openai.com")))
+
 (use-package helpful
   :after evil
   :init
   (setq evil-lookup-func #'helpful-at-point)
-  :custom
-  (counsel-describe-function-function #'helpful-callable)
-  (counsel-describe-variable-function #'helpful-variable)
+  ;; :custom
+  ;; (counsel-describe-function-function #'helpful-callable)
+  ;; (counsel-describe-variable-function #'helpful-variable)
   :bind
-  ([remap describe-function] . counsel-describe-function)
+  ([remap describe-function] . helpful-function)
   ([remap describe-command] . helpful-command)
-  ([remap desribe-variable] . counsel-describe-variable)
+  ([remap desribe-variable] . helpful-variable)
   ([remap describe-key] . helpful-key))
 
 (defun efs/display-startup-time ()

@@ -18,7 +18,8 @@
   (evil-global-set-key 'normal "K" 'helpful-at-point)
 
   ;; (evil-define-key 'normal 'lsp-mode "K" 'lsp-describe-thing-at-point)
-  (evil-define-key 'normal 'lsp-mode "K" 'lsp-ui-doc-glance)
+  ;; (evil-define-key 'normal 'lsp-mode "K" 'lsp-ui-doc-glance)
+  (evil-define-key 'normal 'eldoc-mode "K" 'eldoc)
 
   (evil-set-initial-state 'messages-buffer-mode 'normal)
   (evil-set-initial-state 'dashboard-mode 'normal)
@@ -27,8 +28,11 @@
 
 (use-package evil-collection
   :after evil
+  :ensure t
   :config
   (evil-collection-init))
 
 (use-package evil-commentary
+  :after evil
+  :ensure t
   :init (evil-commentary-mode))

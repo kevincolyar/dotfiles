@@ -12,4 +12,4 @@
  "tl" '(rustic-cargo-test-rerun :which-key "Test Last")
  )
 
-(add-hook 'rust-mode-hook #'lsp)
+; (add-hook 'rust-mode-hook #'lsp)
