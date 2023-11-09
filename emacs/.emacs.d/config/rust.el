@@ -1,14 +1,19 @@
-(use-package rust-mode
-  :defer t)
+
+;; (use-package rust-mode :defer t)
+
 (use-package rustic
-  :defer t)
+  :defer t
+  :config
+  (setq rustic-lsp-client 'eglot)
+  :general
+  (nmap
+   :prefix ","
+   "t"  '(:ignore t :which-key "Tests")
+   "tt" '(rustic-cargo-current-test :which-key "Test Current")
+   "ta" '(rustic-cargo-test :which-key "Test All")
+   "tl" '(rustic-cargo-test-rerun :which-key "Test Last")))
 
-(general-define-key
- :states 'normal
- :keymaps 'rust-mode-map
- :prefix ","
- "tt" '(rustic-cargo-current-test :which-key "Test Current")
- "ta" '(rustic-cargo-test :which-key "Test All")
- )
+; (add-hook 'rust-mode-hook #'lsp)
 
-(add-hook 'rust-mode-hook #'lsp)
+;; Turn off flymake.
+(add-hook 'eglot--managed-mode-hook (lambda () (flymake-mode -1)))

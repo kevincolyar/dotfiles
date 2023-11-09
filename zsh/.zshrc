@@ -13,7 +13,8 @@ export PLATFORM=$(uname)
 export EDITOR='nvim'
 export GREP_COLOR='1;33'
 # export PAGER='less -r'
-export PAGER='most'
+# export PAGER='most'
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 export -U DIAG_ADR_ENABLED=off  # Disable creation of oradiag directory
 
@@ -24,7 +25,9 @@ export HISTSIZE=10000
 export SAVEHIST=10000
 export HISTFILE=$HOME/.zsh_history
 export HISTIGNORE="&:ls:ll:la:l.:pwd:exit:clear:clr:[bf]g"
-export KEYTIMEOUT=5  # Fixes vi-mode esc lag
+
+# Fixes vi-mode esc lag
+export KEYTIMEOUT=5 
 
 # http://hoelz.ro/blog/making-ssh_auth_sock-work-between-detaches-in-tmux
 if [ ! -z "$SSH_AUTH_SOCK" -a "$SSH_AUTH_SOCK" != "$HOME/.ssh/.auth_sock" ] ; then
@@ -97,15 +100,16 @@ stty -ixon
 # Bat instead of cat
 
 # Exa instead of ls
-alias ls="exa --git"
-alias l="exa -lgh"
-alias ll="exa -lgah"
+alias ls="eza --git"
+alias l="eza -lgh"
+alias ll="eza -lgah"
 
 alias ..='cd ..'
 alias less="less -R"
+alias du="dua -i .git -i node_modules interactive"
 
 if [[ "$PLATFORM" == "Linux" ]]; then
-  if ! type exa >> /dev/null; then
+  if ! type eza >> /dev/null; then
     alias ls="ls -FGh --color"
     alias l="ls -lAhG --color"
     alias ll="ls -lGh --color"
@@ -114,16 +118,17 @@ if [[ "$PLATFORM" == "Linux" ]]; then
   alias du="ncdu -rr -x --exclude .git --exclude node_modules"
   alias cat='batcat'
 elif [[ "$PLATFORM" == "Darwin" ]]; then
-  if ! type exa > /dev/null; then
+  if ! type eza > /dev/null; then
     alias ls="ls -FGh"
     alias l="ls -lahG"
     alias ll="ls -lGh"
     alias la="ls -laGh"
   fi
-  alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
+  # alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
   alias vim=nvim
   alias emacs="emacs -nw"
   alias cat='bat'
+  alias e="emacs -nw"
 fi
 
 # apt
@@ -146,6 +151,7 @@ alias glg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset 
 
 # docker
 alias dc='docker compose'
+alias dcl='docker compose -f docker-compose.yml -f docker-compose.local.yml'
 
 # kubernetes
 alias k8='kubectl'

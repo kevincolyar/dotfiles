@@ -1,4 +1,3 @@
-
 ;; Set spell correction language
 ;; (setq ispell-dictionary "en")
 
@@ -31,18 +30,7 @@
   (ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together"))
   :custom-face
   (flyspell-incorrect ((t (:underline (:color "#f1fa8c" :style wave)))))
-  (flyspell-duplicate ((t (:underline (:color "#50fa7b" :style wave)))))
-  :preface
-  (defun message-off-advice (oldfun &rest args)
-    "Quiet down messages in adviced OLDFUN."
-    (let ((message-off (make-symbol "message-off")))
-      (unwind-protect
-          (progn
-            (advice-add #'message :around #'ignore (list 'name message-off))
-            (apply oldfun args))
-        (advice-remove #'message message-off))))
-  :config
-  (advice-add #'ispell-init-process :around #'message-off-advice))
+  (flyspell-duplicate ((t (:underline (:color "#50fa7b" :style wave))))))
 
 ;; TODO: This is triggering in insert mode
 ;; (use-package flyspell-correct

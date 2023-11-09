@@ -6,12 +6,17 @@ return require('packer').startup(function(use)
 
   -- UI
   use { 'kyazdani42/nvim-web-devicons' }
-  -- use { 'feline-nvim/feline.nvim' }
-  -- use { 'EdenEast/nightfox.nvim' }
-  -- use { 'sainnhe/everforest' }
-  -- use { 'rebelot/kanagawa.nvim' }
-  -- use { 'kvrohit/rasmus.nvim' }
   use {'nyoom-engineering/oxocarbon.nvim'}
+
+  use {
+    'rcarriga/nvim-notify',
+    config = function()
+      require("notify").setup({
+        background_colour = "#000000"
+      })
+      vim.notify = require("notify")
+    end
+  }
 
   use {
     'gelguy/wilder.nvim',
@@ -28,36 +33,22 @@ return require('packer').startup(function(use)
         highlighter = wilder.basic_highlighter(),
         left = {' ', wilder.popupmenu_devicons()},
         right = {' ', wilder.popupmenu_scrollbar()},
-        -- pumblend = 30,
       }))
     end
   }
 
   use {
-    'freddiehaddad/feline.nvim',
+    'nvim-lualine/lualine.nvim',
+    requires = { 'nvim-tree/nvim-web-devicons', opt = true },
     config = function()
-      require('feline').setup()
-      require('feline').winbar.setup()
+      require('lualine').setup{
+        options = {
+          theme = 'ayu_dark'
+        }
+      }
     end
   }
 
-  -- use {
-  --   'yamatsum/nvim-cursorline',
-  --   config = function()
-  --     require('nvim-cursorline').setup {
-  --       cursorline = {
-  --         enable = true,
-  --         timeout = 300,
-  --         number = false,
-  --       },
-  --       cursorword = {
-  --         enable = true,
-  --         min_length = 3,
-  --         hl = { underline = false },
-  --       }
-  --     }
-  --   end
-  -- }
   use {
     'xiyaowong/nvim-transparent',
     config = function()
@@ -72,7 +63,7 @@ return require('packer').startup(function(use)
   -- File navigation
   use {
     'nvim-telescope/telescope.nvim',
-    tag = '0.1.0',
+    tag = '0.1.1',
     requires = { {'nvim-lua/plenary.nvim'} },
     config = function()
       local actions = require('telescope.actions')
@@ -86,6 +77,11 @@ return require('packer').startup(function(use)
               ["<C-j>"] = actions.move_selection_next,
               ["<C-k>"] = actions.move_selection_previous
             }
+          },
+          pickers = {
+            find_files = {
+              find_command = { "rg", "--files", "--hidden", "-g", "!.git" },
+            },
           }
         },
       }
@@ -93,31 +89,50 @@ return require('packer').startup(function(use)
   }
 
   -- Dev
-  use { 'nvim-treesitter/nvim-treesitter' }
+  use { 'nvim-treesitter/nvim-treesitter',
+    run = ':TSUpdate',
+    config = function()
+      require('nvim-treesitter.configs').setup({
+        ensure_installed = {
+          "rust",
+          "lua",
+          "javascript",
+          "typescript",
+          "tsx",
+          "graphql",
+          "toml",
+          "ruby",
+          "bash",
+          "python",
+          "css",
+          "markdown",
+          "json",
+        },
+        highlight = {
+          enabled = true
+        },
+        indentation = { enabled = true }
+      })
+
+    end }
+
   use { 'tpope/vim-commentary' }
   use { 'mfussenegger/nvim-lint' }
-  use { 'vim-test/vim-test' }
+
+  use { 
+    'vim-test/vim-test',
+    config = function()
+      vim.cmd([[let test#strategy = "neovim"]])
+    end
+  }
 
   -- LSP
   use {
     'VonHeikemen/lsp-zero.nvim',
     requires = {
-      -- LSP Support
       {'neovim/nvim-lspconfig'},
       {'williamboman/mason.nvim'},
       {'williamboman/mason-lspconfig.nvim'},
-
-      -- Autocompletion
-      {'hrsh7th/nvim-cmp'},         -- Required
-      {'hrsh7th/cmp-nvim-lsp'},     -- Required
-      {'hrsh7th/cmp-buffer'},       -- Optional
-      {'hrsh7th/cmp-path'},         -- Optional
-      {'saadparwaiz1/cmp_luasnip'}, -- Optional
-      {'hrsh7th/cmp-nvim-lua'},     -- Optional
-
-      -- Snippets
-      {'L3MON4D3/LuaSnip'},
-      {'rafamadriz/friendly-snippets'},
     },
     config = function()
       local lsp = require('lsp-zero')
@@ -140,15 +155,40 @@ return require('packer').startup(function(use)
 
   use({
     "glepnir/lspsaga.nvim",
+    opt = true,
     branch = "main",
+    event = "LspAttach",
     config = function()
-      require("lspsaga").setup({})
+      require("lspsaga").setup({
+        hover = {
+          max_width = 1.0
+        },
+        lightbulb = {
+          enable = false
+        }
+      })
     end,
     requires = {
       {"nvim-tree/nvim-web-devicons"},
       --Please make sure you install markdown and markdown_inline parser
       {"nvim-treesitter/nvim-treesitter"}
     }
+  })
+
+  use({
+    "jose-elias-alvarez/null-ls.nvim",
+    config = function()
+
+      local null_ls = require("null-ls")
+
+      null_ls.setup({
+        sources = {
+          null_ls.builtins.formatting.stylua,
+          null_ls.builtins.diagnostics.eslint,
+          null_ls.builtins.completion.spell,
+        },
+      })
+    end
   })
 
   -- Languages
@@ -183,7 +223,7 @@ return require('packer').startup(function(use)
     'simrat39/rust-tools.nvim',
     config = function()
       require("rust-tools").setup({
-        tools = { 
+        tools = {
           inlay_hints = {
             auto = true
           }
@@ -217,6 +257,7 @@ return require('packer').startup(function(use)
       })
     end
   }
+
   use {
     'rhysd/git-messenger.vim',
     setup = function()

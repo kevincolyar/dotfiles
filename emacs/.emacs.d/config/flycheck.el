@@ -4,3 +4,5 @@
 (use-package flycheck-inline
   :after flycheck
   :init (global-flycheck-inline-mode))
+
+(use-package flycheck-popup-tip)

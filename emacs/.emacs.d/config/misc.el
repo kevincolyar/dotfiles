@@ -23,13 +23,13 @@
   :after evil
   :init
   (setq evil-lookup-func #'helpful-at-point)
-  :custom
-  (counsel-describe-function-function #'helpful-callable)
-  (counsel-describe-variable-function #'helpful-variable)
+  ;; :custom
+  ;; (counsel-describe-function-function #'helpful-callable)
+  ;; (counsel-describe-variable-function #'helpful-variable)
   :bind
-  ([remap describe-function] . counsel-describe-function)
+  ([remap describe-function] . helpful-function)
   ([remap describe-command] . helpful-command)
-  ([remap desribe-variable] . counsel-describe-variable)
+  ([remap desribe-variable] . helpful-variable)
   ([remap describe-key] . helpful-key))
 
 (defun efs/display-startup-time ()
@@ -41,13 +41,27 @@
 
 (add-hook 'emacs-startup-hook #'efs/display-startup-time)
 
-(use-package beacon
-  :init (beacon-mode 1))
-
 (use-package editorconfig)
 
 ;; Manage garbage collection
-(use-package gcmh
-  :demand
-  :config
-  (gcmh-mode 1))
+;; (use-package gcmh
+;;   :demand
+;;   :config
+;;   (gcmh-mode 1))
+
+
+;; source: http://steve.yegge.googlepages.com/my-dot-emacs-file
+(defun rename-file-and-buffer (new-name)
+  "Renames both current buffer and file it's visiting to NEW-NAME."
+  (interactive "sNew name: ")
+  (let ((name (buffer-name))
+        (filename (buffer-file-name)))
+    (if (not filename)
+        (message "Buffer '%s' is not visiting a file!" name)
+      (if (get-buffer new-name)
+          (message "A buffer named '%s' already exists!" new-name)
+        (progn
+          (rename-file filename new-name 1)
+          (rename-buffer new-name)
+          (set-visited-file-name new-name)
+          (set-buffer-modified-p nil))))))

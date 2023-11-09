@@ -36,6 +36,7 @@ path=(
   $HOME/bin/ssh
   $HOME/bin/mount
   $HOME/.emacs.d/bin
+  $HOME/.docker/bin
   /opt/homebrew/opt/grep/libexec/gnubin
   /usr/local/opt/grep/libexec/gnubin
   /usr/local/sbin

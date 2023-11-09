@@ -11,6 +11,11 @@
 	      ("C-l". company-select-last)))
 
 ;; GUI VERSION ONLY
-;; (use-package company-quickhelp
+;; (use-package company-quickhelp-terminal
 ;;   :after company
-;;   :init (company-quickhelp-mode))
+;;   :init (company-quickhelp-terminal-mode))
+
+(use-package company-box
+  :after company
+  :hook (company-mode . company-box-mode))
+
