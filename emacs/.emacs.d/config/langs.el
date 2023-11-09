@@ -10,5 +10,4 @@
 
 ;; Code folding
 (use-package origami
-  :ensure t
   :init (global-origami-mode))

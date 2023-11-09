@@ -1,9 +1,12 @@
-(use-package auto-package-update :ensure t)
-(use-package better-defaults :ensure t)
-(use-package no-littering :ensure t)
-(use-package exec-path-from-shell :ensure t)
+(use-package auto-package-update)
+(use-package better-defaults)
+(use-package no-littering)
+;; Below is more useful for GUI emacs
+;; (use-package exec-path-from-shell
+;;   :config
+;;   (exec-path-from-shell-initialize) ; Load path from shell $PATH
+;;   )
 
-(exec-path-from-shell-initialize) ; Load path from shell $PATH
 ; (scroll-bar-mode -1) ; Disable the visible scrollbar
 (tool-bar-mode -1) ; Disable the Toolbar
 (tooltip-mode -1) ; Disable tooltips

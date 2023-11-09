@@ -1,4 +1,6 @@
 ;; https://github.com/minad/consult
+;; Consult provides search and navigation commands based on the Emacs completion function completing-read.
+;; Completion allows you to quickly select an item from a list of candidates.
 
 (defun get-project-root ()
   (when (fboundp 'projectile-project-root)
@@ -14,8 +16,6 @@
 ;; https://github.com/minad/consult#use-package-example
 ;; https://github.com/minad/consult/issues/247
 (use-package consult
-  :ensure t
-
   ;; Enable automatic preview at point in the *Completions* buffer. This is
   ;; relevant when you use the default completion UI.
   :hook (completion-list-mode . consult-preview-at-point-mode) 
@@ -34,6 +34,8 @@
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
 
+  (setq consult-ripgrep-args "rg --follow --hidden --null --line-buffered --color=never --max-columns=1000 --path-separator /   --smart-case --no-heading --with-filename --line-number --search-zip")
+
   :config
   (consult-customize
    consult-theme :preview-key '(:debounce 0.1 any)
@@ -48,30 +50,25 @@
     :keymaps 'override
     :prefix "SPC"
 
-    ;; ":"   'consult-M-x
-    "/"   'consult-ripgrep ;; TODO: not working
+    "/"   'consult-ripgrep
     "*"   'consult-ripgrep-symbol-at-point
-    ;; "/"   'consult-grep
-    ;; "pf" 'consult-projectile-find-file
     "pf" 'consult-projectile
 
-    "bb"  'consult-buffer
+    "bb" 'consult-buffer
+
+    "fr" 'consult-recent-file
 
     "tt"  '(consult-theme :which-key "choose theme")
+    ))
 
-    "ff" 'find-file
-    "fd" 'delete-file
-    "fr" 'consult-recent-file))
-
-(use-package consult-dir :ensure t :defer t)
-(use-package consult-projectile :ensure t :defer t)
-(use-package consult-flycheck :ensure t :defer t)
-(use-package consult-lsp :ensure t :defer t)
-(use-package consult-yasnippet :ensure t :defer t)
+(use-package consult-dir)
+(use-package consult-projectile)
+(use-package consult-flycheck)
+(use-package consult-eglot)
+(use-package consult-yasnippet)
 
 ;; ;; Consult users will also want the embark-consult package.
 (use-package embark-consult
-  :ensure t
   :after (embark consult)
   :demand t ; only necessary if you have the hook below
   ;; if you want to have consult previews as you move around an

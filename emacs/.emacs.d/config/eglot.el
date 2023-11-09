@@ -4,11 +4,7 @@
 
 
 (use-package eglot
-  :ensure nil
   :defer t
-  :config '(
-           (setq rustic-lsp-client 'eglot)
-           )
   :hook (
          (python-mode . eglot-ensure)
          (python-ts-mode . eglot-ensure)
@@ -18,5 +14,3 @@
          (ruby-ts-mode . eglot-ensure)
          (js-ts-mode . eglot-ensure)
   ))
-
-

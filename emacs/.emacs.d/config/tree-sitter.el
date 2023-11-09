@@ -14,6 +14,6 @@
 ;;   :after tree-sitter)
 
 (use-package treesit-auto
-  :ensure t
+  :defer t
   :config
   (global-treesit-auto-mode))

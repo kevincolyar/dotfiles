@@ -43,8 +43,6 @@
   "cr"  'xref-find-references
   "cR"  'eglot-rename
 
-  "ea" 'embark-act
-
   "h"  '(:ignore t :which-key "Help")
   "hb" 'describe-bindings
   "hc" 'describe-command
@@ -57,7 +55,9 @@
   "f"  '(:ignore t :which-key "Files")
   "fs" 'save-buffer
   "fd" 'delete-file
+  "ff" 'find-file
   "fc" 'copy-file
+  "fR" 'rename-file-and-buffer
 
   "g"  '(:ignore t :which-key "git")
   "gg" 'magit-status
@@ -66,12 +66,10 @@
   "s"  '(:ignore t :which-key "Search")
   ;; "ss"  'swiper-thing-at-point
 
-  "tt"  '(consult-theme :which-key "choose theme")
-
   "w"   '(:ignore t :which-key "Web")
   "ws"  'search-web
 
-  "z="  'flyspell-correct-at-point)
+  "z="  'flyspell-correct-word-before-point)
 
 (use-package which-key
   :diminish which-key-mode

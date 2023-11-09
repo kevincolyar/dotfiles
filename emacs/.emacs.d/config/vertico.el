@@ -2,7 +2,6 @@
 ;; https://github.com/minad/vertico
 ;; https://kristofferbalintona.me/posts/202202211546/
 (use-package vertico
-  :ensure t
   :diminish
   :general
   (:keymaps 'vertico-map
@@ -10,7 +9,10 @@
             "<escape>" #'minibuffer-keyboard-quit ; Close minibuffer
             ;; NOTE 2022-02-05: Cycle through candidate groups
             "C-j" #'vertico-next
-            "C-k" #'vertico-previous)
+            "C-k" #'vertico-previous
+            "C-d" #'vertico-scroll-up
+            "C-u" #'vertico-scroll-down
+            )
   (nmap
     :prefix "SPC"
     "sl"  'vertico-repeat ;; TODO: Not working
@@ -23,9 +25,6 @@
 
 (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
 
-(use-package compat :ensure t)
-(use-package wgrep :ensure t)
-(use-package vertico-posframe :ensure t)
-
-
-
+(use-package compat)
+(use-package wgrep)
+(use-package vertico-posframe)

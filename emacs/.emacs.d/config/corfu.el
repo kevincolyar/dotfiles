@@ -2,37 +2,33 @@
 ;; https://youtu.be/Vx0bSKF4y78?t=570
 
 (use-package corfu
-  ;; :hook ((prog-mode . corfu-mode)
-  ;;        (org-mode . corfu-mode))
-  :bind
-  (:map corfu-map
-        ("C-j" . corfu-next)
-        ("C-k" . corfu-previous))
-  ;; :general
-  ;; (evil-insert-state-map "C-k" nil)
-  :custom
-  (setq corfu-auto t)                 ;; Enable auto completion
-  (setq corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
-  (setq corfu-auto-prefix 2 )
-  (setq corfu-auto-delay 0.0)
-  (setq corfu-echo-documentation 0.25)
-  (setq corfu-preview-current 'insert)
-  (setq corfu-preselect-first nil)
-  (setq corfu-min-width 80)
-  (setq corfu-max-width corfu-min-width)       ; Always have the same width
-  ;; Enable auto completion and configure quitting
-  ;; (setq corfu-auto t
-  ;;       corfu-quit-no-match 'separator) ;; or t
+  :general
+  (:keymaps 'corfu-map
+            "C-j" #'corfu-next
+            "C-k" #'corfu-previous
+            "C-u" #'corfu-scroll-up
+            "C-d" #'corfu-scroll-down
+            "C-[" #'corfu-quit)
   :init
+  (setq corfu-auto t                           ;; Enable auto completion
+        corfu-cycle t                          ;; Enable cycling for `corfu-next/previous'
+        corfu-quit-no-match 'separator         ;; or t
+        ;; corfu-auto-prefix 2
+        ;; corfu-auto-delay 0.0
+        corfu-echo-documentation 0.25
+        corfu-preview-current 'insert
+        corfu-preselect-first nil
+        corfu-min-width 80
+        corfu-max-width corfu-min-width
+        )       ; Always have the same width
   (global-corfu-mode)
-  (corfu-terminal-mode)
-  ;; (corfu-doc-terminal-mode)
   (corfu-history-mode)
+  (corfu-popupinfo-mode) ;; TODO not working in terminal yet
   :config
   (corfu-mode))
 
 (use-package cape
-:init
+  :init
   ;; Add `completion-at-point-functions', used by `completion-at-point'.
   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file))
@@ -41,23 +37,12 @@
   :config
   (setq quelpa-update-melpa-p nil)) ;; Don't update at startup
 
-;; (quelpa '(popon :fetcher git
-;;                 :url "https://codeberg.org/akib/emacs-popon.git"))
-
-;; (use-package popon)
-
 (quelpa '(corfu-terminal
           :fetcher git
           :url "https://codeberg.org/akib/emacs-corfu-terminal.git"))
-;; (quelpa '(corfu-doc-terminal
-;;           :fetcher git
-;;           :url "https://codeberg.org/akib/emacs-corfu-doc-terminal.git"))
 
+(unless (display-graphic-p)
+  (corfu-terminal-mode +1))
 
-(use-package kind-icon
-  :ensure t
-  :after corfu
-  :custom
-  (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
-  :config
-  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
+(use-package nerd-icons-corfu)
+(add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter)

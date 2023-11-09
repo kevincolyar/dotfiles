@@ -28,11 +28,9 @@
 
 (use-package evil-collection
   :after evil
-  :ensure t
   :config
   (evil-collection-init))
 
 (use-package evil-commentary
   :after evil
-  :ensure t
   :init (evil-commentary-mode))

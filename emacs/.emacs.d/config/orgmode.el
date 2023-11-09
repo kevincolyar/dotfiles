@@ -54,7 +54,7 @@
   )
 
 (use-package org-bullets
-  :defer t
+  ;; :defer t
   :hook (org-mode . org-bullets-mode))
 
 ;; https://blog.aaronbieber.com/2017/03/19/organizing-notes-with-refile.html
@@ -65,7 +65,7 @@
 ;;             (set-face-background 'default "unspecified-bg")))
 
 (use-package evil-org
-  :ensure t
+  ;; :defer t
   :after org
   :hook (org-mode . (lambda () evil-org-mode))
   :config
