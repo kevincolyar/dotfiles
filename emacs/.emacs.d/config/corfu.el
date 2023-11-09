@@ -37,6 +37,9 @@
   :config
   (setq quelpa-update-melpa-p nil)) ;; Don't update at startup
 
+(quelpa '(popon :fetcher git
+                :url "https://codeberg.org/akib/emacs-popon.git"))
+
 (quelpa '(corfu-terminal
           :fetcher git
           :url "https://codeberg.org/akib/emacs-corfu-terminal.git"))
