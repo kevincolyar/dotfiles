@@ -101,16 +101,16 @@ stty -ixon
 alias cat='bat'
 
 # Exa instead of ls
-alias ls="exa --git"
-alias l="exa -lgh"
-alias ll="exa -lgah"
+alias ls="eza --git"
+alias l="eza -lgh"
+alias ll="eza -lgah"
 
 alias ..='cd ..'
 alias less="less -R"
 alias du="dua -i .git -i node_modules interactive"
 
 if [[ "$PLATFORM" == "Linux" ]]; then
-  if ! type exa >> /dev/null; then
+  if ! type eza >> /dev/null; then
     alias ls="ls -FGh --color"
     alias l="ls -lAhG --color"
     alias ll="ls -lGh --color"
@@ -118,7 +118,7 @@ if [[ "$PLATFORM" == "Linux" ]]; then
   fi
   # alias du="ncdu -rr -x --exclude .git --exclude node_modules"
 elif [[ "$PLATFORM" == "Darwin" ]]; then
-  if ! type exa > /dev/null; then
+  if ! type eza > /dev/null; then
     alias ls="ls -FGh"
     alias l="ls -lahG"
     alias ll="ls -lGh"
@@ -127,6 +127,7 @@ elif [[ "$PLATFORM" == "Darwin" ]]; then
   # alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
   alias vim=nvim
   alias emacs="emacs -nw"
+  alias e="emacs -nw"
 fi
 
 # apt
