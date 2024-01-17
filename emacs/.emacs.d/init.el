@@ -23,7 +23,7 @@
 (load "~/.emacs.d/config/ui.el")
 (load "~/.emacs.d/config/key-mapping.el")
 
-;; Command/File/Buffer Completion  (eg: ivy, helm, ido, etc)
+;; Command/File/Buffer Completion
 ;; (load "~/.emacs.d/config/ivy.el")
 (load "~/.emacs.d/config/vertico.el")
 (load "~/.emacs.d/config/consult.el")
@@ -31,32 +31,32 @@
 (load "~/.emacs.d/config/orderless.el")
 (load "~/.emacs.d/config/misc.el")
 (load "~/.emacs.d/config/projectile.el")
+(load "~/.emacs.d/config/corfu.el")
 
 ;; Development
 ;; (load "~/.emacs.d/config/lsp.el")
 ;; (load "~/.emacs.d/config/dap.el")
-;; (load "~/.emacs.d/config/ruby.el")
+(load "~/.emacs.d/config/ruby.el")
 ;; (load "~/.emacs.d/config/python.el")
-(load "~/.emacs.d/config/eldoc.el")
 (load "~/.emacs.d/config/tree-sitter.el")
 (load "~/.emacs.d/config/eglot.el")
 (load "~/.emacs.d/config/rust.el")
 (load "~/.emacs.d/config/typescript.el")
 (load "~/.emacs.d/config/langs.el")
-(load "~/.emacs.d/config/flycheck.el")
+;; (load "~/.emacs.d/config/flycheck.el")
 (load "~/.emacs.d/config/spell.el")
 (load "~/.emacs.d/config/yas-snippet.el")
 (load "~/.emacs.d/config/dumb-jump.el")
 (load "~/.emacs.d/config/format-all.el")
+(load "~/.emacs.d/config/eldoc.el")
 
 ;; Org
 (load "~/.emacs.d/config/orgmode.el")
 (load "~/.emacs.d/config/embark.el")
 (load "~/.emacs.d/config/tramp.el")
 
-;; In region completion (versus in Minibuffer)
-;; (load "~/.emacs.d/config/company.el")
-(load "~/.emacs.d/config/corfu.el")
+;; ChatGPT - Slow to load
+;; (load "~/.emacs.d/config/chatgpt.el")
 
 ;; Don't let Emacs' customize system pollute our configs
 (setq custom-file "~/.emacs.d/custom-vars.el")

@@ -3,6 +3,7 @@
   :hook
   (org-mode . org-indent-mode)
   :config
+  (visual-line-mode +1) ;; Word wrap
   (setq
    org-refile-targets '((org-agenda-files :maxlevel . 3))
    org-refile-use-outline-path 'file

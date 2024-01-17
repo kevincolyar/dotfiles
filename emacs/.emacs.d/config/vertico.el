@@ -6,7 +6,8 @@
   :general
   (:keymaps 'vertico-map
             "<tab>" #'vertico-insert  ; Insert selected candidate into text area
-            "<escape>" #'minibuffer-keyboard-quit ; Close minibuffer
+            ;; "<escape>" #'minibuffer-keyboard-quit ; Close minibuffer
+            "<escape>" #'keyboard-escape-quit ; Close minibuffer
             ;; NOTE 2022-02-05: Cycle through candidate groups
             "C-j" #'vertico-next
             "C-k" #'vertico-previous
@@ -21,10 +22,15 @@
   (setq vertico-resize nil
         vertico-count 17
         vertico-cycle t)
+  :init
   (vertico-mode))
 
 (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
 
 (use-package compat)
-(use-package wgrep)
-(use-package vertico-posframe)
+;; (use-package wgrep)
+(use-package vertico-posframe
+  :defer t
+  :config
+  (vertico-posframe-mode 1))
+  
