@@ -24,7 +24,6 @@
 (load "~/.emacs.d/config/key-mapping.el")
 
 ;; Command/File/Buffer Completion
-;; (load "~/.emacs.d/config/ivy.el")
 (load "~/.emacs.d/config/vertico.el")
 (load "~/.emacs.d/config/consult.el")
 (load "~/.emacs.d/config/marginalia.el")
@@ -34,10 +33,7 @@
 (load "~/.emacs.d/config/corfu.el")
 
 ;; Development
-;; (load "~/.emacs.d/config/lsp.el")
-;; (load "~/.emacs.d/config/dap.el")
 (load "~/.emacs.d/config/ruby.el")
-;; (load "~/.emacs.d/config/python.el")
 (load "~/.emacs.d/config/tree-sitter.el")
 (load "~/.emacs.d/config/eglot.el")
 (load "~/.emacs.d/config/rust.el")
@@ -54,9 +50,6 @@
 (load "~/.emacs.d/config/orgmode.el")
 (load "~/.emacs.d/config/embark.el")
 (load "~/.emacs.d/config/tramp.el")
-
-;; ChatGPT - Slow to load
-;; (load "~/.emacs.d/config/chatgpt.el")
 
 ;; Don't let Emacs' customize system pollute our configs
 (setq custom-file "~/.emacs.d/custom-vars.el")
