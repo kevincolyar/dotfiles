@@ -12,6 +12,7 @@
 (tooltip-mode -1) ; Disable tooltips
 ; (set-fringe-mode 10) ;
 (menu-bar-mode -1) ; Disable menu bar
+(ido-mode -1) ; Disable ido mode
 (global-hl-line-mode 1) ;; Highlight cursor line
 (column-number-mode)
 (global-display-line-numbers-mode 1)
