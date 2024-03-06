@@ -39,6 +39,7 @@
   ;; "ce"  'flycheck-list-errors
   "ce"  'flymake-show-buffer-diagnostics
   "cd"  'xref-find-definitions
+
   ;; "cD"  'lsp-describe-thing-at-point
   "cr"  'xref-find-references
   "cR"  'eglot-rename

@@ -61,11 +61,11 @@
     "tt"  '(consult-theme :which-key "choose theme")
     ))
 
-(use-package consult-dir)
-(use-package consult-projectile)
-(use-package consult-flycheck)
-(use-package consult-eglot)
-(use-package consult-yasnippet)
+(use-package consult-dir :defer t)
+(use-package consult-projectile :defer t)
+(use-package consult-flycheck :defer t)
+(use-package consult-eglot :defer t)
+(use-package consult-yasnippet :defer t)
 
 ;; ;; Consult users will also want the embark-consult package.
 (use-package embark-consult

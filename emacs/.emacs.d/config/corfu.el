@@ -1,3 +1,4 @@
+;; Corfu enhances in-buffer completion with a small completion popup.
 ;; https://github.com/minad/corfu
 ;; https://youtu.be/Vx0bSKF4y78?t=570
 
@@ -18,7 +19,7 @@
         corfu-echo-documentation 0.25
         corfu-preview-current 'insert
         corfu-preselect-first nil
-        corfu-min-width 80
+        corfu-min-width 100
         corfu-max-width corfu-min-width
         )       ; Always have the same width
   (global-corfu-mode)
@@ -34,6 +35,7 @@
   (add-to-list 'completion-at-point-functions #'cape-file))
 
 (use-package quelpa
+  :defer t
   :config
   (setq quelpa-update-melpa-p nil)) ;; Don't update at startup
 
@@ -47,5 +49,7 @@
 (unless (display-graphic-p)
   (corfu-terminal-mode +1))
 
-(use-package nerd-icons-corfu)
+(use-package nerd-icons-corfu
+  :defer t)
+
 (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter)

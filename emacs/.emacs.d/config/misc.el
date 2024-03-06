@@ -41,11 +41,12 @@
 
 (add-hook 'emacs-startup-hook #'efs/display-startup-time)
 
-(use-package editorconfig)
+(use-package editorconfig
+  :config
+  (editorconfig-mode 1))
 
 ;; Manage garbage collection
 ;; (use-package gcmh
-;;   :demand
 ;;   :config
 ;;   (gcmh-mode 1))
 

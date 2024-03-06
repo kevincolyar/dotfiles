@@ -1,4 +1,9 @@
+# Emacs
+
+## Profile Startup Time
+
+    emacs -f use-package-report
 
 ## Update Packages
 
-    package-refresh-contents
+    emacs -f auto-package-update-now

@@ -18,7 +18,17 @@
 (global-display-line-numbers-mode 1)
 (recentf-mode 1) ;; Save recent files
 (setq recentf-auto-cleanup 'never)
-(setq eldoc-current-idle-delay 0.0)
+
+;; Max echo area height
+(setq max-mini-window-height 10)
+
+
+;; Ignore case when using completion system (emacs, vertico, etc)
+(setq completion-ignore-case t)
+
+;; Profile startup. Use M-x use-package-report to see times. 
+;; emacs -f use-package-report
+(setq use-package-compute-statistics t)
 
 ;; Update files and buffers when changed
 (global-auto-revert-mode 1) ; Revert buffers when the underlying file has changed
