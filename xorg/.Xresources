@@ -1,0 +1,73 @@
+! Dracula Xresources palette
+*.foreground: #F8F8F2
+*.background: #282A36
+*.color0:     #000000
+*.color8:     #4D4D4D
+*.color1:     #FF5555
+*.color9:     #FF6E67
+*.color2:     #50FA7B
+*.color10:    #5AF78E
+*.color3:     #F1FA8C
+*.color11:    #F4F99D
+*.color4:     #BD93F9
+*.color12:    #CAA9FA
+*.color5:     #FF79C6
+*.color13:    #FF92D0
+*.color6:     #8BE9FD
+*.color14:    #9AEDFE
+*.color7:     #BFBFBF
+*.color15:    #E6E6E6
+
+! ! special
+! *.foreground:   #f1ebeb
+! *.background:   #272822
+! *.cursorColor:  #f1ebeb
+!
+! ! black
+! *.color0:       #48483e
+! *.color8:       #76715e
+!
+! ! red
+! *.color1:       #dc2566
+! *.color9:       #fa2772
+!
+! ! green
+! *.color2:       #8fc029
+! *.color10:      #a7e22e
+!
+! ! yellow
+! *.color3:       #d4c96e
+! *.color11:      #e7db75
+!
+! ! blue
+! *.color4:       #55bcce
+! *.color12:      #66d9ee
+!
+! ! magenta
+! *.color5:       #9358fe
+! *.color13:      #ae82ff
+!
+! ! cyan
+! *.color6:       #56b7a5
+! *.color14:      #66efd5
+!
+! ! white
+! *.color7:       #acada1
+! *.color15:      #cfd0c2
+
+URxvt.intensityStyles:    false
+!!URxvt.background:       [70]#000000
+URxvt.depth:               32
+URxvt.font:                xft:monospace:size=10:pixlesize=22:autohint=true
+URxvt.letterSpace:         -1
+URxvt.scrollBar:           false
+URxvt.cursorColor:         white
+! URxvt.perl-ext-common:	default,matcher,resize-font
+! URxvt.perl-lib:		$HOME/.config/Scripts
+URxvt.url-launcher:        /usr/bin/xdg-open
+URxvt.matcher.button:      1
+URxvt.resize-font.smaller: C-Down
+URxvt.resize-font.bigger:  C-Up
+
+URxvt.colorUL:             #4682B4
+URxvt.visualBell: false
