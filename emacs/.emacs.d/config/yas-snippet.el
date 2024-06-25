@@ -7,7 +7,7 @@
   :custom (yas-prompt-functions '(yas-completing-prompt))
   
   :general
-  (nmap
+  (:states '(normal visual)
     :prefix "SPC"
     "ys"   'consult-yasnippet
     )

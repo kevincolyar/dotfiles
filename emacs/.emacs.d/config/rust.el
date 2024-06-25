@@ -7,8 +7,11 @@
   (setq rustic-lsp-client 'eglot)
   :general
   (nmap
+   'rust-mode-map
    :prefix ","
+   "c"  '(:ignore t :which-key "Cargo")
    "cb" '(rustic-cargo-build :which-key "Cargo Build")
+   "cr" '(rustic-cargo-run :which-key "Cargo Run")
    "t"  '(:ignore t :which-key "Tests")
    "tt" '(rustic-cargo-current-test :which-key "Test Current")
    "ta" '(rustic-cargo-test :which-key "Test All")

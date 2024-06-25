@@ -46,7 +46,7 @@
   )
 
   :general
-  (nmap
+  (:states '(normal visual)
     :keymaps 'override
     :prefix "SPC"
 
@@ -55,6 +55,7 @@
     "pf" 'consult-projectile
 
     "bb" 'consult-buffer
+    "ce" 'consult-flymake
 
     "fr" 'consult-recent-file
 

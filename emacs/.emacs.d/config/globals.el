@@ -12,7 +12,7 @@
 (tooltip-mode -1) ; Disable tooltips
 ; (set-fringe-mode 10) ;
 (menu-bar-mode -1) ; Disable menu bar
-(global-hl-line-mode 1) ;; Highlight cursor line
+(global-hl-line-mode -1) ;; Disable Highlight cursor line
 (column-number-mode)
 (global-display-line-numbers-mode 1)
 (recentf-mode 1) ;; Save recent files
