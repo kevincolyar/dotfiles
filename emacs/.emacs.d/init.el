@@ -22,6 +22,7 @@
 (load "~/.emacs.d/config/evil.el")
 (load "~/.emacs.d/config/ui.el")
 (load "~/.emacs.d/config/key-mapping.el")
+(load "~/.emacs.d/config/crux.el")
 
 ;; Command/File/Buffer Completion
 (load "~/.emacs.d/config/vertico.el")
@@ -39,12 +40,14 @@
 (load "~/.emacs.d/config/rust.el")
 (load "~/.emacs.d/config/typescript.el")
 (load "~/.emacs.d/config/langs.el")
-;; (load "~/.emacs.d/config/flycheck.el")
+(load "~/.emacs.d/config/flymake.el")
+(load "~/.emacs.d/config/flycheck.el")
 (load "~/.emacs.d/config/spell.el")
 (load "~/.emacs.d/config/yas-snippet.el")
 (load "~/.emacs.d/config/dumb-jump.el")
 (load "~/.emacs.d/config/format-all.el")
 (load "~/.emacs.d/config/eldoc.el")
+(load "~/.emacs.d/config/ellama.el")
 
 ;; Org
 (load "~/.emacs.d/config/orgmode.el")

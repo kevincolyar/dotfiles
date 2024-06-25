@@ -31,8 +31,10 @@
 (use-package cape
   :init
   ;; Add `completion-at-point-functions', used by `completion-at-point'.
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-file))
+  ;; DISABLED: messing up cursor location
+  ;; (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  ;; (add-to-list 'completion-at-point-functions #'cape-file)
+  )
 
 (use-package quelpa
   :defer t
@@ -45,6 +47,11 @@
 (quelpa '(corfu-terminal
           :fetcher git
           :url "https://codeberg.org/akib/emacs-corfu-terminal.git"))
+
+;; Currently broken
+;; (quelpa '(corfu-doc-terminal
+;;           :fetcher git
+;;           :url "https://codeberg.org/akib/emacs-corfu-doc-terminal.git"))
 
 (unless (display-graphic-p)
   (corfu-terminal-mode +1))

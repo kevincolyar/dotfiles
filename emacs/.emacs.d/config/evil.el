@@ -4,6 +4,7 @@
   (setq evil-want-keybinding nil)
   (setq evil-want-C-u-scroll t)
   (setq evil-want-C-i-jump t)
+  (setq  evil-want-Y-yank-to-eol t)
   (setq evil-undo-system 'undo-fu)
   ;; https://evil.readthedocs.io/en/latest/faq.html#problems-with-the-escape-key-in-the-terminal
   (setq evil-esc-delay 0)

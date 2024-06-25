@@ -14,7 +14,8 @@
             "C-d" #'vertico-scroll-up
             "C-u" #'vertico-scroll-down
             )
-  (nmap
+  (:states
+   '(normal visual)
     :prefix "SPC"
     "sl"  'vertico-repeat ;; TODO: Not working
     )
