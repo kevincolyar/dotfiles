@@ -87,8 +87,10 @@ dev() {
   fi
 
   # rust
-  . "$HOME/.cargo/env"
-  export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
+  if [[ -z $HOME/.cargo ]]; then
+    . "$HOME/.cargo/env"
+    export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
+  fi
 }
 
 # Temporary Files
