@@ -31,6 +31,7 @@
 (load "~/.emacs.d/config/orderless.el")
 (load "~/.emacs.d/config/misc.el")
 (load "~/.emacs.d/config/projectile.el")
+(load "~/.emacs.d/config/tempel.el")
 (load "~/.emacs.d/config/corfu.el")
 
 ;; Development
@@ -43,7 +44,7 @@
 (load "~/.emacs.d/config/flymake.el")
 (load "~/.emacs.d/config/flycheck.el")
 (load "~/.emacs.d/config/spell.el")
-(load "~/.emacs.d/config/yas-snippet.el")
+;; (load "~/.emacs.d/config/yas-snippet.el")
 (load "~/.emacs.d/config/dumb-jump.el")
 (load "~/.emacs.d/config/format-all.el")
 (load "~/.emacs.d/config/eldoc.el")

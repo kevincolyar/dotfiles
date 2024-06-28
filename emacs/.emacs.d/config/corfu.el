@@ -14,7 +14,7 @@
   (setq corfu-auto t                           ;; Enable auto completion
         corfu-cycle t                          ;; Enable cycling for `corfu-next/previous'
         corfu-quit-no-match 'separator         ;; or t
-        ;; corfu-auto-prefix 2
+        ;; corfu-auto-prefix 1
         ;; corfu-auto-delay 0.0
         corfu-echo-documentation 0.25
         corfu-preview-current 'insert
@@ -22,12 +22,15 @@
         corfu-min-width 100
         corfu-max-width corfu-min-width
         )       ; Always have the same width
-  (global-corfu-mode)
-  (corfu-history-mode)
-  (corfu-popupinfo-mode) ;; TODO not working in terminal yet
   :config
-  (corfu-mode))
+  (global-corfu-mode)
+  ;; (corfu-history-mode)
+  ;; (corfu-popupinfo-mode) ;; TODO not working in terminal yet
+  ;; (corfu-mode)
+  )
 
+;; Cape provides Completion At Point Extensions which can be used in combination with Corfu, Company or the default completion UI.
+;; https://kristofferbalintona.me/posts/202203130102/#adding-backends-to-completion-at-point-functions
 (use-package cape
   :init
   ;; Add `completion-at-point-functions', used by `completion-at-point'.
@@ -44,6 +47,7 @@
 (quelpa '(popon :fetcher git
                 :url "https://codeberg.org/akib/emacs-popon.git"))
 
+".dotfiles"
 (quelpa '(corfu-terminal
           :fetcher git
           :url "https://codeberg.org/akib/emacs-corfu-terminal.git"))

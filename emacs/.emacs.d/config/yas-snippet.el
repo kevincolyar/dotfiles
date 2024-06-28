@@ -1,4 +1,4 @@
-;; https://github.com/joaotavora/yasnippet
+(insert );; https://github.com/joaotavora/yasnippet
 ;; Use TAB to expand snippet
 (use-package yasnippet
   :defer 10 ;; takes a while to load, so do it async
@@ -12,6 +12,7 @@
     "ys"   'consult-yasnippet
     )
   
+
   :hook (
          (rust-mode . yas-minor-mode)
          (python-mode . yas-minor-mode)
@@ -25,6 +26,6 @@
 
 (use-package yasnippet-capf
   :defer t
-  :after cape
+  ;; :after cape
   :config
   (add-to-list 'completion-at-point-functions #'yasnippet-capf))
