@@ -39,6 +39,8 @@ path=(
   $HOME/.docker/bin
   /opt/homebrew/opt/grep/libexec/gnubin
   /usr/local/opt/grep/libexec/gnubin
+  # Fix for emacs+gpg+brew
+  /opt/homebrew/opt/gnupg@2.2/bin
   /usr/local/sbin
   /usr/local/{bin,sbin}
   $path
@@ -87,8 +89,14 @@ dev() {
   fi
 
   # rust
-  . "$HOME/.cargo/env"
-  export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
+  if [[ -z $HOME/.cargo ]]; then
+    . "$HOME/.cargo/env"
+    export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
+  fi
+
+  # golang
+  export GOPATH="$(go env GOPATH)"
+  export PATH="${PATH}:${GOPATH}/bin"
 }
 
 # Temporary Files

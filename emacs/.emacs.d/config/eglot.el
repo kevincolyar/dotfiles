@@ -13,4 +13,10 @@
          (ruby-mode . eglot-ensure)
          (ruby-ts-mode . eglot-ensure)
          (js-ts-mode . eglot-ensure)
-  ))
+         (go-mode . eglot-ensure)
+         ))
+
+
+(use-package eglot-booster
+	:after eglot
+	:config	(eglot-booster-mode))

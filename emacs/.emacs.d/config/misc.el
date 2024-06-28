@@ -10,10 +10,17 @@
   :custom
   (magic-display-buffer-function #'magic-display-buffer-same-window-except-diff-v1))
 
+;; (use-package git-gutter
+;;   :init
+;;   (global-git-gutter-mode t)
+;;   (git-gutter:linum-setup)
+;;   )
+
 (use-package git-gutter
-  :defer t
+  :ensure t
   :init
-  (global-git-gutter-mode))
+  (setq global-linum-mode nil)
+  (global-git-gutter-mode +1))
 
 (use-package xclip
   :init
@@ -41,11 +48,12 @@
 
 (add-hook 'emacs-startup-hook #'efs/display-startup-time)
 
-(use-package editorconfig)
+(use-package editorconfig
+  :config
+  (editorconfig-mode 1))
 
 ;; Manage garbage collection
 ;; (use-package gcmh
-;;   :demand
 ;;   :config
 ;;   (gcmh-mode 1))
 
@@ -65,3 +73,7 @@
           (rename-buffer new-name)
           (set-visited-file-name new-name)
           (set-buffer-modified-p nil))))))
+
+(defun reload-init-file ()
+  (interactive)
+  (load-file user-init-file))

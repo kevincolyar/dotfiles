@@ -3,6 +3,7 @@
   :hook
   (org-mode . org-indent-mode)
   :config
+  (visual-line-mode +1) ;; Word wrap
   (setq
    org-refile-targets '((org-agenda-files :maxlevel . 3))
    org-refile-use-outline-path 'file
@@ -11,6 +12,7 @@
    org-log-done 'time
    org-html-checkbox-type 'html
    org-reverse-note-order t ; Refiles to top of subheading
+   org-link-descriptive nil
    org-todo-keyword-faces
    '(
      ("HOLD" . "orange")
@@ -28,6 +30,7 @@
              :states 'normal
              :keymaps 'org-mode-map
              :prefix ","
+             "#"  'org-table-align
              "a"  'org-agenda
              "s"  '(:ignore t :which-key "Subtree")
              "sa" 'org-archive-subtree
@@ -43,12 +46,13 @@
              "e"  'org-export-dispatch
              "t"  'org-todo
              "r"  'org-refile
-             "#"  'org-update-statistics-cookies
+             ;; "#"  'org-update-statistics-cookies
              "ds" 'org-schedule
              "e"  'org-export-dispatch
              "t"  'org-todo
+             "T"  'org-show-todo-tree
              "r"  'org-refile
-             "#"  'org-update-statistics-cookies
+             ;; "#"  'org-update-statistics-cookies
              "c"  'org-toggle-checkbox
              )
   )

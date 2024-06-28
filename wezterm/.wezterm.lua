@@ -15,8 +15,9 @@ return {
    -- font = wezterm.font('SauceCode Pro Nerd Font Regular'),
    -- font = wezterm.font('Fisa Code', { weight = 'Thin' }),
    font_size = 16,
-   window_background_opacity = 0.88,
-   macos_window_background_blur = 40,
+   adjust_window_size_when_changing_font_size = false,
+   window_background_opacity = 0.80,
+   macos_window_background_blur = 20,
    harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
 
    -- Disable Italic
@@ -28,5 +29,12 @@ return {
          italic = false
        },
      },
+   },
+   keys = {
+      {
+         key = 'f',
+         mods = 'SHIFT|CTRL',
+         action = wezterm.action.ToggleFullScreen,
+      },
    }
 }

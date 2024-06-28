@@ -1,6 +1,7 @@
 (use-package tramp
+  :after org
   :defer t
-  :init
+  :config
   ;; Disable version control on tramp buffers to avoid freezes.
   (setq vc-ignore-dir-regexp
         (format "\\(%s\\)\\|\\(%s\\)"
@@ -14,7 +15,6 @@
   (setq password-cache-expiry nil)
   (setq tramp-use-ssh-controlmaster-options nil)
   (setq remote-file-name-inhibit-cache nil)
-  :config
   (customize-set-variable 'tramp-ssh-controlmaster-options
                           (concat
                            "-o ControlPath=/tmp/ssh-tramp-%%r@%%h:%%p "

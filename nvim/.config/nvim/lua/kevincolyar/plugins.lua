@@ -155,9 +155,7 @@ return require('packer').startup(function(use)
 
   use({
     "glepnir/lspsaga.nvim",
-    opt = true,
-    branch = "main",
-    event = "LspAttach",
+    after = 'nvim-lspconfig',
     config = function()
       require("lspsaga").setup({
         hover = {
@@ -169,9 +167,9 @@ return require('packer').startup(function(use)
       })
     end,
     requires = {
-      {"nvim-tree/nvim-web-devicons"},
+      "nvim-tree/nvim-web-devicons",
       --Please make sure you install markdown and markdown_inline parser
-      {"nvim-treesitter/nvim-treesitter"}
+      "nvim-treesitter/nvim-treesitter"
     }
   })
 
@@ -242,7 +240,13 @@ return require('packer').startup(function(use)
 
   -- Git
   use { 'tpope/vim-fugitive' }
-  use { 'TimUntersberger/neogit', requires = 'nvim-lua/plenary.nvim' }
+  use { 
+    'NeogitOrg/neogit', 
+    config = function()
+      require('neogit').setup({})
+    end,
+    requires = 'nvim-lua/plenary.nvim'
+  }
   use {
     "lewis6991/gitsigns.nvim",
     config = function()

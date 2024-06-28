@@ -7,6 +7,13 @@
 (use-package yaml-mode :defer t)
 (use-package toml-mode :defer t)
 (use-package lua-mode :defer t)
+(use-package go-mode :defer t)
+
+(use-package poly-markdown :defer t)
+(use-package poly-ruby :defer t)
+
+(add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.erb" . poly-ruby-mode))
 
 ;; Code folding
 (use-package origami

@@ -12,13 +12,23 @@
 (tooltip-mode -1) ; Disable tooltips
 ; (set-fringe-mode 10) ;
 (menu-bar-mode -1) ; Disable menu bar
-(global-hl-line-mode 1) ;; Highlight cursor line
+(global-hl-line-mode -1) ;; Disable Highlight cursor line
 (ido-mode -1) ; Disable ido mode
 (column-number-mode)
 (global-display-line-numbers-mode 1)
 (recentf-mode 1) ;; Save recent files
 (setq recentf-auto-cleanup 'never)
-(setq eldoc-current-idle-delay 0.0)
+
+;; Max echo area height
+(setq max-mini-window-height 10)
+
+
+;; Ignore case when using completion system (emacs, vertico, etc)
+(setq completion-ignore-case t)
+
+;; Profile startup. Use M-x use-package-report to see times. 
+;; emacs -f use-package-report
+(setq use-package-compute-statistics t)
 
 ;; Update files and buffers when changed
 (global-auto-revert-mode 1) ; Revert buffers when the underlying file has changed
