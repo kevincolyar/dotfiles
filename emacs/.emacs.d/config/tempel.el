@@ -28,7 +28,7 @@
     ;; `tempel-expand' *before* the main programming mode Capf, such
     ;; that it will be tried first.
     (setq-local completion-at-point-functions
-                (cons #'tempel-expand
+                (cons #'tempel-complete
                       completion-at-point-functions)))
 
   (add-hook 'conf-mode-hook 'tempel-setup-capf)
@@ -39,6 +39,15 @@
   ;; either locally or globally. `expand-abbrev' is bound to C-x '.
   ;; (add-hook 'prog-mode-hook #'tempel-abbrev-mode)
   ;; (global-tempel-abbrev-mode)
+
+  (defun my/eglot-capf ()
+    (setq-local completion-at-point-functions
+                (list (cape-capf-super
+                       #'eglot-completion-at-point
+                       #'tempel-expand
+                       #'cape-file))))
+
+  (add-hook 'eglot-managed-mode-hook #'my/eglot-capf)
 )
 
 ;; Optional: Add tempel-collection.
