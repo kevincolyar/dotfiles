@@ -33,6 +33,7 @@
 
   "b"   '(:ignore t :which-key "buffers")
   "be"  'eval-buffer
+  "re"  'eval-region
 
   "c"   '(:ignore t :which-key "code")
   ;; "ca"  'lsp-execute-code-action

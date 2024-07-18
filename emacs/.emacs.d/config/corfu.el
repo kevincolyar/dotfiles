@@ -14,7 +14,7 @@
   (setq corfu-auto t                           ;; Enable auto completion
         corfu-cycle t                          ;; Enable cycling for `corfu-next/previous'
         corfu-quit-no-match 'separator         ;; or t
-        ;; corfu-auto-prefix 1
+        corfu-auto-prefix 2
         ;; corfu-auto-delay 0.0
         corfu-echo-documentation 0.25
         corfu-preview-current 'insert
@@ -35,8 +35,8 @@
   :init
   ;; Add `completion-at-point-functions', used by `completion-at-point'.
   ;; DISABLED: messing up cursor location
-  ;; (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  ;; (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  (add-to-list 'completion-at-point-functions #'cape-file)
   )
 
 (use-package quelpa
