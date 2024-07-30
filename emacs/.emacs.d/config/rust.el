@@ -4,7 +4,9 @@
 (use-package rustic
   :defer t
   :config
-  (setq rustic-lsp-client 'eglot)
+  (setq
+   rustic-lsp-client 'eglot
+   rust-mode-treesitter-derive t)
   :general
   (nmap
    'rust-mode-map
