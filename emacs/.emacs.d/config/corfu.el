@@ -35,7 +35,7 @@
   :init
   ;; Add `completion-at-point-functions', used by `completion-at-point'.
   ;; DISABLED: messing up cursor location
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+  ;; (add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file)
   )
 
