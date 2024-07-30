@@ -10,7 +10,7 @@ return {
    -- color_scheme = 'Dracula (Gogh)',
    -- color_scheme = "Gigavolt (base16)",
    -- color_scheme = "Later This Evening",
-   font = wezterm.font('Fisa Code'),
+   font = wezterm.font('Fira Code'),
    -- font = wezterm.font('FuraMono Nerd Font'),
    -- font = wezterm.font('SauceCode Pro Nerd Font Regular'),
    -- font = wezterm.font('Fisa Code', { weight = 'Thin' }),
@@ -25,7 +25,7 @@ return {
      {
        italic = true,
        font = wezterm.font {
-         family = "Fisa Code",
+         family = "Fira Code",
          italic = false
        },
      },
