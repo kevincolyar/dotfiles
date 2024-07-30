@@ -49,6 +49,7 @@
 (load "~/.emacs.d/config/format-all.el")
 (load "~/.emacs.d/config/eldoc.el")
 (load "~/.emacs.d/config/ellama.el")
+(load "~/.emacs.d/config/nix.el")
 
 ;; Org
 (load "~/.emacs.d/config/orgmode.el")
