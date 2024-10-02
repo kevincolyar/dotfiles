@@ -18,7 +18,6 @@
 
   home-manager = {
     users = {
-      # "kevin.colyar" = import "/Users/kevin.colyar/.config/home-manager/is-kevinc.nix";
       "kevin.colyar" = {
         home.username = "kevin.colyar";
         home.homeDirectory = "/Users/kevin.colyar";

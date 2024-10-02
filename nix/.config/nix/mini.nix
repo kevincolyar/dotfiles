@@ -7,20 +7,20 @@
   environment.systemPackages = with pkgs; [
   ];
 
-  users.users."kevin.colyar" = {
-    name = "kevin.colyar";
-    home = "/Users/kevin.colyar";
+  users.users."kevincolyar" = {
+    name = "kevincolyar";
+    home = "/Users/kevincolyar";
     shell = pkgs.zsh;
   };
 
   # Add your user in order for devenv to work
-  nix.settings.trusted-users = ["root" "kevin.colyar"];
+  nix.settings.trusted-users = ["root" "kevincolyar"];
 
   home-manager = {
     users = {
-      "kevin.colyar" = {
-        home.username = "kevin.colyar";
-        home.homeDirectory = "/Users/kevin.colyar";
+      "kevincolyar" = {
+        home.username = "kevincolyar";
+        home.homeDirectory = "/Users/kevincolyar";
 
         imports = [
           ./home.nix
@@ -41,23 +41,23 @@
 
   homebrew.enable = true;
   homebrew.casks = [
-    "alacritty"
+    "adobe-creative-cloud"
+    "airfoil"
     "alfred"
+    "app-tamer"
+    "backblaze"
+    "blender"
     "brave-browser"
-    "cyberduck"
-    "dbeaver-community"
-    "docker"
-    "lapce"
-    "little-snitch"
-    "lm-studio"
+    "carbon-copy-cloner"
+    "font-fira-code-nerd-font"
     "microsoft-remote-desktop"
-    "prosys-opc-ua-browser"
-    "qlstephen"
-    "ricoh-ps-printers-vol4-exp-driver"
-    "timemachineeditor"
+    "minecraft"
+    "openemu"
+    "protonmail-bridge"
+    "signal"
+    "steam"
+    "thunderbird"
     "vlc"
     "wezterm"
-    "wireshark"
-    "screenfocus"
   ];
 }
