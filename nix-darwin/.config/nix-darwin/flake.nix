@@ -14,8 +14,8 @@
 
   outputs = { self, nixpkgs, nix-darwin, ...}@inputs:
     let
-      username = "kevin.colyar";
-      hostname = "is-kevinc";
+      # username = "kevin.colyar";
+      # hostname = "is-kevinc";
       
       configuration = { pkgs, ... }: {
 
@@ -27,7 +27,7 @@
         nix.settings.experimental-features = "nix-command flakes";
 
         # Add your user in order for devenv to work
-        nix.settings.trusted-users = ["root" "${username}"];
+        # nix.settings.trusted-users = ["root" "${username}"];
 
         # Set Git commit hash for darwin-version.
         system.configurationRevision = self.rev or self.dirtyRev or null;
@@ -43,16 +43,25 @@
       {
         # Build darwin flake using:
         # $ darwin-rebuild build --flake .#is-kevinc
-        darwinConfigurations.${hostname} = nix-darwin.lib.darwinSystem {
+        darwinConfigurations.is-kevinc = nix-darwin.lib.darwinSystem {
           specialArgs = { inherit inputs;};
           modules = [
             configuration
-            ./configuration.nix
+            ./is-kevinc.nix
+            inputs.home-manager.darwinModules.default
+          ];
+        };
+
+        darwinConfigurations.mini = nix-darwin.lib.darwinSystem {
+          specialArgs = { inherit inputs;};
+          modules = [
+            configuration
+            ./mini.nix
             inputs.home-manager.darwinModules.default
           ];
         };
 
         # Expose the package set, including overlays, for convenience.
-        darwinPackages = self.darwinConfigurations.${hostname}.pkgs;
+        # darwinPackages = self.darwinConfigurations.${hostname}.pkgs;
       };
 }

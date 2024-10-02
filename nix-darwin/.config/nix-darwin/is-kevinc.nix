@@ -13,9 +13,20 @@
     shell = pkgs.zsh;
   };
 
+  # Add your user in order for devenv to work
+  nix.settings.trusted-users = ["root" "kevin.colyar"];
+
   home-manager = {
     users = {
-      "kevin.colyar" = import "/Users/kevin.colyar/.config/home-manager/is-kevinc.nix";
+      # "kevin.colyar" = import "/Users/kevin.colyar/.config/home-manager/is-kevinc.nix";
+      "kevin.colyar" = {
+        home.username = "kevin.colyar";
+        home.homeDirectory = "/Users/kevin.colyar";
+
+        imports = [
+          /Users/kevin.colyar/.config/home-manager/is-kevinc.nix
+        ];
+      };
     };
   };
 
