@@ -45,12 +45,15 @@
     autossh
     stow
     delta
+    nmap
+    prettierd # html formatter, used by emacs format-all 
 
     zsh
     zsh-syntax-highlighting
     zsh-autocomplete
     zsh-autosuggestions
     zsh-fzf-tab
+    zsh-fzf-history-search
 
     # Fonts 
     fira-code
@@ -62,12 +65,12 @@
     devenv
     jq
     nil
-    # rbenv
-    # pyenv
+    ollama
 
-    # TODO Brew Casks
-
-    # TODO DCPUD
+    # python
+    ruff
+    poetry
+    pyright
 
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
@@ -129,16 +132,27 @@
   # programs.fzf.keybindings = true;
 
   programs.direnv.enable = true;
-  
+
   # https://github.com/starcraft66/os-config/blob/master/home-manager/programs/zsh.nix
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
-    enableCompletion = true;
+
+    # Disable completion because completion is already enabled in nix config.
+    # Zsh startup is slow if set to true.
+    enableCompletion = false;
+
     initExtra = ''
        # Vim Mode
        bindkey -v
+
+       zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|=*' 'l:|=*'
+ 
+       # Optional: you may want to add other useful options
+       setopt AUTO_MENU    # enables automatic selection in the completion menu.
+       setopt CORRECT      # enables spelling correction
+       setopt REC_EXACT    # don't correct matches even though they are typographical mistakes
 
        path=(
          ./bin
@@ -161,35 +175,6 @@
          source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
        fi
     '';
-
-
-    profileExtra = ''
-      setopt incappendhistory
-      setopt histfindnodups
-      setopt histreduceblanks
-      setopt histverify
-      setopt correct                                                  # Auto correct mistakes
-      setopt extendedglob                                             # Extended globbing. Allows using regular expressions with *
-      setopt nocaseglob                                               # Case insensitive globbing
-      setopt rcexpandparam                                            # Array expension with parameters
-      #setopt nocheckjobs                                              # Don't warn about running processes when exiting
-      setopt numericglobsort                                          # Sort filenames numerically when it makes sense
-      unsetopt nobeep                                                 # Enable beep
-      setopt appendhistory                                            # Immediately append history instead of overwriting
-      unsetopt histignorealldups                                      # If a new command is a duplicate, do not remove the older one
-      setopt interactivecomments
-      zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'       # Case insensitive tab completion
-      zstyle ':completion:*' list-colors "''${(s.:.)LS_COLORS}"       # Colored completion (different colors for dirs/files/etc)
-      zstyle ':completion:*' rehash true                              # automatically find new executables in path
-      # Speed up completions
-      zstyle ':completion:*' accept-exact '*(N)'
-      zstyle ':completion:*' use-cache on
-      mkdir -p "$(dirname ${config.xdg.cacheHome}/zsh/completion-cache)"
-      zstyle ':completion:*' cache-path "${config.xdg.cacheHome}/zsh/completion-cache"
-      zstyle ':completion:*' menu select
-      WORDCHARS=''${WORDCHARS//\/[&.;]}                                 # Don't consider certain characters part of the word
-    '';
-
 
     shellAliases = {
 

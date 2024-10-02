@@ -25,5 +25,15 @@
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
       };
+      homeConfigurations."is-kevinc" = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+
+        # Specify your home configuration modules here, for example,
+        # the path to your home.nix.
+        modules = [ ./is-kevinc.nix ];
+
+        # Optionally use extraSpecialArgs
+        # to pass through arguments to home.nix
+      };
     };
 }
