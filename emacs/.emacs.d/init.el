@@ -13,11 +13,6 @@
 ;; (unless package-archive-contents
 ;;   (package-refresh-contents))
 
-;; Load private config
-(setq-default private-config (expand-file-name "~/.emacs.private"))
-(when (file-exists-p private-config)
-  (load-file private-config))
-
 (load "~/.emacs.d/config/globals.el")
 (load "~/.emacs.d/config/evil.el")
 (load "~/.emacs.d/config/ui.el")
@@ -49,6 +44,7 @@
 (load "~/.emacs.d/config/format-all.el")
 (load "~/.emacs.d/config/eldoc.el")
 (load "~/.emacs.d/config/ellama.el")
+(load "~/.emacs.d/config/gpt.el")
 (load "~/.emacs.d/config/nix.el")
 
 ;; Org
@@ -59,3 +55,8 @@
 ;; Don't let Emacs' customize system pollute our configs
 (setq custom-file "~/.emacs.d/custom-vars.el")
 (load custom-file 'noerror 'nomessage)
+
+;; Load private config
+(setq-default private-config (expand-file-name "~/.emacs.private"))
+(when (file-exists-p private-config)
+  (load-file private-config))

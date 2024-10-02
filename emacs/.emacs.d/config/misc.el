@@ -10,12 +10,6 @@
   :custom
   (magic-display-buffer-function #'magic-display-buffer-same-window-except-diff-v1))
 
-;; (use-package git-gutter
-;;   :init
-;;   (global-git-gutter-mode t)
-;;   (git-gutter:linum-setup)
-;;   )
-
 (use-package git-gutter
   :ensure t
   :init

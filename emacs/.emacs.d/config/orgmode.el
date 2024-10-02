@@ -2,8 +2,8 @@
   :defer t
   :hook
   (org-mode . org-indent-mode)
+  (org-mode . visual-line-mode) ;; Word wrap
   :config
-  (visual-line-mode +1) ;; Word wrap
   (setq
    org-refile-targets '((org-agenda-files :maxlevel . 3))
    org-refile-use-outline-path 'file
@@ -16,6 +16,7 @@
    org-todo-keyword-faces
    '(
      ("HOLD" . "orange")
+     ("WORK" . "yellow")
      ("WAIT" . "red")
      ("STRT" . "red")
      ;; ("CANCELED" . (:foreground "blue" :weight bold))
@@ -28,8 +29,9 @@
   (:keymaps 'org-mode-map
              ;; NOTE: keymaps specified with :keymaps must be quoted
              :states 'normal
-             :keymaps 'org-mode-map
+             ;; :keymaps 'org-mode-map
              :prefix ","
+             "/"  'org-update-statistics-cookies
              "#"  'org-table-align
              "a"  'org-agenda
              "s"  '(:ignore t :which-key "Subtree")
@@ -54,8 +56,15 @@
              "r"  'org-refile
              ;; "#"  'org-update-statistics-cookies
              "c"  'org-toggle-checkbox
+             "h"  'consult-org-heading
              )
   )
+
+(use-package org-super-agenda
+  :hook (org-mode . org-super-agenda-mode))
+
+;; (use-package org-modern
+;;   :hook (org-mode . org-modern-mode))
 
 (use-package org-bullets
   ;; :defer t

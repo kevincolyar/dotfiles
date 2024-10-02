@@ -66,6 +66,7 @@
   "g"  '(:ignore t :which-key "git")
   "gg" 'magit-status
   "gb" 'magit-blame-addition
+  "gf" 'magit-log-current
 
   "R" 'reload-init-file
 

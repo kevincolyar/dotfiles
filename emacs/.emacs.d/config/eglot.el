@@ -23,6 +23,6 @@
 ;; Install Instructions:
 ;; https://github.com/jdtsmith/eglot-booster
 ;; M-x package-vc-install https://github.com/jdtsmith/eglot-booster
-(use-package eglot-booster
-	:after eglot
-	:config	(eglot-booster-mode))
+;; (use-package eglot-booster
+;; 	:after eglot
+;; 	:config	(eglot-booster-mode))
