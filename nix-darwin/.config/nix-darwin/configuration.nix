@@ -23,8 +23,11 @@
   programs.zsh.enable = true;  # default shell on catalina
   # programs.fish.enable = true;
 
+  # MacOS Settings
+  system.defaults.dock.appswitcher-all-displays = true;
+    
   # Setup fonts
-  fonts.packages = [ pkgs.fira-code pkgs.fira-code-nerdfont ];
+  fonts.packages = [ pkgs.fira-code-nerdfont ];
 
   homebrew.enable = true;
   homebrew.casks = [
@@ -45,5 +48,6 @@
     "vlc"
     "wezterm"
     "wireshark"
+    "screenfocus"
   ];
 }
