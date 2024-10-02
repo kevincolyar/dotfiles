@@ -39,7 +39,7 @@
     in
       {
         # Build darwin flake using:
-        # $ darwin-rebuild build --flake .#is-kevinc
+        # $ darwin-rebuild build --flake ~/.dotfiles/nix/.config/nix#is-kevinc
         darwinConfigurations.is-kevinc = nix-darwin.lib.darwinSystem {
           specialArgs = { inherit inputs;};
 
@@ -50,6 +50,7 @@
           ];
         };
 
+        # darwin-rebuild build --flake ~/.dotfiles/nix/.config/nix#mini
         darwinConfigurations.mini = nix-darwin.lib.darwinSystem {
           specialArgs = { inherit inputs;};
 
@@ -60,8 +61,9 @@
           ];
         };
 
+        # home-manager switch --flake ~/.dotfiles/nix/.config/nix#fishident
         homeConfigurations.fishident = home-manager.lib.homeManagerConfiguration {
-          specialArgs = { inherit inputs;};
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
 
           modules = [
             ./fishident.nix
