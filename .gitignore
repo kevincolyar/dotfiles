@@ -18,6 +18,7 @@ emacs/.emacs.d/recentf
 emacs/.emacs.d/places
 emacs/.emacs.d/eln-cache
 emacs/.emacs.d/elpa
+emacs/.emacs.d/elpy
 emacs/.emacs.d/.lsp-session*
 emacs/.emacs.d/projectile-bookmarks*
 emacs/.emacs.d/smex-items
