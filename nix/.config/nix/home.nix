@@ -20,13 +20,13 @@
   home.packages = with pkgs; [
 
     (aspellWithDicts
-    (dicts: with dicts; [ en en-computers ]))
+      (dicts: with dicts; [ en en-computers ]))
     tree
     curl
     wget
     dust
     eza
-    emacs-nox
+    emacs30-nox
     emacs-lsp-booster
     starship
     tmux
@@ -38,6 +38,7 @@
     dua
     fd
     htop
+    btop
     most
     gnugrep
     neovim
@@ -74,6 +75,9 @@
 
     # rust
     cargo-outdated
+
+    # nix
+    nixd # lsp server
 
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
