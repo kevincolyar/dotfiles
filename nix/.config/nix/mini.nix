@@ -37,28 +37,37 @@
   # MacOS Settings
   system.defaults.dock.appswitcher-all-displays = true;
     
+  system.keyboard.enableKeyMapping = true;
+  system.keyboard.remapCapsLockToControl = true;
+
   # Setup fonts
   fonts.packages = [ pkgs.fira-code-nerdfont ];
 
-  homebrew.enable = true;
-  homebrew.casks = [
-    "adobe-creative-cloud"
-    "airfoil"
-    "alfred"
-    "app-tamer"
-    "backblaze"
-    "blender"
-    "brave-browser"
-    "carbon-copy-cloner"
-    "font-fira-code-nerd-font"
-    "microsoft-remote-desktop"
-    "minecraft"
-    "openemu"
-    "protonmail-bridge"
-    "signal"
-    "steam"
-    "thunderbird"
-    "vlc"
-    "wezterm"
-  ];
+  homebrew = {
+    enable = true;
+    onActivation = {
+      autoUpdate = true;
+      cleanup = "zap";
+    };
+    casks = [
+      "adobe-creative-cloud"
+      "airfoil"
+      "alfred"
+      "app-tamer"
+      "backblaze"
+      "blender"
+      "brave-browser"
+      "carbon-copy-cloner"
+      "font-fira-code-nerd-font"
+      "microsoft-remote-desktop"
+      "minecraft"
+      "openemu"
+      "protonmail-bridge"
+      "signal"
+      "steam"
+      "thunderbird"
+      "vlc"
+      "wezterm"
+    ];
+  };
 }
