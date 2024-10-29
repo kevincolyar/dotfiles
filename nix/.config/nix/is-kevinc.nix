@@ -49,31 +49,41 @@
   # programs.fish.enable = true;
 
   # MacOS Settings
+  # https://macos-defaults.com
   system.defaults.dock.appswitcher-all-displays = true;
-    
+
+  system.keyboard.enableKeyMapping = true;
+  system.keyboard.remapCapsLockToControl = true;
+  
   # Setup fonts
   fonts.packages = [ pkgs.fira-code-nerdfont ];
 
-  homebrew.enable = true;
-  homebrew.casks = [
-    "alacritty"
-    "alfred"
-    "brave-browser"
-    "cyberduck"
-    "dbeaver-community"
-    "docker"
-    "lapce"
-    "little-snitch"
-    "lm-studio"
-    "microsoft-remote-desktop"
-    "prosys-opc-ua-browser"
-    "qlstephen"
-    "ricoh-ps-printers-vol4-exp-driver"
-    "timemachineeditor"
-    "vlc"
-    "wezterm"
-    "wireshark"
-    "screenfocus"
-    "sourcetree"
-  ];
+  homebrew = {
+    enable = true;
+    onActivation = {
+      autoUpdate = true;
+      cleanup = "zap";
+    };
+    casks = [
+      "alacritty"
+      "alfred"
+      "brave-browser"
+      "cyberduck"
+      "dbeaver-community"
+      "docker"
+      "lapce"
+      "little-snitch"
+      "lm-studio"
+      "windows-app"
+      "prosys-opc-ua-browser"
+      "qlstephen"
+      "ricoh-ps-printers-vol4-exp-driver"
+      "timemachineeditor"
+      "vlc"
+      "wezterm"
+      "wireshark"
+      "screenfocus"
+      "sourcetree"
+    ];
+  };
 }
