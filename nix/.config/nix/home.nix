@@ -46,6 +46,7 @@
     autossh
     stow
     delta
+    yazi
     nmap
     prettierd # html formatter, used by emacs format-all 
 
