@@ -71,6 +71,7 @@
 
     # python
     ruff
+    black
     poetry
     pyright
 
@@ -190,6 +191,7 @@
       less="less -R";
       du="dua -i .git -i node_modules interactive";
       cat="bat";
+      e="emacs";
 
       ls="eza --git";
       l="eza -lgh";
