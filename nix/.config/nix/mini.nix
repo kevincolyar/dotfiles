@@ -6,7 +6,16 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
+    darwin.apple_sdk.frameworks.Security
+    darwin.apple_sdk.frameworks.CoreServices
   ];
+
+  environment = {
+    # Required for emacs native compiling. Fixes 'libgccjit.so: error: error invoking gcc driver' error.
+    variables = {
+        LIBRARY_PATH = "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib";
+    };
+  };
 
   users.users."kevincolyar" = {
     name = "kevincolyar";
