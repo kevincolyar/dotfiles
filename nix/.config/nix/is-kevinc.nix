@@ -20,6 +20,11 @@
       auth       optional       ${pkgs.pam-reattach}/lib/pam/pam_reattach.so ignore_ssh
       auth       sufficient     pam_tid.so
     '';
+
+    # Required for emacs native compiling. Fixes 'libgccjit.so: error: error invoking gcc driver' error.
+    variables = {
+        LIBRARY_PATH = "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib";
+    };
   };
 
   users.users."kevin.colyar" = {
@@ -65,7 +70,6 @@
       cleanup = "zap";
     };
     casks = [
-      "alacritty"
       "alfred"
       "brave-browser"
       "cyberduck"
@@ -74,16 +78,16 @@
       "lapce"
       "little-snitch"
       "lm-studio"
-      "windows-app"
       "prosys-opc-ua-browser"
       "qlstephen"
       "ricoh-ps-printers-vol4-exp-driver"
+      "screenfocus"
+      "sourcetree"
       "timemachineeditor"
       "vlc"
       "wezterm"
+      "windows-app"
       "wireshark"
-      "screenfocus"
-      "sourcetree"
     ];
   };
 }

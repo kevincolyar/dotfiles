@@ -39,7 +39,7 @@
     in
       {
         # Build darwin flake using:
-        # $ darwin-rebuild build --flake ~/.dotfiles/nix/.config/nix#is-kevinc
+        # $ darwin-rebuild switch --flake ~/.dotfiles/nix/.config/nix#is-kevinc
         darwinConfigurations.is-kevinc = nix-darwin.lib.darwinSystem {
           specialArgs = { inherit inputs;};
 
@@ -50,7 +50,7 @@
           ];
         };
 
-        # darwin-rebuild build --flake ~/.dotfiles/nix/.config/nix#mini
+        # darwin-rebuild switch --flake ~/.dotfiles/nix/.config/nix#mini
         darwinConfigurations.mini = nix-darwin.lib.darwinSystem {
           specialArgs = { inherit inputs;};
 
