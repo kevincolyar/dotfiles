@@ -57,7 +57,7 @@
     "pf" 'project-find-file
 
     "bb" 'consult-buffer
-    "ce" 'consult-flymake
+    "ce" 'consult-flycheck
 
     "fr" 'consult-recent-file
 

@@ -38,6 +38,8 @@
   "c"   '(:ignore t :which-key "code")
   ;; "ca"  'lsp-execute-code-action
   "ca"  'eglot-code-actions
+  "cf"  'format-all-region-or-buffer
+  ;; "ce"  'consult-flycheck
   ;; "ce"  'flycheck-list-errors
   ;; "ce"  'flymake-show-buffer-diagnostics
   "cd"  'xref-find-definitions

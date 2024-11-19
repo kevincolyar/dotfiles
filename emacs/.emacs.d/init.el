@@ -37,7 +37,6 @@
 (load "~/.emacs.d/config/typescript.el")
 (load "~/.emacs.d/config/python.el")
 (load "~/.emacs.d/config/langs.el")
-(load "~/.emacs.d/config/flymake.el")
 (load "~/.emacs.d/config/flycheck.el")
 (load "~/.emacs.d/config/dape.el")
 (load "~/.emacs.d/config/spell.el")
