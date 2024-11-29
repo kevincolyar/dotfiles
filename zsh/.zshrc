@@ -236,9 +236,10 @@ if [[ "$PLATFORM" == "Linux" ]]; then
   # https://stackoverflow.com/questions/869589/why-ssh-fails-from-crontab-but-succedes-when-executed-from-a-command-line
   keychain --nogui id_rsa --quiet
 
-  # Make GPG Agent available
-  gpg-agent --quiet
 fi
+
+# Make GPG Agent available
+gpg-agent --quiet
 
 # Command-line Fuzzy Finder (eg, command history)
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

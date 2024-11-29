@@ -25,26 +25,30 @@
   "TAB" 'evil-switch-to-windows-last-buffer
   "?"   'beacon-blink
 
-  "t"   '(:ignore t :which-key "Toggles")
+  "a"   '(:ignore t :which-key "ai")
+  "t"   '(:ignore t :which-key "toggles")
 
   ;; "p" '(:keymap projectile-command-map :package projectile :which-key "Project")
   ;; "l" '(:keymap lsp-command-map :package lsp :which-key "LSP")
 
-  "b"   '(:ignore t :which-key "Buffers")
+  "b"   '(:ignore t :which-key "buffers")
   "be"  'eval-buffer
+  "re"  'eval-region
 
-  "c"   '(:ignore t :which-key "Code")
+  "c"   '(:ignore t :which-key "code")
   ;; "ca"  'lsp-execute-code-action
   "ca"  'eglot-code-actions
+  "cf"  'format-all-region-or-buffer
+  ;; "ce"  'consult-flycheck
   ;; "ce"  'flycheck-list-errors
-  "ce"  'flymake-show-buffer-diagnostics
+  ;; "ce"  'flymake-show-buffer-diagnostics
   "cd"  'xref-find-definitions
 
   ;; "cD"  'lsp-describe-thing-at-point
   "cr"  'xref-find-references
   "cR"  'eglot-rename
 
-  "h"  '(:ignore t :which-key "Help")
+  "h"  '(:ignore t :which-key "help")
   "hb" 'describe-bindings
   "hc" 'describe-command
   "hf" 'describe-function
@@ -53,7 +57,8 @@
   "hs" 'describe-symbol
   "hm" 'describe-mode
 
-  "f"  '(:ignore t :which-key "Files")
+  
+  "f"  '(:ignore t :which-key "files")
   "fs" 'save-buffer
   "fd" 'delete-file
   "ff" 'find-file
@@ -63,11 +68,14 @@
   "g"  '(:ignore t :which-key "git")
   "gg" 'magit-status
   "gb" 'magit-blame-addition
+  "gf" 'magit-log-current
 
-  "s"  '(:ignore t :which-key "Search")
+  "R" 'reload-init-file
+
+  "s"  '(:ignore t :which-key "search")
   ;; "ss"  'swiper-thing-at-point
 
-  "w"   '(:ignore t :which-key "Web")
+  "w"   '(:ignore t :which-key "web")
   "ws"  'search-web
 
   "z="  'flyspell-correct-word-before-point)

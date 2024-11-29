@@ -8,3 +8,5 @@ scan_timeout = 10
 #   disabled=true
 [docker_context]
   disabled=true
+[battery]
+  disabled=true

@@ -34,6 +34,7 @@
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
 
+  ;; Custom ripgrep command, use .ignore file to ignore hidden dirs like .git or node_modules
   (setq consult-ripgrep-args "rg --follow --hidden --null --line-buffered --color=never --max-columns=1000 --path-separator /   --smart-case --no-heading --with-filename --line-number --search-zip")
 
   :config
@@ -46,15 +47,17 @@
   )
 
   :general
-  (nmap
+  (:states '(normal visual)
     :keymaps 'override
     :prefix "SPC"
 
     "/"   'consult-ripgrep
     "*"   'consult-ripgrep-symbol-at-point
-    "pf" 'consult-projectile
+    ;; "pf" 'consult-projectile
+    "pf" 'project-find-file
 
     "bb" 'consult-buffer
+    "ce" 'consult-flycheck
 
     "fr" 'consult-recent-file
 
@@ -65,7 +68,7 @@
 (use-package consult-projectile :defer t)
 (use-package consult-flycheck :defer t)
 (use-package consult-eglot :defer t)
-(use-package consult-yasnippet :defer t)
+;; (use-package consult-yasnippet :defer t)
 
 ;; ;; Consult users will also want the embark-consult package.
 (use-package embark-consult

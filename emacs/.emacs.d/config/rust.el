@@ -4,11 +4,18 @@
 (use-package rustic
   :defer t
   :config
-  (setq rustic-lsp-client 'eglot)
+  (setq
+   rustic-lsp-client 'eglot
+   rust-mode-treesitter-derive t)
   :general
   (nmap
+   'rust-mode-map
    :prefix ","
+   "c"  '(:ignore t :which-key "Cargo")
    "cb" '(rustic-cargo-build :which-key "Cargo Build")
+   "cc" '(rustic-cargo-clippy :which-key "Cargo Clippy")
+   "co" '(rustic-cargo-outdated :which-key "Cargo Outdated")
+   "cr" '(rustic-cargo-run :which-key "Cargo Run")
    "t"  '(:ignore t :which-key "Tests")
    "tt" '(rustic-cargo-current-test :which-key "Test Current")
    "ta" '(rustic-cargo-test :which-key "Test All")

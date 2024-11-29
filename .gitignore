@@ -18,11 +18,13 @@ emacs/.emacs.d/recentf
 emacs/.emacs.d/places
 emacs/.emacs.d/eln-cache
 emacs/.emacs.d/elpa
+emacs/.emacs.d/elpy
 emacs/.emacs.d/.lsp-session*
 emacs/.emacs.d/projectile-bookmarks*
 emacs/.emacs.d/smex-items
 emacs/.emacs.d/bookmarks
 emacs/.emacs.d/history
+emacs/.emacs.d/backups
 emacs/.emacs.d/.cache
 emacs/.emacs.d/custom-vars.el
 emacs/.emacs.d/projects
@@ -30,6 +32,7 @@ emacs/.emacs.d/tramp-*
 emacs/.emacs.d/\#*
 emacs/.emacs.d/quelpa
 emacs/.emacs.d/tree-sitter
+emacs/.emacs.d/ellama-sessions
 
 nvim/.config/nvim/undodir
 nvim/.config/nvim/spell

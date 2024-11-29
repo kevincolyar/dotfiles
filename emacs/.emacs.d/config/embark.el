@@ -1,4 +1,5 @@
 (use-package embark
+  :defer t
   :general
   (nmap
     :keymaps 'override

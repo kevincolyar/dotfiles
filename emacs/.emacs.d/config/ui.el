@@ -3,8 +3,8 @@
 ;;; Code:
 
 (use-package doom-modeline
-  ;; :after eglot
-  :config (doom-modeline-mode 1))
+  :config
+  (doom-modeline-mode 1))
 
 ;; (use-package smart-mode-line)
 
