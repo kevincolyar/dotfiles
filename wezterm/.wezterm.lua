@@ -1,6 +1,7 @@
 local wezterm = require 'wezterm'
 
 return {
+   check_for_updates = false,
    enable_tab_bar = false,
    window_decorations = "RESIZE",
    color_scheme = 'oxocarbon',
