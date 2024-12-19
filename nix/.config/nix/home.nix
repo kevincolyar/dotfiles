@@ -133,6 +133,7 @@
   #
   home.sessionVariables = {
     EDITOR = "emacs";
+    COLORTERM="truecolor";
     GPG_TTY = "tty"; # Required by gnupg-vim
   };
 
