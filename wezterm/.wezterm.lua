@@ -1,9 +1,12 @@
 local wezterm = require 'wezterm'
 
+local theme = require('lua/rose-pine').main
+
 return {
    enable_tab_bar = false,
    window_decorations = "RESIZE",
-   color_scheme = 'oxocarbon',
+   colors = theme.colors(),
+   -- color_scheme = 'oxocarbon',
    -- color_scheme = 'DoomOne',
    -- color_scheme = 'tokyonight',
    -- color_scheme = "Catppuccin Mocha",
