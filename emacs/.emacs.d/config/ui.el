@@ -46,8 +46,8 @@
 
 ;; GUI Settings
 (if (display-graphic-p)
-    (set-frame-font "Fisa Code 16" nil t)
-    (setq default-frame-alist '((width . 80) (height . 24))))
+  (set-face-attribute 'default nil :family "FiraCode Nerd Font" :height 140)
+  (setq default-frame-alist '((width . 80) (height . 24))))
 
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
