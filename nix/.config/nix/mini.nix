@@ -71,6 +71,7 @@
       "brave-browser"
       "carbon-copy-cloner"
       "font-fira-code-nerd-font"
+      "freecad"
       "microsoft-remote-desktop"
       "minecraft"
       "openemu"

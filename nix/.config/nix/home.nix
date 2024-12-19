@@ -50,6 +50,7 @@
     yazi
     nmap
     prettierd # html formatter, used by emacs format-all 
+    iperf
 
     zsh
     zsh-syntax-highlighting
@@ -132,6 +133,7 @@
   #
   home.sessionVariables = {
     EDITOR = "emacs";
+    GPG_TTY = "tty"; # Required by gnupg-vim
   };
 
   programs.starship.enable = true;
