@@ -35,6 +35,7 @@
     bat
     bottom
     gnupg
+    pinentry-tty
     dua
     fd
     htop
@@ -58,8 +59,7 @@
     zsh-fzf-history-search
 
     # Fonts 
-    fira-code
-    fira-code-nerdfont
+    nerd-fonts.fira-code
 
     # Dev
     git

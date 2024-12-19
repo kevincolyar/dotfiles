@@ -47,7 +47,9 @@
   system.defaults.dock.appswitcher-all-displays = true;
     
   # Setup fonts
-  fonts.packages = [ pkgs.fira-code-nerdfont ];
+  fonts.packages = [
+    pkgs.nerd-fonts.fira-code
+  ];
 
   homebrew.enable = true;
   homebrew.casks = [

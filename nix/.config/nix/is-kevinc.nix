@@ -57,11 +57,15 @@
   # https://macos-defaults.com
   system.defaults.dock.appswitcher-all-displays = true;
 
+  system.defaults.NSGlobalDomain.NSWindowShouldDragOnGesture = true;
+
   system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToControl = true;
-  
+
   # Setup fonts
-  fonts.packages = [ pkgs.fira-code-nerdfont ];
+  fonts.packages = [
+    pkgs.nerd-fonts.fira-code
+  ];
 
   homebrew = {
     enable = true;
@@ -69,6 +73,7 @@
       autoUpdate = true;
       cleanup = "zap";
     };
+
     casks = [
       "alfred"
       "brave-browser"
