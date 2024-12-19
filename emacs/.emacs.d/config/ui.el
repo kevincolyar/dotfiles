@@ -17,9 +17,9 @@
 
 (use-package doom-themes
   :config
+  ;; (load-theme 'doom-sourcerer t)
   ;; (load-theme 'doom-Iosvkem t)
   ;; (load-theme 'doom-pine t)
-  (load-theme 'doom-sourcerer t)
   ;; (load-theme 'doom-dark+ t))
   ;; (load-theme 'doom-nord t)
 ;;   (load-theme 'doom-rouge t)
@@ -33,10 +33,12 @@
 ;;   ;; (load-theme 'kaolin-dark t)
 ;;   (load-theme 'kaolin-shiva t))
 
-;; (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-;; (use-package autothemer
-;;   :config
-;;   (load-theme 'oxocarbon t))
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(use-package autothemer
+  :config
+  (load-theme 'doom-rose-pine t)
+  ;; (load-theme 'oxocarbon t)
+  )
 
 ;; Make background transparent
 (unless (display-graphic-p)
