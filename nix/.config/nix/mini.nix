@@ -6,6 +6,7 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
+    yt-dlp
     darwin.apple_sdk.frameworks.Security
     darwin.apple_sdk.frameworks.CoreServices
   ];
@@ -46,30 +47,39 @@
   # MacOS Settings
   system.defaults.dock.appswitcher-all-displays = true;
     
+  system.keyboard.enableKeyMapping = true;
+  system.keyboard.remapCapsLockToControl = true;
+
   # Setup fonts
   fonts.packages = [
     pkgs.nerd-fonts.fira-code
   ];
 
-  homebrew.enable = true;
-  homebrew.casks = [
-    "adobe-creative-cloud"
-    "airfoil"
-    "alfred"
-    "app-tamer"
-    "backblaze"
-    "blender"
-    "brave-browser"
-    "carbon-copy-cloner"
-    "font-fira-code-nerd-font"
-    "microsoft-remote-desktop"
-    "minecraft"
-    "openemu"
-    "protonmail-bridge"
-    "signal"
-    "steam"
-    "thunderbird"
-    "vlc"
-    "wezterm"
-  ];
+  homebrew = {
+    enable = true;
+    onActivation = {
+      autoUpdate = true;
+      cleanup = "zap";
+    };
+    casks = [
+      "adobe-creative-cloud"
+      "airfoil"
+      "alfred"
+      "app-tamer"
+      "backblaze"
+      "blender"
+      "brave-browser"
+      "carbon-copy-cloner"
+      "font-fira-code-nerd-font"
+      "microsoft-remote-desktop"
+      "minecraft"
+      "openemu"
+      "protonmail-bridge"
+      "signal"
+      "steam"
+      "thunderbird"
+      "vlc"
+      "wezterm"
+    ];
+  };
 }

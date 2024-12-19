@@ -3,6 +3,7 @@ local wezterm = require 'wezterm'
 local theme = require('lua/rose-pine').main
 
 return {
+   check_for_updates = false,
    enable_tab_bar = false,
    window_decorations = "RESIZE",
    colors = theme.colors(),
