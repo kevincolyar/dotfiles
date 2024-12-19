@@ -1,0 +1,33 @@
+* Setup
+** Determinate Nix Installer
+
+#+begin_src sh
+curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | \
+  sh -s -- install
+#+end_src
+
+** Home Manager
+#+begin_src sh
+  nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+  nix-channel --update
+  nix-shell '<home-manager>' -A install
+#+end_src
+
+* Rebuild System
+** Darwin
+
+#+begin_src sh
+    darwin-rebuild switch --flake ~/.dotfiles/nix/.config/nix#HOSTNAME
+#+end_src
+
+** Home Manager
+
+#+begin_src sh
+    home-manager switch --flake ~/.dotfiles/nix/.config/nix#HOSTNAME
+#+end_src
+
+* Update
+
+#+begin_src sh
+    nix flake update ~/.dotfiles/nix/.config/nix
+#+end_src
