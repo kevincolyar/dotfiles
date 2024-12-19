@@ -35,6 +35,7 @@
     bat
     bottom
     gnupg
+    pinentry-tty
     dua
     fd
     htop
@@ -49,6 +50,7 @@
     yazi
     nmap
     prettierd # html formatter, used by emacs format-all 
+    iperf
 
     zsh
     zsh-syntax-highlighting
@@ -58,8 +60,7 @@
     zsh-fzf-history-search
 
     # Fonts 
-    fira-code
-    fira-code-nerdfont
+    nerd-fonts.fira-code
 
     # Dev
     git
@@ -132,6 +133,7 @@
   #
   home.sessionVariables = {
     EDITOR = "emacs";
+    GPG_TTY = "tty"; # Required by gnupg-vim
   };
 
   programs.starship.enable = true;

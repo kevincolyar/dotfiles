@@ -51,7 +51,9 @@
   system.keyboard.remapCapsLockToControl = true;
 
   # Setup fonts
-  fonts.packages = [ pkgs.fira-code-nerdfont ];
+  fonts.packages = [
+    pkgs.nerd-fonts.fira-code
+  ];
 
   homebrew = {
     enable = true;
@@ -69,6 +71,7 @@
       "brave-browser"
       "carbon-copy-cloner"
       "font-fira-code-nerd-font"
+      "freecad"
       "microsoft-remote-desktop"
       "minecraft"
       "openemu"

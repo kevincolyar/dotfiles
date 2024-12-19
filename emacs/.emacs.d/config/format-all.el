@@ -13,3 +13,8 @@
       ;; ("Ruby" rufo)
       ("Ruby" rubocop)
       )))
+
+;; EXAMPLE: Add to dir-locals.el to disable for project
+;; ((nil . ((eval .
+;;           (format-all-mode 0)
+;;           ))))
