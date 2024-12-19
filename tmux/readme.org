@@ -1,0 +1,9 @@
+
+
+* Setup
+** Install TPM
+#+begin_src sh
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+#+end_src
+
+Then in tmux, ctrl-f I
