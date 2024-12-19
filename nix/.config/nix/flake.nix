@@ -70,6 +70,14 @@
           ];
         };
 
+        homeConfigurations.kubi = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+
+          modules = [
+            ./kubi.nix
+          ];
+        };
+
         # Expose the package set, including overlays, for convenience.
         # darwinPackages = self.darwinConfigurations.${hostname}.pkgs;
       };
