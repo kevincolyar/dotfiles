@@ -102,7 +102,7 @@
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
-  home.file = {
+  home.file = with pkgs; {
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
@@ -113,6 +113,10 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
+
+    ".gnupg/gpg-agent.conf".text = ''
+       pinentry-program ${pkgs.pinentry-tty}/bin/pinentry-tty
+    '';
   };
 
   # Home Manager can also manage your environment variables through
