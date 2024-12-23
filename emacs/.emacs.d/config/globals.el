@@ -65,3 +65,6 @@
 
 ;; The default is 800 kilobytes.  Measured in bytes.
 (setq gc-cons-threshold (* 50 1000 1000))
+
+;; Force the GPG password prompt into the minibuffer instead of a gui popup
+(setq epg-pinentry-mode 'loopback)
