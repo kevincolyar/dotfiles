@@ -138,7 +138,6 @@
   home.sessionVariables = {
     EDITOR = "emacs";
     COLORTERM="truecolor";
-    GPG_TTY = "tty"; # Required by gnupg-vim
   };
 
   programs.starship.enable = true;
@@ -190,6 +189,9 @@
          # source "$(fzf-share)/completion.zsh"
          source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
        fi
+
+       # Required by gnupg-vim, zsh, etc
+       export GPG_TTY=$(tty)
     '';
 
     shellAliases = {
