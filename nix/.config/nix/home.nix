@@ -102,7 +102,7 @@
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
-  home.file = {
+  home.file = with pkgs; {
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
@@ -113,6 +113,10 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
+
+    ".gnupg/gpg-agent.conf".text = ''
+       pinentry-program ${pkgs.pinentry-tty}/bin/pinentry-tty
+    '';
   };
 
   # Home Manager can also manage your environment variables through
@@ -134,7 +138,6 @@
   home.sessionVariables = {
     EDITOR = "emacs";
     COLORTERM="truecolor";
-    GPG_TTY = "tty"; # Required by gnupg-vim
   };
 
   programs.starship.enable = true;
@@ -186,6 +189,9 @@
          # source "$(fzf-share)/completion.zsh"
          source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
        fi
+
+       # Required by gnupg-vim, zsh, etc
+       export GPG_TTY=$(tty)
     '';
 
     shellAliases = {
