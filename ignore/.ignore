@@ -1,2 +1,4 @@
+# Used by ft, ag, ripgrep, etc
+
 .git
 .devenv
