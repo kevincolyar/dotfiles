@@ -20,8 +20,8 @@ return {
    -- font = wezterm.font('Fisa Code', { weight = 'Thin' }),
    font_size = 14,
    adjust_window_size_when_changing_font_size = false,
-   -- window_background_opacity = 0.80,
-   -- macos_window_background_blur = 20,
+   window_background_opacity = 0.85,
+   macos_window_background_blur = 15,
    harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
 
    -- Disable Italic
