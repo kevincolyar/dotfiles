@@ -11,7 +11,7 @@
             "C-d" #'corfu-scroll-down
             "C-[" #'corfu-quit)
   :init
-  (setq corfu-auto t                           ;; Enable auto completion
+  (setq corfu-auto t                           ;; Enable auto completion, required for eglot methods, etc
         corfu-cycle t                          ;; Enable cycling for `corfu-next/previous'
         corfu-quit-no-match 'separator         ;; or t
         corfu-auto-prefix 2
