@@ -15,7 +15,17 @@
 (global-hl-line-mode -1) ;; Disable Highlight cursor line
 (ido-mode -1) ; Disable ido mode
 (column-number-mode)
-(global-display-line-numbers-mode 1)
+(global-completion-preview-mode)
+
+;; (global-display-line-numbers-mode 1)
+
+(defun display-line-numbers-hook ()
+  (display-line-numbers-mode 1))
+
+;; Only show line numbers in prog-mode and text-mode
+(add-hook 'prog-mode-hook 'display-line-numbers-hook)
+(add-hook 'text-mode-hook 'display-line-numbers-hook)
+
 (recentf-mode 1) ;; Save recent files
 (setq recentf-auto-cleanup 'never)
 
