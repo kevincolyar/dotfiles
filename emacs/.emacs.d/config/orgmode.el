@@ -84,3 +84,11 @@
   :config
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
+
+;; Auto-update todo state based on subtasks
+(defun org-summary-todo (n-done n-not-done)
+  "Switch entry to DONE when all subentries are done, to TODO otherwise."
+  (let (org-log-done org-log-states)
+    (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
+
+(add-hook 'org-after-todo-statistics-hook #'org-summary-todo)
