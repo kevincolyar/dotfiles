@@ -11,7 +11,8 @@
   ];
 
   # Add ability to used TouchID for sudo authentication
-  security.pam.enableSudoTouchIdAuth = true;
+  # security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   # Setup pam-reattached to enable touchid & sudo inside tmux
   environment = {
@@ -80,12 +81,15 @@
       "cyberduck"
       "dbeaver-community"
       "docker"
+      "freecad"
+      "ghostty"
       "lapce"
       "little-snitch"
       "lm-studio"
       "prosys-opc-ua-browser"
       "qlstephen"
       "ricoh-ps-printers-vol4-exp-driver"
+      "rustdesk"
       "screenfocus"
       "sourcetree"
       "timemachineeditor"

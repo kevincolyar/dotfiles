@@ -46,11 +46,14 @@
     mprocs
     autossh
     stow
+    serie
     delta
     yazi
     nmap
     prettierd # html formatter, used by emacs format-all 
     iperf
+    rsync
+    lazydocker
 
     zsh
     zsh-syntax-highlighting
