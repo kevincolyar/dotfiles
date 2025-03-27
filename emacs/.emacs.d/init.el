@@ -44,7 +44,7 @@
 (load "~/.emacs.d/config/dumb-jump.el")
 (load "~/.emacs.d/config/format-all.el")
 (load "~/.emacs.d/config/eldoc.el")
-(load "~/.emacs.d/config/ellama.el")
+;; (load "~/.emacs.d/config/ellama.el")
 (load "~/.emacs.d/config/gpt.el")
 (load "~/.emacs.d/config/nix.el")
 

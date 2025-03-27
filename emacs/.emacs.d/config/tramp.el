@@ -15,7 +15,9 @@
   (setq password-cache-expiry nil)
   (setq tramp-use-ssh-controlmaster-options nil)
   (setq remote-file-name-inhibit-cache nil)
-  (customize-set-variable 'tramp-ssh-controlmaster-options
-                          (concat
-                           "-o ControlPath=/tmp/ssh-tramp-%%r@%%h:%%p "
-                           "-o ControlMaster=auto -o ControlPersist=yes")))
+
+  ;; (customize-set-variable 'tramp-ssh-controlmaster-options
+  ;;                         (concat
+  ;;                          "-o ControlPath=/tmp/ssh-tramp-%%r@%%h:%%p "
+  ;;                          "-o ControlMaster=auto -o ControlPersist=yes"))
+  )

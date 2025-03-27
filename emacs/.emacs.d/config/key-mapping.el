@@ -15,10 +15,14 @@
   )
 
 (defun search-web ()
-  "Promt for search query and open it in the web browser."
   (interactive)
-  (let ((query (read-string "Query: ")))
-    (browse-url (concat "https://search.brave.com/search?q=" query))))
+  (let ((search-text (if (use-region-p)
+                         (buffer-substring-no-properties (region-beginning) (region-end))
+                       (read-string "Search text: "))))
+    (when (and search-text (not (string= search-text "")))
+      (let ((url (concat "https://search.brave.com/search?q=" 
+                         (url-hexify-string search-text))))
+        (browse-url url)))))
 
 (kevincolyar/leader-keys
   ":"   'execute-extended-command
@@ -47,6 +51,8 @@
   ;; "cD"  'lsp-describe-thing-at-point
   "cr"  'xref-find-references
   "cR"  'eglot-rename
+
+  "xe"  'eval-last-sexp
 
   "h"  '(:ignore t :which-key "help")
   "hb" 'describe-bindings
