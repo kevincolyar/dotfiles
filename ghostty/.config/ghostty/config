@@ -1,11 +1,22 @@
+macos-titlebar-style = hidden
+# macos-titlebar-proxy-icon = hidden
+window-save-state = always
+
+# TODO: Doesn't work in macos+fullscreen
+background-opacity = 0.92
+background-blur-radius = 15
+
 theme = rose-pine
 
 # Font
-font-size = 14
-#font-thicken = true
 font-family = "FiraCode Nerd Font"
+font-size = 14
+font-style = light
+font-thicken = true
+# adjust-cell-height = 10%
 
 # Mouse & Cursor
 mouse-hide-while-typing = true
 cursor-style = block
 cursor-style-blink = true
+cursor-color = "#ffffff"
