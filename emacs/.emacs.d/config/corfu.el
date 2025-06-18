@@ -63,4 +63,5 @@
 (use-package nerd-icons-corfu
   :defer t)
 
-(add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter)
+(unless (display-graphic-p)
+  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))

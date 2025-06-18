@@ -74,7 +74,11 @@
   "g"  '(:ignore t :which-key "git")
   "gg" 'magit-status
   "gb" 'magit-blame-addition
-  "gf" 'magit-log-current
+  "gf" 'magit-file-dispatch
+  "gl" 'magit-log-current
+
+  "o"  '(:ignore t :which-key "org")
+  "oc" 'org-capture
 
   "R" 'reload-init-file
 
