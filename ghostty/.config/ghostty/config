@@ -10,7 +10,7 @@ theme = rose-pine
 
 # Font
 font-family = "FiraCode Nerd Font"
-font-size = 14
+font-size = 15
 font-style = light
 font-thicken = true
 # adjust-cell-height = 10%
