@@ -6,10 +6,13 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
-    darwin.apple_sdk.frameworks.Security
-    darwin.apple_sdk.frameworks.CoreServices
+    # Deprecated?
+    # darwin.apple_sdk.frameworks.Security
+    # darwin.apple_sdk.frameworks.CoreServices
+    pkgs.aider-chat
   ];
 
+    
   # Add ability to used TouchID for sudo authentication
   # security.pam.enableSudoTouchIdAuth = true;
   security.pam.services.sudo_local.touchIdAuth = true;
@@ -27,6 +30,8 @@
         LIBRARY_PATH = "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib";
     };
   };
+
+  system.primaryUser = "kevin.colyar";
 
   users.users."kevin.colyar" = {
     name = "kevin.colyar";
@@ -50,6 +55,8 @@
     };
   };
 
+  services.skhd.enable = true;
+  
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true;  # default shell on catalina
   # programs.fish.enable = true;
@@ -74,6 +81,7 @@
       autoUpdate = true;
       cleanup = "zap";
     };
+
 
     casks = [
       "alfred"
