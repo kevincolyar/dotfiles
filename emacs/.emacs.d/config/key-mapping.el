@@ -88,7 +88,12 @@
   "w"   '(:ignore t :which-key "web")
   "ws"  'search-web
 
-  "z="  'flyspell-correct-word-before-point)
+  "z="  'jinx-correct
+  "zw"  'jinx-correct
+  "za"  'jinx-correct-all
+  "zn"  'jinx-next
+  "zp"  'jinx-previous
+  )
 
 (use-package which-key
   :diminish which-key-mode

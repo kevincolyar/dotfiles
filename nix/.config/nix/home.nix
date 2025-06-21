@@ -28,6 +28,7 @@
     eza
     emacs
     emacs-lsp-booster
+    emacsPackages.jinx
     starship
     tmux
     fzf
