@@ -74,7 +74,11 @@
   "g"  '(:ignore t :which-key "git")
   "gg" 'magit-status
   "gb" 'magit-blame-addition
-  "gf" 'magit-log-current
+  "gf" 'magit-file-dispatch
+  "gl" 'magit-log-current
+
+  "o"  '(:ignore t :which-key "org")
+  "oc" 'org-capture
 
   "R" 'reload-init-file
 
@@ -84,7 +88,12 @@
   "w"   '(:ignore t :which-key "web")
   "ws"  'search-web
 
-  "z="  'flyspell-correct-word-before-point)
+  "z="  'jinx-correct
+  "zw"  'jinx-correct
+  "za"  'jinx-correct-all
+  "zn"  'jinx-next
+  "zp"  'jinx-previous
+  )
 
 (use-package which-key
   :diminish which-key-mode

@@ -48,8 +48,14 @@
 
 ;; GUI Settings
 (if (display-graphic-p)
-    (set-frame-font "FiraCode Nerd Font 16" nil t)
+    (set-frame-font "FiraCode Nerd Font 15" nil t)
     (setq default-frame-alist '((width . 80) (height . 24))))
+
+;; Display image images inline in org files
+(if (display-graphic-p)
+   (setq org-startup-with-inline-images t)
+   (setq org-display-remote-inline-images t))
+
 
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)

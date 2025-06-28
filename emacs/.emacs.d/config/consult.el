@@ -55,6 +55,7 @@
     "*"   'consult-ripgrep-symbol-at-point
     ;; "pf" 'consult-projectile
     "pf" 'project-find-file
+    "pp" 'consult-projectile-switch-project
 
     "bb" 'consult-buffer
     "ce" 'consult-flycheck

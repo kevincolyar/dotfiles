@@ -26,8 +26,9 @@
     wget
     dust
     eza
-    emacs30-nox
+    emacs
     emacs-lsp-booster
+    emacsPackages.jinx
     starship
     tmux
     fzf
@@ -54,6 +55,8 @@
     iperf
     rsync
     lazydocker
+    proxychains-ng
+    wireproxy
 
     zsh
     zsh-syntax-highlighting
@@ -161,7 +164,7 @@
     # Zsh startup is slow if set to true.
     enableCompletion = false;
 
-    initExtra = ''
+    initContent = ''
        # Vim Mode
        bindkey -v
 
@@ -195,6 +198,10 @@
 
        # Required by gnupg-vim, zsh, etc
        export GPG_TTY=$(tty)
+
+       # Ripgrep
+       export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
+       
     '';
 
     shellAliases = {
@@ -203,7 +210,7 @@
       less="less -R";
       du="dua -i .git -i node_modules interactive";
       cat="bat";
-      e="emacs";
+      e="emacs -nw";
 
       ls="eza --git";
       l="eza -lgh";
