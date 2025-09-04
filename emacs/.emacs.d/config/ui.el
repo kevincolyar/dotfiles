@@ -15,6 +15,9 @@
   :defer t
   :hook (prog-mode . rainbow-delimiters-mode))
 
+(use-package indent-bars
+  :hook (prog-mode .indent-bars-mode))
+
 (use-package doom-themes
   :config
   ;; (load-theme 'doom-sourcerer t)
@@ -25,7 +28,7 @@
 ;;   (load-theme 'doom-rouge t)
 ;;   ;; (load-theme 'doom-one t)
 ;;   ;; (doom-themes-visual-bell-config)
-;;   (doom-themes-org-config))
+   (doom-themes-org-config)
   )
 
 ;; (use-package kaolin-themes
@@ -63,5 +66,9 @@
 
 (use-package nerd-icons
   :defer t)
+
+;; Custom fonts
+(custom-set-faces
+ '(completions-common-part ((t (:foreground "#31748f" :weight bold)))))
 
 ;;; ui.el ends here

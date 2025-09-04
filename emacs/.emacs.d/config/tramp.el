@@ -1,7 +1,14 @@
+;; https://coredumped.dev/2025/06/18/making-tramp-go-brrrr./
+;; I don’t use rsync though because it breaks remote shells. Edit: This is going to be fixed in Emacs 30.2.
+
 (use-package tramp
   :after org
   :defer t
   :config
+  ;; Prevent extra files
+  (setq remote-file-name-inhibit-locks t
+        tramp-use-scp-direct-remote-copying t
+        remote-file-name-inhibit-auto-save-visited t)
   ;; Disable version control on tramp buffers to avoid freezes.
   (setq vc-ignore-dir-regexp
         (format "\\(%s\\)\\|\\(%s\\)"

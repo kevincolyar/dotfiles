@@ -27,6 +27,15 @@
 (add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.erb" . poly-ruby-mode))
 
+(defun platformio-conditionally-enable ()
+  "Enable PlatformIO mode if platformio.ini exists in project root."
+  (when (locate-dominating-file default-directory "platformio.ini")
+    (platformio-mode 1)))
+
+(use-package platformio-mode
+  :ensure t
+  :hook (c++-mode . platformio-conditionally-enable))
+
 ;; Code folding
 (use-package origami
   :init (global-origami-mode))

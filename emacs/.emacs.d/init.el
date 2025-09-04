@@ -39,14 +39,10 @@
 (load "~/.emacs.d/config/langs.el")
 (load "~/.emacs.d/config/flycheck.el")
 (load "~/.emacs.d/config/dape.el")
-;; (load "~/.emacs.d/config/spell.el")
 (load "~/.emacs.d/config/jinx.el")
-;; (load "~/.emacs.d/config/yas-snippet.el")
 (load "~/.emacs.d/config/dumb-jump.el")
 (load "~/.emacs.d/config/format-all.el")
 (load "~/.emacs.d/config/eldoc.el")
-;; (load "~/.emacs.d/config/ellama.el")
-(load "~/.emacs.d/config/gpt.el")
 (load "~/.emacs.d/config/nix.el")
 
 ;; Org
