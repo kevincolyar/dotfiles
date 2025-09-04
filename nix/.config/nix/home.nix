@@ -88,6 +88,9 @@
     # nix
     nixd # lsp server
 
+    # c/c++
+    clang # lsp server
+
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -142,7 +145,7 @@
   #  /etc/profiles/per-user/kevin.colyar/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    EDITOR = "emacs";
+    EDITOR = "emacs -nw";
     COLORTERM="truecolor";
   };
 

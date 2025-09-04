@@ -9,7 +9,7 @@
     # Deprecated?
     # darwin.apple_sdk.frameworks.Security
     # darwin.apple_sdk.frameworks.CoreServices
-    pkgs.aider-chat
+    # pkgs.aider-chat
   ];
 
     
@@ -88,7 +88,7 @@
       "brave-browser"
       "cyberduck"
       "dbeaver-community"
-      "docker"
+      "docker-desktop"
       "freecad"
       "ghostty"
       "lapce"
@@ -104,7 +104,7 @@
       "vlc"
       "wezterm"
       "windows-app"
-      "wireshark"
+      "wireshark-app"
     ];
   };
 }

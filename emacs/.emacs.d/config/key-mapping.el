@@ -24,6 +24,13 @@
                          (url-hexify-string search-text))))
         (browse-url url)))))
 
+
+
+
+;; Transient (magit, gptel, etc) menus
+  (with-eval-after-load 'transient
+    (keymap-set transient-map "<escape>" #'transient-quit-one))
+
 (kevincolyar/leader-keys
   ":"   'execute-extended-command
   "TAB" 'evil-switch-to-windows-last-buffer

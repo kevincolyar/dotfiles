@@ -47,7 +47,6 @@
 (quelpa '(popon :fetcher git
                 :url "https://codeberg.org/akib/emacs-popon.git"))
 
-".dotfiles"
 (quelpa '(corfu-terminal
           :fetcher git
           :url "https://codeberg.org/akib/emacs-corfu-terminal.git"))

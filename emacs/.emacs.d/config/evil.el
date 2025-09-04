@@ -36,16 +36,7 @@
   :after evil
   :init (evil-commentary-mode))
 
-;;  ;; visual hints while editing
-;; Seems a little slow
-;; (use-package evil-goggles
-;;   :after evil
-;;   :config
-;;   (evil-goggles-mode))
-
-;; (use-package evil-org
-;;   :after org
-;;   :hook (org-mode . (lambda () evil-org-mode))
-;;   :config
-;;   (require 'evil-org-agenda)
-;;   (evil-org-agenda-set-keys))
+;;; Use escape to escape from everything
+(use-package evil-escape
+  :ensure
+  :after evil)

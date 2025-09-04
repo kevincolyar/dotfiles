@@ -15,10 +15,16 @@
          (js-ts-mode . eglot-ensure)
          (go-mode . eglot-ensure)
          (nix-mode . eglot-ensure)
+         (c-mode . eglot-ensure)
+         (c++-mode . eglot-ensure)
          )
   :config
   (with-eval-after-load 'eglot
-    (add-to-list 'eglot-server-programs '((ruby-mode ruby-ts-mode) "ruby-lsp"))))
+    (add-to-list 'eglot-server-programs
+                 '((ruby-mode ruby-ts-mode) "ruby-lsp")
+                 '((c++-mode c-mode) . ("clangd"
+                                        "--compile-commands-dir=.pio/build"
+                                        "--header-insertion=never")))))
 
 ;; Install Instructions:
 ;; https://github.com/jdtsmith/eglot-booster
