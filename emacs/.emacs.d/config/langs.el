@@ -8,6 +8,7 @@
 (use-package toml-mode :defer t)
 (use-package lua-mode :defer t)
 (use-package go-mode :defer t)
+(use-package clojure-mode :defer t)
 
 (use-package web-mode
   :defer t
@@ -36,6 +37,3 @@
   :ensure t
   :hook (c++-mode . platformio-conditionally-enable))
 
-;; Code folding
-(use-package origami
-  :init (global-origami-mode))

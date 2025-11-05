@@ -6,7 +6,13 @@ window-save-state = always
 background-opacity = 0.92
 background-blur-radius = 15
 
-theme = rose-pine
+# Automatic dark/light switching
+theme = dark:Rose Pine Moon,light:Rose Pine Dawn
+
+# Or set individual themes
+# theme = Rose Pine
+# theme = Rose Pine Moon
+# theme = Rose Pine Dawn
 
 # Font
 font-family = "FiraCode Nerd Font"

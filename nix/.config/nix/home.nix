@@ -28,7 +28,7 @@
     eza
     emacs
     emacs-lsp-booster
-    emacsPackages.jinx
+    emacs.pkgs.jinx
     starship
     tmux
     fzf
@@ -51,12 +51,12 @@
     delta
     yazi
     nmap
-    prettierd # html formatter, used by emacs format-all 
     iperf
     rsync
     lazydocker
     proxychains-ng
     wireproxy
+    ttyd
 
     zsh
     zsh-syntax-highlighting
@@ -74,13 +74,18 @@
     devenv
     jq
     nil
+    grex
     ollama
+    mkcert
+    prettierd # html formatter, used by emacs format-all 
+    vscode-langservers-extracted # for html-mode
 
     # python
-    ruff
-    black
+    # black
     poetry
-    pyright
+    ruff
+    pyrefly
+    # pyright
 
     # rust
     cargo-outdated
@@ -145,7 +150,7 @@
   #  /etc/profiles/per-user/kevin.colyar/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    EDITOR = "emacs -nw";
+    EDITOR = "emacsclient -t";
     COLORTERM="truecolor";
   };
 
@@ -204,6 +209,9 @@
 
        # Ripgrep
        export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
+
+       # Pyrefly
+       export PYREFLY_STACK_SIZE=100000000
        
     '';
 
@@ -213,7 +221,7 @@
       less="less -R";
       du="dua -i .git -i node_modules interactive";
       cat="bat";
-      e="emacs -nw";
+      e="emacsclient -t";
 
       ls="eza --git";
       l="eza -lgh";

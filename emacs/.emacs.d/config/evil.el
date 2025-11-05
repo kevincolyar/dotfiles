@@ -20,7 +20,18 @@
 
   ;; (evil-define-key 'normal 'lsp-mode "K" 'lsp-describe-thing-at-point)
   ;; (evil-define-key 'normal 'lsp-mode "K" 'lsp-ui-doc-glance)
-  (evil-define-key 'normal 'eldoc-mode "K" 'eldoc)
+
+  (defun my-eldoc-toggle ()
+    "Toggle the eldoc documentation buffer."
+    (interactive)
+    (let ((buf eldoc--doc-buffer))
+      (if (and buf (get-buffer-window buf))
+          ;; Buffer exists and is visible, hide it
+          (quit-window nil (get-buffer-window buf))
+        ;; Buffer doesn't exist or isn't visible, show it
+        (call-interactively #'eldoc-doc-buffer))))
+
+  (evil-define-key 'normal 'eldoc-mode "K" 'my-eldoc-toggle)
 
   (evil-set-initial-state 'messages-buffer-mode 'normal)
   (evil-set-initial-state 'dashboard-mode 'normal)

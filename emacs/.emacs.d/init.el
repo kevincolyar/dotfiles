@@ -8,7 +8,9 @@
 
 (require 'use-package)
 (setq use-package-always-ensure t)
-(setq inhibit-startup-screen t)
+(setq
+ inhibit-startup-screen t
+ inhibit-startup-message t)
 
 ;; (unless package-archive-contents
 ;;   (package-refresh-contents))

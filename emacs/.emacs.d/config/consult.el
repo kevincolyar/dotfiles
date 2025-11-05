@@ -39,11 +39,13 @@
 
   :config
   (consult-customize
-   consult-theme :preview-key '(:debounce 0.1 any)
-   consult-ripgrep consult-git-grep consult-grep
+   '(consult-theme :preview-key '(:debounce 0.1 any))
+   consult-buffer
+   '(consult-ripgrep :preview-key '(:debounce 0.1 any)) 
+   consult-git-grep consult-grep
    consult-bookmark consult-recent-file consult-xref
-   consult--source-recent-file consult--source-project-recent-file
-   :preview-key '(:debounce 0.1 any)
+   consult--source-recent-file
+   '(consult--source-project-recent-file :preview-key '(:debounce 0.1 any))
   )
 
   :general

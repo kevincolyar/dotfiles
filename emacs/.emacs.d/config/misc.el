@@ -6,6 +6,7 @@
   (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'")))
 
 (use-package magit
+  :ensure t
   :commands (magit-status magit-get-current-branch)
   :custom
   (magic-display-buffer-function #'magic-display-buffer-same-window-except-diff-v1))

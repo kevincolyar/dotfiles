@@ -55,7 +55,7 @@
     };
   };
 
-  services.skhd.enable = true;
+  # services.skhd.enable = true;
   
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true;  # default shell on catalina
@@ -84,22 +84,17 @@
 
 
     casks = [
-      "alfred"
       "brave-browser"
       "cyberduck"
       "dbeaver-community"
       "docker-desktop"
       "freecad"
       "ghostty"
-      "lapce"
       "little-snitch"
-      "lm-studio"
       "prosys-opc-ua-browser"
       "qlstephen"
       "ricoh-ps-printers-vol4-exp-driver"
       "rustdesk"
-      "screenfocus"
-      "sourcetree"
       "timemachineeditor"
       "vlc"
       "wezterm"

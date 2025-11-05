@@ -39,7 +39,8 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (use-package autothemer
   :config
-  (load-theme 'doom-rose-pine t)
+  ;; (load-theme 'doom-rose-pine t)
+  (load-theme 'doom-rose-pine-moon t)
   ;; (load-theme 'oxocarbon t)
   )
 

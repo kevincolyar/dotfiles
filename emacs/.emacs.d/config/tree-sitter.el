@@ -13,6 +13,8 @@
 ;;   :defer t
 ;;   :after tree-sitter)
 
-(use-package treesit-auto
-  :config
-  (global-treesit-auto-mode))
+;; DISABLED: Causes slow down when opening files
+;; https://github.com/renzmann/treesit-auto/issues/135
+;; (use-package treesit-auto
+;;   :config
+;;   (global-treesit-auto-mode))
