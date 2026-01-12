@@ -47,6 +47,7 @@
 (quelpa '(popon :fetcher git
                 :url "https://codeberg.org/akib/emacs-popon.git"))
 
+;; NOTE: Corfu relies on child frames to show the popup. On Emacs 31 this works even for terminal Emacs, but support is still experimental. Use the corfu-terminal package on older Emacs versions.
 (quelpa '(corfu-terminal
           :fetcher git
           :url "https://codeberg.org/akib/emacs-corfu-terminal.git"))

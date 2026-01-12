@@ -43,7 +43,8 @@
   ;; Configure all servers at once
   (my/eglot-configure-servers
    '(((ruby-mode ruby-ts-mode) . ("ruby-lsp"))
-     ((python-mode python-ts-mode) . ("pyrefly" "lsp"))
+     ((python-mode python-ts-mode) . ("ty" "server"))
+     ;; ((python-mode python-ts-mode) . ("pyrefly" "lsp"))
      ;; ((python-mode python-ts-mode) . ("ruff"))
      ((html-mode html-ts-mode mhtml-mode) . ("vscode-html-language-server" "--stdio"))
      ((css-mode css-ts-mode) . ("vscode-css-language-server" "--stdio"))

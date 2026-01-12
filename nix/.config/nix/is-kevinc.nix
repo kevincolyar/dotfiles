@@ -10,6 +10,13 @@
     # darwin.apple_sdk.frameworks.Security
     # darwin.apple_sdk.frameworks.CoreServices
     # pkgs.aider-chat
+    pkgs.llama-cpp
+    pkgs.llama-swap
+    pkgs.opencode
+
+    # Docker stuff
+    pkgs.docker
+    pkgs.colima
   ];
 
     
@@ -87,12 +94,11 @@
       "brave-browser"
       "cyberduck"
       "dbeaver-community"
-      "docker-desktop"
+      # "docker-desktop"
       "freecad"
       "ghostty"
       "little-snitch"
       "prosys-opc-ua-browser"
-      "qlstephen"
       "ricoh-ps-printers-vol4-exp-driver"
       "rustdesk"
       "timemachineeditor"
@@ -100,6 +106,7 @@
       "wezterm"
       "windows-app"
       "wireshark-app"
+      # "ollama"
     ];
   };
 }
