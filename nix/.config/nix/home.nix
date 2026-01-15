@@ -24,6 +24,7 @@
     tree
     curl
     wget
+    snitch
     dust
     eza
     emacs
@@ -41,6 +42,7 @@
     fd
     htop
     btop
+    hl-log-viewer
     most
     gnugrep
     neovim
@@ -75,7 +77,7 @@
     jq
     nil
     grex
-    ollama
+    # ollama - Currently broken on arm64. Using brew version instead
     mkcert
     prettierd # html formatter, used by emacs format-all 
     vscode-langservers-extracted # for html-mode
@@ -85,6 +87,7 @@
     poetry
     ruff
     pyrefly
+    ty
     # pyright
 
     # rust
@@ -221,7 +224,8 @@
       less="less -R";
       du="dua -i .git -i node_modules interactive";
       cat="bat";
-      e="emacsclient -t";
+      e="emacs -nw";
+      ec="emacsclient -t";
 
       ls="eza --git";
       l="eza -lgh";

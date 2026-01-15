@@ -1,6 +1,7 @@
 local wezterm = require 'wezterm'
 
-local theme = require('lua/rose-pine').main
+local wezterm = require('wezterm')
+local theme = wezterm.plugin.require('https://github.com/neapsix/wezterm').moon
 
 return {
    check_for_updates = false,
@@ -18,11 +19,13 @@ return {
    -- font = wezterm.font('FuraMono Nerd Font'),
    -- font = wezterm.font('SauceCode Pro Nerd Font Regular'),
    -- font = wezterm.font('Fisa Code', { weight = 'Thin' }),
-   font_size = 14,
+   font_size = 15,
    adjust_window_size_when_changing_font_size = false,
    window_background_opacity = 0.95,
    macos_window_background_blur = 15,
    harfbuzz_features = { 'calt=0', 'clig=0', 'liga=0' },
+
+   default_cursor_style = 'BlinkingBlock',
 
    -- Disable Italic
    font_rules = {
