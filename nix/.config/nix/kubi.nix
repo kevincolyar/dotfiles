@@ -12,6 +12,7 @@
     protonvpn-gui
     networkmanagerapplet
     unixtools.netstat
+    ghostty
   ];
 
   # programs.zsh = {
