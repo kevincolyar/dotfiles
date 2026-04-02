@@ -20,6 +20,7 @@
 (load "~/.emacs.d/config/ui.el")
 (load "~/.emacs.d/config/key-mapping.el")
 (load "~/.emacs.d/config/crux.el")
+(load "~/.emacs.d/config/kirigami.el")
 
 ;; Command/File/Buffer Completion
 (load "~/.emacs.d/config/vertico.el")
