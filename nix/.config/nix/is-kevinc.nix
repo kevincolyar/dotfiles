@@ -3,15 +3,14 @@
 {
   nixpkgs.hostPlatform = "aarch64-darwin";
 
+  # Turn off nix-darwin's management of the Nix installation
+  nix.enable = false;
+
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
-    # Deprecated?
-    # darwin.apple_sdk.frameworks.Security
-    # darwin.apple_sdk.frameworks.CoreServices
-    # pkgs.aider-chat
     pkgs.llama-cpp
-    pkgs.llama-swap
+    # pkgs.llama-swap
     pkgs.opencode
 
     # Docker stuff
@@ -19,10 +18,22 @@
     pkgs.colima
   ];
 
+  # Colima CA Cert Fix
+  #  cat /etc/nix/macos-keychain.crt | \
+  #  colima ssh -- sudo tee /etc/nix/macos-keychain.crt && \
+  #  colima ssh -- sudo update-ca-certificates
     
   # Add ability to used TouchID for sudo authentication
-  # security.pam.enableSudoTouchIdAuth = true;
   security.pam.services.sudo_local.touchIdAuth = true;
+
+  # Fixes tools like curl
+  security.pki.certificateFiles = [
+    "/etc/nix/macos-keychain.crt"
+    # "/etc/ssl/certs/dcpud-ca.crt"
+  ];
+
+  # Restarts nix daemon
+  # sudo launchctl kickstart -k system/systems.determinate.nix-daemon
 
   # Setup pam-reattached to enable touchid & sudo inside tmux
   environment = {
@@ -35,6 +46,8 @@
     # Required for emacs native compiling. Fixes 'libgccjit.so: error: error invoking gcc driver' error.
     variables = {
         LIBRARY_PATH = "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib";
+        SSL_CERT_FILE = "/etc/nix/macos-keychain.crt";
+        NIX_SSL_CERT_FILE = "/etc/nix/macos-keychain.crt";
     };
   };
 
@@ -71,11 +84,12 @@
   # MacOS Settings
   # https://macos-defaults.com
   system.defaults.dock.appswitcher-all-displays = true;
-
-  system.defaults.NSGlobalDomain.NSWindowShouldDragOnGesture = true;
-
   system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToControl = true;
+  system.defaults.NSGlobalDomain.KeyRepeat = 1;
+  system.defaults.NSGlobalDomain.InitialKeyRepeat = 9;
+  system.defaults.NSGlobalDomain.ApplePressAndHoldEnabled = false;
+  system.defaults.NSGlobalDomain.NSWindowShouldDragOnGesture = true;
 
   # Setup fonts
   fonts.packages = [
@@ -89,7 +103,6 @@
       cleanup = "zap";
     };
 
-
     casks = [
       "brave-browser"
       "cyberduck"
@@ -99,12 +112,15 @@
       "ghostty"
       "little-snitch"
       "prosys-opc-ua-browser"
-      "ricoh-ps-printers-vol4-exp-driver"
+      # "ricoh-ps-printers-vol4-exp-driver"
       "rustdesk"
       "timemachineeditor"
       "vlc"
       "wezterm"
       "windows-app"
+      "microsoft-teams"
+      "microsoft-outlook"
+      "postman"
       "wireshark-app"
       # "ollama"
     ];

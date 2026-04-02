@@ -28,7 +28,7 @@
     dust
     eza
     emacs
-    emacs-lsp-booster
+    # emacs-lsp-booster
     emacs.pkgs.jinx
     starship
     tmux
@@ -40,6 +40,8 @@
     pinentry-tty
     dua
     fd
+    witr
+    tailspin
     htop
     btop
     hl-log-viewer
@@ -84,7 +86,7 @@
 
     # python
     # black
-    poetry
+    # poetry
     ruff
     pyrefly
     ty
@@ -153,7 +155,7 @@
   #  /etc/profiles/per-user/kevin.colyar/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    EDITOR = "emacsclient -t";
+    EDITOR = "emacs -nw";
     COLORTERM="truecolor";
   };
 
@@ -243,7 +245,7 @@
       gs="git status";
       grm="git status | grep deleted | awk '{print \$3}' | xargs git rm";
       git_diff="git diff --no-ext-diff -w '$@' | vim -R -";
-      glg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %C(yellow) %an %Creset' --abbrev-commit --date=relative";
+      glg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
 
       # docker
       dc="docker compose";
