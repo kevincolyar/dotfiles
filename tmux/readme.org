@@ -7,3 +7,18 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 #+end_src
 
 Then in tmux, ctrl-f I
+
+** On MacOS with Ghostty: Fix undercurls, etc
+
+Follow: https://gist.github.com/bbqtd/a4ac060d6f6b9ea6fe3aabe735aa9d95
+
+#+begin_src sh
+curl -LO https://invisible-island.net/datafiles/current/terminfo.src.gz && gunzip terminfo.src.gz
+/usr/bin/tic -xe tmux-256color terminfo.src
+#+end_src
+
+In ~/.tmux.conf:
+
+#+begin_src sh
+set -g default-terminal "tmux-256color"
+#+end_src
