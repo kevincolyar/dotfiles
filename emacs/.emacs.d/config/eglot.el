@@ -48,7 +48,18 @@
      ;; ((python-mode python-ts-mode) . ("ruff"))
      ((html-mode html-ts-mode mhtml-mode) . ("vscode-html-language-server" "--stdio"))
      ((css-mode css-ts-mode) . ("vscode-css-language-server" "--stdio"))
-     ((markdown-mode) . ("vscode-markdown-language-server" "--stdio")))))
+     ((markdown-mode) . ("vscode-markdown-language-server" "--stdio"))))
+
+  (defun my/eglot-capf ()
+    (setq-local completion-at-point-functions
+                (list (cape-capf-super
+                       #'eglot-completion-at-point
+                       #'tempel-expand
+                       #'cape-file))))
+
+  (add-hook 'eglot-managed-mode-hook #'my/eglot-capf)
+
+  )
 
   ;; (with-eval-after-load 'eglot
   ;;   (add-to-list 'eglot-server-programs
