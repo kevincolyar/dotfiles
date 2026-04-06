@@ -13,6 +13,8 @@
     networkmanagerapplet
     unixtools.netstat
     ghostty
+    bitwarden-cli
+    enscript
   ];
 
   # programs.zsh = {

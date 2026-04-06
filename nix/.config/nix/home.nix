@@ -132,6 +132,7 @@
     # '';
 
     ".gnupg/gpg-agent.conf".text = ''
+       allow-loopback-pinentry
        pinentry-program ${pkgs.pinentry-tty}/bin/pinentry-tty
     '';
   };
@@ -176,6 +177,9 @@
     enableCompletion = false;
 
     initContent = ''
+       # Dumb terminal (e.g. emacs tramp)
+       [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
+
        # Vim Mode
        bindkey -v
 
