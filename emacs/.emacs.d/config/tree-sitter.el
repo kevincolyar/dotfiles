@@ -18,3 +18,6 @@
 ;; (use-package treesit-auto
 ;;   :config
 ;;   (global-treesit-auto-mode))
+
+
+;; (setq treesit-font-lock-level 4)

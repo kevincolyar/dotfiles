@@ -56,7 +56,7 @@
 
 (setq
  fill-column  80
- tab-width 2
+ tab-width 8
  visible-bell nil
  ring-bell-function 'ignore
  )                         ; Set width for automatic line breaks

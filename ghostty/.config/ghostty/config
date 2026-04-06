@@ -25,4 +25,4 @@ font-thicken = true
 mouse-hide-while-typing = true
 cursor-style = block
 cursor-style-blink = true
-cursor-color = "#ffffff"
+cursor-color = "#FF5F00"

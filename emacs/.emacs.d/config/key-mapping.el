@@ -86,11 +86,14 @@
 
   "o"  '(:ignore t :which-key "org")
   "oc" 'org-capture
+  "ot" '((lambda () (interactive) (org-capture nil "t")) :which-key "capture TODO")
 
   "R" 'reload-init-file
 
   "s"  '(:ignore t :which-key "search")
   ;; "ss"  'swiper-thing-at-point
+
+  "ti"  'tempel-insert
 
   "w"   '(:ignore t :which-key "web")
   "ws"  'search-web

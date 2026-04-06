@@ -40,7 +40,8 @@
 (use-package autothemer
   :config
   ;; (load-theme 'doom-rose-pine t)
-  (load-theme 'doom-rose-pine-moon t)
+  ;; (load-theme 'doom-rose-pine-moon t)
+  (load-theme 'doom-rose-pine-dawn t)
   ;; (load-theme 'oxocarbon t)
   )
 
@@ -71,5 +72,30 @@
 ;; Custom fonts
 (custom-set-faces
  '(completions-common-part ((t (:foreground "#31748f" :weight bold)))))
+
+;; Transient Menu (magit, gptel, etc) - light mode
+(with-eval-after-load 'transient
+  (dolist (face '(transient-key-stay transient-key-return))
+    (set-face-attribute face nil
+                        :foreground "#99aa99")))
+
+;; Current search candidate - light mode
+(set-face-attribute 'isearch nil
+                    :background "#ff9900"
+                    :foreground "black"
+                    :inverse-video nil)
+
+
+;; Other search candidates - light mode
+(set-face-attribute 'lazy-highlight nil
+                    :background "#ffdd99"
+                    :foreground "black"
+                    :inverse-video nil)
+
+;; Markdown code blocks
+(with-eval-after-load 'markdown-mode
+  (set-face-attribute 'markdown-code-face nil
+                      :background 'unspecified))
+
 
 ;;; ui.el ends here

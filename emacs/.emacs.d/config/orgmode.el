@@ -3,6 +3,7 @@
   :hook
   (org-mode . org-indent-mode)
   (org-mode . visual-line-mode) ;; Word wrap
+  (org-mode . (lambda () (setq tab-width 8)))
   :config
   (setq
    org-refile-targets '((org-agenda-files :maxlevel . 3))
@@ -34,6 +35,10 @@
              "/"  'org-update-statistics-cookies
              "#"  'org-table-align
              "a"  'org-agenda
+             "i"  '(:ignore t :which-key "Insert")
+             "is" '((lambda () (interactive) (org-insert-structure-template "src")) :which-key "src")
+             "il" 'org-insert-structure-template
+             "id" '((lambda () (interactive) (org-insert-time-stamp nil nil t)) :which-key "insert date")
              "s"  '(:ignore t :which-key "Subtree")
              "sa" 'org-archive-subtree
              "si" 'evil-org-org-insert-todo-heading-respect-content-below

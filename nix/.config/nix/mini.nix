@@ -3,12 +3,13 @@
 {
   nixpkgs.hostPlatform = "aarch64-darwin";
 
+  # Turn off nix-darwin's management of the Nix installation
+  nix.enable = false;
+
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     yt-dlp
-    darwin.apple_sdk.frameworks.Security
-    darwin.apple_sdk.frameworks.CoreServices
   ];
 
   environment = {

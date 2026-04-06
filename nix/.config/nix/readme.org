@@ -17,7 +17,7 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix 
 ** Darwin
 
 #+begin_src sh
-    darwin-rebuild switch --flake ~/.dotfiles/nix/.config/nix#HOSTNAME
+    sudo darwin-rebuild switch --flake ~/.dotfiles/nix/.config/nix#HOSTNAME
 #+end_src
 
 ** Home Manager
@@ -26,8 +26,14 @@ curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix 
     home-manager switch --flake ~/.dotfiles/nix/.config/nix#HOSTNAME
 #+end_src
 
-* Update
+* Update Channels
 
 #+begin_src sh
-    nix flake update ~/.dotfiles/nix/.config/nix
+    nix flake update --flake ~/.dotfiles/nix/.config/nix
+#+end_src
+
+* Collect Garbage
+
+#+begin_src sh
+  nix-collect-garbage
 #+end_src
