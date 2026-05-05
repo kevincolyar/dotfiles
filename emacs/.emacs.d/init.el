@@ -58,6 +58,6 @@
 (load custom-file 'noerror 'nomessage)
 
 ;; Load private config
-(setq-default private-config (expand-file-name "~/.emacs.private"))
+(setq-default private-config (expand-file-name "~/.emacs.private.gpg"))
 (when (file-exists-p private-config)
   (load-file private-config))

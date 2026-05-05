@@ -1,5 +1,8 @@
 (use-package flycheck
-  :init (global-flycheck-mode))
+  :init (global-flycheck-mode)
+  :config
+  (setq flycheck-ruby-rubocop-executable "bundle exec rubocop")
+  )
 
 (use-package flycheck-inline
   :after flycheck

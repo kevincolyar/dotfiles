@@ -61,6 +61,13 @@
  ring-bell-function 'ignore
  )                         ; Set width for automatic line breaks
 
+;; (superword-mode 1)
+(setq evil-search-module 'isearch)
+(modify-syntax-entry ?- "w")
+(modify-syntax-entry ?_ "w")
+
+(setq redisplay-skip-fontification-on-input t)
+
 ;; Supress compilation warnings
 (setq warning-suppress-types '(comp))
 

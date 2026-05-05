@@ -2,6 +2,7 @@
 ;; ------------------------------------------------------------------------------
 ;; https://joaotavora.github.io/eglot/#Using-Eglot
 
+(setq read-process-output-max (* 4 1024 1024)) ; 4MB
 
 (use-package eglot
   :defer t

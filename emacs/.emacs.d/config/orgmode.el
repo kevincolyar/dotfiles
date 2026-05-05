@@ -32,13 +32,14 @@
              :states 'normal
              ;; :keymaps 'org-mode-map
              :prefix ","
+             ","  'org-ctrl-c-ctrl-c 
              "/"  'org-update-statistics-cookies
              "#"  'org-table-align
              "a"  'org-agenda
              "i"  '(:ignore t :which-key "Insert")
              "is" '((lambda () (interactive) (org-insert-structure-template "src")) :which-key "src")
              "il" 'org-insert-structure-template
-             "id" '((lambda () (interactive) (org-insert-time-stamp nil nil t)) :which-key "insert date")
+             "id" '((lambda () (interactive) (org-insert-time-stamp nil t t)) :which-key "insert date")
              "s"  '(:ignore t :which-key "Subtree")
              "sa" 'org-archive-subtree
              "si" 'evil-org-org-insert-todo-heading-respect-content-below
