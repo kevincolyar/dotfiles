@@ -135,6 +135,8 @@
 
     ".gnupg/gpg-agent.conf".text = ''
        pinentry-program ${pkgs.pinentry-tty}/bin/pinentry-tty
+       default-cache-ttl 86400       # 24 hours
+       max-cache-ttl 604800          # 7 days (hard max)
     '';
   };
 
