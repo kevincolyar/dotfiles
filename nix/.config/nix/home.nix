@@ -61,6 +61,8 @@
     proxychains-ng
     wireproxy
     ttyd
+    rmlint
+    zoxide
 
     zsh
     zsh-syntax-highlighting
@@ -220,6 +222,8 @@
        # Pyrefly
        export PYREFLY_STACK_SIZE=100000000
        
+       # zoxide
+       eval "$(zoxide init zsh)"
     '';
 
     shellAliases = {
