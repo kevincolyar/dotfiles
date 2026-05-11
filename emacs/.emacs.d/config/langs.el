@@ -41,6 +41,5 @@
     (platformio-mode 1)))
 
 (use-package platformio-mode
-  :ensure t
   :hook (c++-mode . platformio-conditionally-enable))
 

@@ -39,18 +39,16 @@
   (add-to-list 'completion-at-point-functions #'cape-file)
   )
 
-(use-package quelpa
-  :defer t
-  :config
-  (setq quelpa-update-melpa-p nil)) ;; Don't update at startup
-
-(quelpa '(popon :fetcher git
-                :url "https://codeberg.org/akib/emacs-popon.git"))
+(straight-use-package
+ '(popon
+   :type git
+   :repo "https://codeberg.org/akib/emacs-popon.git"))
 
 ;; NOTE: Corfu relies on child frames to show the popup. On Emacs 31 this works even for terminal Emacs, but support is still experimental. Use the corfu-terminal package on older Emacs versions.
-(quelpa '(corfu-terminal
-          :fetcher git
-          :url "https://codeberg.org/akib/emacs-corfu-terminal.git"))
+(straight-use-package
+ '(corfu-terminal
+   :type git
+   :repo "https://codeberg.org/akib/emacs-corfu-terminal.git"))
 
 ;; Currently broken
 ;; (quelpa '(corfu-doc-terminal
