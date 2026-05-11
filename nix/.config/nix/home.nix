@@ -136,6 +136,7 @@
     # '';
 
     ".gnupg/gpg-agent.conf".text = ''
+       allow-loopback-pinentry
        pinentry-program ${pkgs.pinentry-tty}/bin/pinentry-tty
        default-cache-ttl 86400       # 24 hours
        max-cache-ttl 604800          # 7 days (hard max)
@@ -182,6 +183,9 @@
     enableCompletion = false;
 
     initContent = ''
+       # Dumb terminal (e.g. emacs tramp)
+       [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
+
        # Vim Mode
        bindkey -v
 
