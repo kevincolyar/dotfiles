@@ -172,6 +172,12 @@
 
   programs.direnv.enable = true;
 
+  # Keychain used for cron+ssh
+  programs.keychain = {
+    enable = true;
+    keys = [ "id_rsa" ];
+  };
+
   # https://github.com/starcraft66/os-config/blob/master/home-manager/programs/zsh.nix
   programs.zsh = {
     enable = true;
