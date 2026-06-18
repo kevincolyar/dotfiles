@@ -38,14 +38,38 @@
 ;;   ;; (load-theme 'kaolin-dark t)
 ;;   (load-theme 'kaolin-shiva t))
 
+(defun my/system-dark-mode-p ()
+  (pcase system-type
+    ('darwin
+     (string= "Dark"
+              (string-trim
+               (shell-command-to-string
+                "defaults read -g AppleInterfaceStyle 2>/dev/null"))))
+    (_ t)))
+
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (use-package autothemer
   :config
-  ;; (load-theme 'doom-rose-pine t)
-  ;; (load-theme 'doom-rose-pine-moon t)
+  (load-theme 'doom-rose-pine-moon t)
   (load-theme 'doom-rose-pine-dawn t)
-  ;; (load-theme 'oxocarbon t)
+  :init
+  ;; Set light/dark theme based on system
+  (if (my/system-dark-mode-p)
+      (load-theme 'rose-pine-moon t)
+    (load-theme 'rose-pine-dawn t))
   )
+
+(use-package auto-dark
+  :ensure t
+  :custom
+  (auto-dark-themes '((doom-rose-pine-moon) (doom-rose-pine-dawn)))
+  (auto-dark-polling-interval-seconds 2)
+  :init
+  (progn
+    ;; Only enable for MacOS
+    (when (eq system-type 'darwin)
+      (setq auto-dark-allow-osascript t)
+      (auto-dark-mode))))
 
 ;; Make background transparent
 (unless (display-graphic-p)
