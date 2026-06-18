@@ -12,6 +12,12 @@ stow
 
 * Notes
 
+Startup
+
+#+begin_src sh
+ssh-add && gpg-agent --daemon --q; tmux
+#+end_src
+
 Disable OpenGL on older laptop, for wezterm
 
 #+begin_src sh
