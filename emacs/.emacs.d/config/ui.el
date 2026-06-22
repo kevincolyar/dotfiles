@@ -59,17 +59,18 @@
     (load-theme 'rose-pine-dawn t))
   )
 
-(use-package auto-dark
-  :ensure t
-  :custom
-  (auto-dark-themes '((doom-rose-pine-moon) (doom-rose-pine-dawn)))
-  (auto-dark-polling-interval-seconds 2)
-  :init
-  (progn
-    ;; Only enable for MacOS
-    (when (eq system-type 'darwin)
-      (setq auto-dark-allow-osascript t)
-      (auto-dark-mode))))
+;; Not working on remote, tramp (rsync) files
+;; (use-package auto-dark
+;;   :ensure t
+;;   :custom
+;;   (auto-dark-themes '((doom-rose-pine-moon) (doom-rose-pine-dawn)))
+;;   (auto-dark-polling-interval-seconds 2)
+;;   :init
+;;   (progn
+;;     ;; Only enable for MacOS
+;;     (when (eq system-type 'darwin)
+;;       (setq auto-dark-allow-osascript t)
+;;       (auto-dark-mode))))
 
 ;; Make background transparent
 (unless (display-graphic-p)
