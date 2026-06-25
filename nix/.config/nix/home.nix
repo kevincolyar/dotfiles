@@ -90,7 +90,7 @@
     # black
     # poetry
     ruff
-    pyrefly
+    # pyrefly
     ty
     # pyright
 
