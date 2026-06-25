@@ -1,0 +1,70 @@
+* Emacs
+
+** Profile Startup Time
+
+#+begin_src 
+    emacs -nw -f use-package-report
+#+end_src
+
+** Updating Packages in straight.el
+
+*** Update a single package
+
+#+begin_src 
+M-x straight-pull-package
+#+end_src
+Then type the package name (e.g., =vertico=). This pulls the latest commit from the Git remote.
+
+---
+
+*** Update all packages
+
+#+begin_src 
+M-x straight-pull-all
+#+end_src
+
+Or, from the command line:
+#+begin_src 
+emacs -nw -f straight-pull-all
+#+end_src
+
+---
+
+*** After updating — rebuild
+
+Pulling updates the Git repo but doesn't rebuild. To rebuild:
+
+#+begin_src 
+M-x straight-rebuild-package   ; single package
+M-x straight-rebuild-all       ; all packages
+#+end_src
+
+Or do both in one step:
+
+#+begin_src 
+M-x straight-pull-package-and-deps   ; pulls + rebuilds a package + its deps
+#+end_src
+
+---
+
+*** The typical update workflow
+
+#+begin_src 
+M-x straight-pull-all         ; 1. pull latest from all remotes
+M-x straight-rebuild-all      ; 2. rebuild everything
+M-x straight-freeze-versions  ; 3. update your lockfile
+#+end_src
+
+Then commit the updated =straight/versions/default.el= to version control.
+
+---
+
+*** Restoring to lockfile versions
+
+If an update breaks something:
+
+#+begin_src 
+M-x straight-thaw-versions    ; revert all packages to lockfile versions
+#+end_src
+
+---

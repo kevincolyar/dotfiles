@@ -90,7 +90,7 @@
     # black
     # poetry
     ruff
-    pyrefly
+    # pyrefly
     ty
     # pyright
 
@@ -194,6 +194,9 @@
 
        # Vim Mode
        bindkey -v
+
+       # Set maximum number of open file descriptors to 65536
+       ulimit -n 65536
 
        zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|=*' 'l:|=*'
  
