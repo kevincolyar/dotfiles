@@ -12,9 +12,22 @@ stow
 
 * Notes
 
+Startup
+
+#+begin_src sh
+ssh-add && gpg-agent --daemon --q; tmux
+#+end_src
+
 Disable OpenGL on older laptop, for wezterm
 
 #+begin_src sh
 systemctl --user unset-environment LIBGL_ALWAYS_SOFTWARE
 #+end_src
+
+* MacOS
+
+Add terminal to Developer Tools for faster builds
+
+[[https://nnethercote.github.io/2025/09/04/faster-rust-builds-on-mac.html][[2025-12-24 Wed 11:33]]]
+
 

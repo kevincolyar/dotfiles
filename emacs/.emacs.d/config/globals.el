@@ -15,7 +15,17 @@
 (global-hl-line-mode -1) ;; Disable Highlight cursor line
 (ido-mode -1) ; Disable ido mode
 (column-number-mode)
-(global-display-line-numbers-mode 1)
+(global-completion-preview-mode)
+
+;; (global-display-line-numbers-mode 1)
+
+(defun display-line-numbers-hook ()
+  (display-line-numbers-mode 1))
+
+;; Only show line numbers in prog-mode and text-mode
+(add-hook 'prog-mode-hook 'display-line-numbers-hook)
+(add-hook 'text-mode-hook 'display-line-numbers-hook)
+
 (recentf-mode 1) ;; Save recent files
 (setq recentf-auto-cleanup 'never)
 
@@ -46,10 +56,17 @@
 
 (setq
  fill-column  80
- tab-width 2
+ tab-width 8
  visible-bell nil
  ring-bell-function 'ignore
  )                         ; Set width for automatic line breaks
+
+;; (superword-mode 1)
+(setq evil-search-module 'isearch)
+(modify-syntax-entry ?- "w")
+(modify-syntax-entry ?_ "w")
+
+(setq redisplay-skip-fontification-on-input t)
 
 ;; Supress compilation warnings
 (setq warning-suppress-types '(comp))
@@ -65,3 +82,6 @@
 
 ;; The default is 800 kilobytes.  Measured in bytes.
 (setq gc-cons-threshold (* 50 1000 1000))
+
+;; Force the GPG password prompt into the minibuffer instead of a gui popup
+(setq epg-pinentry-mode 'loopback)

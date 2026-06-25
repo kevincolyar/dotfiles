@@ -24,10 +24,12 @@
     tree
     curl
     wget
+    snitch
     dust
     eza
-    emacs30-nox
-    emacs-lsp-booster
+    emacs
+    # emacs-lsp-booster
+    emacs.pkgs.jinx
     starship
     tmux
     fzf
@@ -38,19 +40,29 @@
     pinentry-tty
     dua
     fd
+    witr
+    tailspin
     htop
     btop
+    hl-log-viewer
     most
     gnugrep
     neovim
     mprocs
     autossh
     stow
+    serie
     delta
     yazi
     nmap
-    prettierd # html formatter, used by emacs format-all 
     iperf
+    rsync
+    lazydocker
+    proxychains-ng
+    wireproxy
+    ttyd
+    rmlint
+    zoxide
 
     zsh
     zsh-syntax-highlighting
@@ -68,19 +80,28 @@
     devenv
     jq
     nil
-    ollama
+    grex
+    # ollama - Currently broken on arm64. Using brew version instead
+    mkcert
+    prettierd # html formatter, used by emacs format-all 
+    vscode-langservers-extracted # for html-mode
 
     # python
+    # black
+    # poetry
     ruff
-    black
-    poetry
-    pyright
+    # pyrefly
+    ty
+    # pyright
 
     # rust
     cargo-outdated
 
     # nix
     nixd # lsp server
+
+    # c/c++
+    clang # lsp server
 
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
@@ -102,7 +123,7 @@
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
-  home.file = {
+  home.file = with pkgs; {
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
@@ -113,6 +134,13 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
+
+    ".gnupg/gpg-agent.conf".text = ''
+       allow-loopback-pinentry
+       pinentry-program ${pkgs.pinentry-tty}/bin/pinentry-tty
+       default-cache-ttl 86400       # 24 hours
+       max-cache-ttl 604800          # 7 days (hard max)
+    '';
   };
 
   # Home Manager can also manage your environment variables through
@@ -132,9 +160,8 @@
   #  /etc/profiles/per-user/kevin.colyar/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    EDITOR = "emacs";
+    EDITOR = "emacs -nw";
     COLORTERM="truecolor";
-    GPG_TTY = "tty"; # Required by gnupg-vim
   };
 
   programs.starship.enable = true;
@@ -144,6 +171,12 @@
   # programs.fzf.keybindings = true;
 
   programs.direnv.enable = true;
+
+  # Keychain used for cron+ssh
+  programs.keychain = {
+    enable = true;
+    keys = [ "id_rsa" ];
+  };
 
   # https://github.com/starcraft66/os-config/blob/master/home-manager/programs/zsh.nix
   programs.zsh = {
@@ -155,9 +188,15 @@
     # Zsh startup is slow if set to true.
     enableCompletion = false;
 
-    initExtra = ''
+    initContent = ''
+       # Dumb terminal (e.g. emacs tramp)
+       [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
+
        # Vim Mode
        bindkey -v
+
+       # Set maximum number of open file descriptors to 65536
+       ulimit -n 65536
 
        zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|=*' 'l:|=*'
  
@@ -184,8 +223,25 @@
        if [ -n "''${commands[fzf-share]}" ]; then
          # source "$(fzf-share)/key-bindings.zsh"
          # source "$(fzf-share)/completion.zsh"
+
+         # Having problems on older ubuntu systems unable recompile fzf-tab binary? Remove the old one:
+         # e.g.: rm root@kubi:/nix/store/hzvfypkvkcx9axfw4wrzi69pr3y6bp6p-zsh-fzf-tab-1.3.0/share/fzf-tab/modules/Src/aloxaf/fzftab.so
+         FZF_TAB_MODULE_BUILD=0
+         zstyle ':fzf-tab:*' use-fzf-default-opts yes
          source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
        fi
+
+       # Required by gnupg-vim, zsh, etc
+       export GPG_TTY=$(tty)
+
+       # Ripgrep
+       export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
+
+       # Pyrefly
+       export PYREFLY_STACK_SIZE=100000000
+       
+       # zoxide
+       eval "$(zoxide init zsh)"
     '';
 
     shellAliases = {
@@ -194,7 +250,8 @@
       less="less -R";
       du="dua -i .git -i node_modules interactive";
       cat="bat";
-      e="emacs";
+      e="emacs -nw";
+      ec="emacsclient -t";
 
       ls="eza --git";
       l="eza -lgh";
@@ -212,7 +269,7 @@
       gs="git status";
       grm="git status | grep deleted | awk '{print \$3}' | xargs git rm";
       git_diff="git diff --no-ext-diff -w '$@' | vim -R -";
-      glg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %C(yellow) %an %Creset' --abbrev-commit --date=relative";
+      glg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
 
       # docker
       dc="docker compose";

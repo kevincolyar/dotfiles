@@ -1,0 +1,28 @@
+macos-titlebar-style = hidden
+# macos-titlebar-proxy-icon = hidden
+window-save-state = always
+
+# TODO: Doesn't work in macos+fullscreen
+background-opacity = 0.92
+background-blur-radius = 15
+
+# Automatic dark/light switching
+theme = dark:Rose Pine Moon,light:Rose Pine Dawn
+
+# Or set individual themes
+# theme = Rose Pine
+# theme = Rose Pine Moon
+# theme = Rose Pine Dawn
+
+# Font
+font-family = "FiraCode Nerd Font"
+font-size = 15
+font-style = light
+font-thicken = true
+# adjust-cell-height = 10%
+
+# Mouse & Cursor
+mouse-hide-while-typing = true
+cursor-style = block
+cursor-style-blink = true
+cursor-color = "#FF5F00"

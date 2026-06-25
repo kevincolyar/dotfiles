@@ -15,10 +15,21 @@
   )
 
 (defun search-web ()
-  "Promt for search query and open it in the web browser."
   (interactive)
-  (let ((query (read-string "Query: ")))
-    (browse-url (concat "https://search.brave.com/search?q=" query))))
+  (let ((search-text (if (use-region-p)
+                         (buffer-substring-no-properties (region-beginning) (region-end))
+                       (read-string "Search text: "))))
+    (when (and search-text (not (string= search-text "")))
+      (let ((url (concat "https://search.brave.com/search?q=" 
+                         (url-hexify-string search-text))))
+        (browse-url url)))))
+
+
+
+
+;; Transient (magit, gptel, etc) menus
+  (with-eval-after-load 'transient
+    (keymap-set transient-map "<escape>" #'transient-quit-one))
 
 (kevincolyar/leader-keys
   ":"   'execute-extended-command
@@ -48,6 +59,8 @@
   "cr"  'xref-find-references
   "cR"  'eglot-rename
 
+  "xe"  'eval-last-sexp
+
   "h"  '(:ignore t :which-key "help")
   "hb" 'describe-bindings
   "hc" 'describe-command
@@ -68,17 +81,29 @@
   "g"  '(:ignore t :which-key "git")
   "gg" 'magit-status
   "gb" 'magit-blame-addition
-  "gf" 'magit-log-current
+  "gf" 'magit-file-dispatch
+  "gl" 'magit-log-current
+
+  "o"  '(:ignore t :which-key "org")
+  "oc" 'org-capture
+  "ot" '((lambda () (interactive) (org-capture nil "t")) :which-key "capture TODO")
 
   "R" 'reload-init-file
 
   "s"  '(:ignore t :which-key "search")
   ;; "ss"  'swiper-thing-at-point
 
+  "ti"  'tempel-insert
+
   "w"   '(:ignore t :which-key "web")
   "ws"  'search-web
 
-  "z="  'flyspell-correct-word-before-point)
+  "z="  'jinx-correct
+  "zw"  'jinx-correct
+  "za"  'jinx-correct-all
+  "zn"  'jinx-next
+  "zp"  'jinx-previous
+  )
 
 (use-package which-key
   :diminish which-key-mode

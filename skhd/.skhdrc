@@ -10,14 +10,16 @@ alt - return : open -n /Applications/WezTerm.app
 ]
 
 # Rotate tree
-alt - r : yabai -m space --rotate 90
+# alt - r : yabai -m space --rotate 90
 
 alt - b : open /Applications/Brave\ Browser.app
 alt - a : open /Applications/Alacritty.app
 alt - w : open /Applications/WezTerm.app
 alt - m : open /Applications/Music.app
+alt - g : open /Applications/Ghostty.app
+alt - r : open /Applications/RustDesk.app
 
 alt - n [
-  "brave browser" : open /Applications/WezTerm.app
-  "wezterm" : open "/Applications/Brave Browser.app"
+  "brave browser" : open /Applications/Ghostty.app
+  "ghostty" : open "/Applications/Brave Browser.app"
 ]

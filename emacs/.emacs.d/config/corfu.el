@@ -11,7 +11,7 @@
             "C-d" #'corfu-scroll-down
             "C-[" #'corfu-quit)
   :init
-  (setq corfu-auto t                           ;; Enable auto completion
+  (setq corfu-auto t                           ;; Enable auto completion, required for eglot methods, etc
         corfu-cycle t                          ;; Enable cycling for `corfu-next/previous'
         corfu-quit-no-match 'separator         ;; or t
         corfu-auto-prefix 2
@@ -39,18 +39,16 @@
   (add-to-list 'completion-at-point-functions #'cape-file)
   )
 
-(use-package quelpa
-  :defer t
-  :config
-  (setq quelpa-update-melpa-p nil)) ;; Don't update at startup
+(straight-use-package
+ '(popon
+   :type git
+   :repo "https://codeberg.org/akib/emacs-popon.git"))
 
-(quelpa '(popon :fetcher git
-                :url "https://codeberg.org/akib/emacs-popon.git"))
-
-".dotfiles"
-(quelpa '(corfu-terminal
-          :fetcher git
-          :url "https://codeberg.org/akib/emacs-corfu-terminal.git"))
+;; NOTE: Corfu relies on child frames to show the popup. On Emacs 31 this works even for terminal Emacs, but support is still experimental. Use the corfu-terminal package on older Emacs versions.
+(straight-use-package
+ '(corfu-terminal
+   :type git
+   :repo "https://codeberg.org/akib/emacs-corfu-terminal.git"))
 
 ;; Currently broken
 ;; (quelpa '(corfu-doc-terminal
@@ -63,4 +61,5 @@
 (use-package nerd-icons-corfu
   :defer t)
 
-(add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter)
+(unless (display-graphic-p)
+  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))

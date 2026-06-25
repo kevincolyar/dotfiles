@@ -20,7 +20,18 @@
 
   ;; (evil-define-key 'normal 'lsp-mode "K" 'lsp-describe-thing-at-point)
   ;; (evil-define-key 'normal 'lsp-mode "K" 'lsp-ui-doc-glance)
-  (evil-define-key 'normal 'eldoc-mode "K" 'eldoc)
+
+  (defun my-eldoc-toggle ()
+    "Toggle the eldoc documentation buffer."
+    (interactive)
+    (let ((buf eldoc--doc-buffer))
+      (if (and buf (get-buffer-window buf))
+          ;; Buffer exists and is visible, hide it
+          (quit-window nil (get-buffer-window buf))
+        ;; Buffer doesn't exist or isn't visible, show it
+        (call-interactively #'eldoc-doc-buffer))))
+
+  (evil-define-key 'normal 'eldoc-mode "K" 'my-eldoc-toggle)
 
   (evil-set-initial-state 'messages-buffer-mode 'normal)
   (evil-set-initial-state 'dashboard-mode 'normal)
@@ -36,16 +47,7 @@
   :after evil
   :init (evil-commentary-mode))
 
-;;  ;; visual hints while editing
-;; Seems a little slow
-;; (use-package evil-goggles
-;;   :after evil
-;;   :config
-;;   (evil-goggles-mode))
-
-;; (use-package evil-org
-;;   :after org
-;;   :hook (org-mode . (lambda () evil-org-mode))
-;;   :config
-;;   (require 'evil-org-agenda)
-;;   (evil-org-agenda-set-keys))
+;;; Use escape to escape from everything
+(use-package evil-escape
+  :ensure
+  :after evil)

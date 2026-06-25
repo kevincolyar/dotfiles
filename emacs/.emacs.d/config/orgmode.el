@@ -3,6 +3,7 @@
   :hook
   (org-mode . org-indent-mode)
   (org-mode . visual-line-mode) ;; Word wrap
+  (org-mode . (lambda () (setq tab-width 8)))
   :config
   (setq
    org-refile-targets '((org-agenda-files :maxlevel . 3))
@@ -31,9 +32,14 @@
              :states 'normal
              ;; :keymaps 'org-mode-map
              :prefix ","
+             ","  'org-ctrl-c-ctrl-c 
              "/"  'org-update-statistics-cookies
              "#"  'org-table-align
              "a"  'org-agenda
+             "i"  '(:ignore t :which-key "Insert")
+             "is" '((lambda () (interactive) (org-insert-structure-template "src")) :which-key "src")
+             "il" 'org-insert-structure-template
+             "id" '((lambda () (interactive) (org-insert-time-stamp nil t t)) :which-key "insert date")
              "s"  '(:ignore t :which-key "Subtree")
              "sa" 'org-archive-subtree
              "si" 'evil-org-org-insert-todo-heading-respect-content-below
@@ -84,3 +90,14 @@
   :config
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))
+
+;; Auto-update todo state based on subtasks
+(defun org-summary-todo (n-done n-not-done)
+  "Switch entry to DONE when all subentries are done, to TODO otherwise."
+  (let (org-log-done org-log-states)
+    (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
+
+(add-hook 'org-after-todo-statistics-hook #'org-summary-todo)
+
+
+(use-package htmlize)

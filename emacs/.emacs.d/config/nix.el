@@ -7,4 +7,5 @@
   (add-to-list 'eglot-server-programs '(nix-mode . ("nixd")))
   :mode "\\.nix\\'")
 
-(use-package direnv)
+(use-package direnv
+  :config (direnv-mode))

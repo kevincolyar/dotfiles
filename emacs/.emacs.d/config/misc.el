@@ -11,10 +11,12 @@
   (magic-display-buffer-function #'magic-display-buffer-same-window-except-diff-v1))
 
 (use-package git-gutter
-  :ensure t
-  :init
-  (setq global-linum-mode nil)
-  (global-git-gutter-mode +1))
+  :config
+  (global-git-gutter-mode +1)
+  :custom
+  (git-gutter:linum-setup)
+  (git-gutter:update-all-windows)
+  (git-gutter:update-interval 2))
 
 (use-package xclip
   :init

@@ -8,6 +8,8 @@
 (use-package toml-mode :defer t)
 (use-package lua-mode :defer t)
 (use-package go-mode :defer t)
+(use-package clojure-mode :defer t)
+(use-package basic-mode :defer t)
 
 (use-package web-mode
   :defer t
@@ -24,9 +26,20 @@
 (use-package poly-markdown :defer t)
 (use-package poly-ruby :defer t)
 
+;; Make ruby-mode define '_' as part of a word, not a symbol (e.g. when using *)
+(add-hook 'ruby-mode-hook
+          (lambda ()
+            (superword-mode 1)
+            (modify-syntax-entry ?_ "w")))
+
 (add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.erb" . poly-ruby-mode))
 
-;; Code folding
-(use-package origami
-  :init (global-origami-mode))
+(defun platformio-conditionally-enable ()
+  "Enable PlatformIO mode if platformio.ini exists in project root."
+  (when (locate-dominating-file default-directory "platformio.ini")
+    (platformio-mode 1)))
+
+(use-package platformio-mode
+  :hook (c++-mode . platformio-conditionally-enable))
+
