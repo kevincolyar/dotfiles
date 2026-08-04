@@ -90,7 +90,7 @@
     # black
     # poetry
     ruff
-    pyrefly
+    # pyrefly
     ty
     # pyright
 
@@ -172,12 +172,6 @@
 
   programs.direnv.enable = true;
 
-  # Keychain used for cron+ssh
-  programs.keychain = {
-    enable = true;
-    keys = [ "id_rsa" ];
-  };
-
   # https://github.com/starcraft66/os-config/blob/master/home-manager/programs/zsh.nix
   programs.zsh = {
     enable = true;
@@ -223,6 +217,11 @@
        if [ -n "''${commands[fzf-share]}" ]; then
          # source "$(fzf-share)/key-bindings.zsh"
          # source "$(fzf-share)/completion.zsh"
+
+         # Having problems on older ubuntu systems unable recompile fzf-tab binary? Remove the old one:
+         # e.g.: rm root@kubi:/nix/store/hzvfypkvkcx9axfw4wrzi69pr3y6bp6p-zsh-fzf-tab-1.3.0/share/fzf-tab/modules/Src/aloxaf/fzftab.so
+         FZF_TAB_MODULE_BUILD=0
+         zstyle ':fzf-tab:*' use-fzf-default-opts yes
          source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
        fi
 
