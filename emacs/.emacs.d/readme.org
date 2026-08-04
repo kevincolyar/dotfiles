@@ -39,12 +39,6 @@ M-x straight-rebuild-package   ; single package
 M-x straight-rebuild-all       ; all packages
 #+end_src
 
-Or do both in one step:
-
-#+begin_src 
-M-x straight-pull-package-and-deps   ; pulls + rebuilds a package + its deps
-#+end_src
-
 ---
 
 *** The typical update workflow
