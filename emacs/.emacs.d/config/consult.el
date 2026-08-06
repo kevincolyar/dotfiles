@@ -11,6 +11,32 @@
   (interactive)
   (consult-ripgrep (get-project-root) (thing-at-point 'symbol)))
 
+;; `consult-fd'/`consult-find' stream candidates from an async process that
+;; only starts once you type, so there's no initial listing and (since they
+;; never pass `:state' to `consult--read') no preview either. This instead
+;; gathers the full file list up front, like `consult-recent-file' does with
+;; `recentf-list', so it behaves like `consult-buffer': everything shown
+;; immediately, narrow as you type, live preview via `consult--file-preview'.
+(defun consult-find-file (&optional dir)
+  "Find a file under DIR (default `default-directory') with an immediate
+listing and live preview, like `consult-buffer' but for files."
+  (interactive)
+  (require 'consult)
+  (let* ((dir (or dir default-directory))
+         (fd (if (executable-find "fd") "fd" "fdfind"))
+         (files (let ((default-directory dir))
+                  (mapcar (lambda (f) (consult--fast-abbreviate-file-name (expand-file-name f dir)))
+                          (process-lines fd "--type" "f" "--color=never")))))
+    (find-file
+     (consult--read
+      files
+      :prompt (format "Find file (%s): " (abbreviate-file-name dir))
+      :sort nil
+      :require-match t
+      :category 'file
+      :state (consult--file-preview)
+      :history 'file-name-history))))
+
 ;; https://www.youtube.com/watch?v=UtqE-lR2HCA&t=1246s
 ;; https://youtu.be/5ffb2at2d7w?t=412
 ;; https://github.com/minad/consult#use-package-example

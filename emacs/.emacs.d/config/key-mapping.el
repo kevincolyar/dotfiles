@@ -74,7 +74,7 @@
   "f"  '(:ignore t :which-key "files")
   "fs" 'save-buffer
   "fd" 'delete-file
-  "ff" 'find-file
+  "ff" 'consult-find-file
   "fc" 'copy-file
   "fR" 'rename-file-and-buffer
 
