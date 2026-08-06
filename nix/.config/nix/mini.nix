@@ -40,6 +40,7 @@
 
         imports = [
           ./home.nix
+          ./keychain.nix
         ];
       };
     };

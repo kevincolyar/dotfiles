@@ -70,10 +70,13 @@
 
         imports = [
           ./home.nix
+          ./keychain.nix
         ];
       };
     };
   };
+
+  home-manager.backupFileExtension = "backup";
 
   # services.skhd.enable = true;
   
