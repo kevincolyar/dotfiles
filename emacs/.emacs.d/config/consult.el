@@ -23,10 +23,9 @@ listing and live preview, like `consult-buffer' but for files."
   (interactive)
   (require 'consult)
   (let* ((dir (or dir default-directory))
+         (default-directory dir)
          (fd (if (executable-find "fd") "fd" "fdfind"))
-         (files (let ((default-directory dir))
-                  (mapcar (lambda (f) (consult--fast-abbreviate-file-name (expand-file-name f dir)))
-                          (process-lines fd "--type" "f" "--color=never")))))
+         (files (process-lines fd "--type" "f" "--color=never")))
     (find-file
      (consult--read
       files
