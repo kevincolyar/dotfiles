@@ -11,6 +11,36 @@
   (interactive)
   (consult-ripgrep (get-project-root) (thing-at-point 'symbol)))
 
+(defvar consult-find-file--dir nil
+  "Search root of the running `consult-find-file'.
+Bound during the `consult--read' call so `consult-find-file-up' knows which
+directory to ascend from.")
+
+(defun consult-find-file-up ()
+  "Move the `consult-find-file' search root up one directory.
+Only acts on an empty prompt; otherwise deletes backward as usual, so
+backspace still narrows normally. The listing is rebuilt from the parent by
+re-invoking `consult-find-file' on a timer, since the candidates are gathered
+up front rather than completed path-by-path."
+  (interactive)
+  (if (or (not consult-find-file--dir)
+          (/= (minibuffer-prompt-end) (point-max)))
+      (call-interactively #'delete-backward-char)
+    (let* ((dir consult-find-file--dir)
+           (parent (file-name-directory (directory-file-name dir))))
+      (if (or (null parent) (equal parent dir))
+          (minibuffer-message "Already at the filesystem root")
+        ;; Re-invoke after this minibuffer unwinds, so `:state' tears down its
+        ;; preview buffers before the next listing opens.
+        (run-at-time 0 nil #'consult-find-file parent)
+        (abort-recursive-edit)))))
+
+(defvar-keymap consult-find-file-map
+  :doc "Keymap active during `consult-find-file'."
+  "<remap> <delete-backward-char>" #'consult-find-file-up
+  "DEL" #'consult-find-file-up
+  "<backspace>" #'consult-find-file-up)
+
 ;; `consult-fd'/`consult-find' stream candidates from an async process that
 ;; only starts once you type, so there's no initial listing and (since they
 ;; never pass `:state' to `consult--read') no preview either. This instead
@@ -19,11 +49,15 @@
 ;; immediately, narrow as you type, live preview via `consult--file-preview'.
 (defun consult-find-file (&optional dir)
   "Find a file under DIR (default `default-directory') with an immediate
-listing and live preview, like `consult-buffer' but for files."
+listing and live preview, like `consult-buffer' but for files.
+
+Backspace on an empty prompt moves the search root up one directory."
   (interactive)
   (require 'consult)
-  (let* ((dir (or dir default-directory))
+  ;; Normalized so `consult-find-file-up' can walk to the parent reliably.
+  (let* ((dir (file-name-as-directory (expand-file-name (or dir default-directory))))
          (default-directory dir)
+         (consult-find-file--dir dir)
          (fd (if (executable-find "fd") "fd" "fdfind"))
          (files (process-lines fd "--type" "f" "--color=never")))
     (find-file
@@ -33,6 +67,7 @@ listing and live preview, like `consult-buffer' but for files."
       :sort nil
       :require-match t
       :category 'file
+      :keymap consult-find-file-map
       :state (consult--file-preview)
       :history 'file-name-history))))
 
