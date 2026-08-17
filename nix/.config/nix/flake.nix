@@ -72,12 +72,12 @@
           ];
         };
 
-        # home-manager switch --flake ~/.dotfiles/nix/.config/nix#fishident
-        homeConfigurations.fishident = home-manager.lib.homeManagerConfiguration {
+        # home-manager switch --flake ~/.dotfiles/nix/.config/nix#is-kevin-ub
+        homeConfigurations.is-kevinc-ub = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
 
           modules = [
-            ./fishident.nix
+            ./is-kevinc-ub.nix
           ];
         };
 
