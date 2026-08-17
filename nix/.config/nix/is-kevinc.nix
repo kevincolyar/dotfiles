@@ -2,6 +2,7 @@
 
 {
   nixpkgs.hostPlatform = "aarch64-darwin";
+  nixpkgs.config.allowUnfree = true;  # For pkgs.claude-code
 
   # Turn off nix-darwin's management of the Nix installation
   nix.enable = false;
@@ -9,20 +10,28 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
-    pkgs.llama-cpp
+    # pkgs.llama-cpp
     # pkgs.llama-swap
+    pkgs.claude-code
     pkgs.opencode
+    pkgs.fabric-ai
+    pkgs.pi-coding-agent
+    pkgs.nodejs-slim
+    inputs.oh-my-pi.packages.${pkgs.stdenv.hostPlatform.system}.omp
 
     # Docker stuff
     pkgs.docker
     pkgs.colima
+
+    # SQL Server
+    pkgs.sqlcmd
   ];
 
   # Colima CA Cert Fix
   #  cat /etc/nix/macos-keychain.crt | \
   #  colima ssh -- sudo tee /etc/nix/macos-keychain.crt && \
   #  colima ssh -- sudo update-ca-certificates
-    
+
   # Add ability to used TouchID for sudo authentication
   security.pam.services.sudo_local.touchIdAuth = true;
 
@@ -89,8 +98,8 @@
   system.defaults.dock.appswitcher-all-displays = true;
   system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToControl = true;
-  system.defaults.NSGlobalDomain.KeyRepeat = 1;
-  system.defaults.NSGlobalDomain.InitialKeyRepeat = 9;
+  system.defaults.NSGlobalDomain.KeyRepeat = 2;
+  system.defaults.NSGlobalDomain.InitialKeyRepeat = 13;
   system.defaults.NSGlobalDomain.ApplePressAndHoldEnabled = false;
   system.defaults.NSGlobalDomain.NSWindowShouldDragOnGesture = true;
 
@@ -103,7 +112,7 @@
     enable = true;
     onActivation = {
       autoUpdate = true;
-      cleanup = "zap";
+      # cleanup = "zap";
     };
 
     casks = [
@@ -125,7 +134,7 @@
       "microsoft-outlook"
       "postman"
       "wireshark-app"
-      # "ollama"
+      "ollama-app"
     ];
   };
 }
