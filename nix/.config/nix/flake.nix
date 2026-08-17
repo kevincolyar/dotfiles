@@ -1,6 +1,15 @@
 {
   description = "Example Darwin system flake";
 
+  # oh-my-pi publishes to the nix-community cache; without this the omp
+  # derivation (rust natives + bun deps) builds from source.
+  nixConfig = {
+    extra-substituters = [ "https://nix-community.cachix.org" ];
+    extra-trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+  };
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
@@ -9,8 +18,11 @@
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows= "nixpkgs";
-  };
 
+    # NOTE: no inputs.nixpkgs.follows — omp pins its own nixpkgs (bun 1.3.14,
+    # rust-overlay, bun2nix). Overriding it breaks the build and cache hits.
+    oh-my-pi.url = "github:can1357/oh-my-pi";
+  };
 
   outputs = { self, nixpkgs, nix-darwin, home-manager, ...}@inputs:
     let
