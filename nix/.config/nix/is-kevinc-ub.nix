@@ -22,7 +22,7 @@
     ollama
     opencode
     claude-code
-    inputs.oh-my-pi.packages.${pkgs.stdenv.hostPlatform.system}.omp
+    (pkgs.callPackage ./omp-bin.nix { })
   ];
     
   imports = [

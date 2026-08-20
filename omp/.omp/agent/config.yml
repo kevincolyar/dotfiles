@@ -17,3 +17,15 @@ startup:
   quiet: true
 terminal: 
   showImages: false
+bash:
+  patterns:
+    - match: "rm -rf /*"
+      approval: deny
+    - match: "curl *|*sh"
+      approval: deny
+    - match: "curl *|*sh *"
+      approval: deny
+    - match: "wget *|*sh"
+      approval: deny
+    - match: "wget *|*sh *"
+      approval: deny

@@ -17,7 +17,7 @@
     pkgs.fabric-ai
     pkgs.pi-coding-agent
     pkgs.nodejs-slim
-    inputs.oh-my-pi.packages.${pkgs.stdenv.hostPlatform.system}.omp
+    (pkgs.callPackage ./omp-bin.nix { })
 
     # Docker stuff
     pkgs.docker
