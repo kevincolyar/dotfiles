@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;; Vertico provides a performant and minimalistic vertical completion UI based on the default completion system. The main focus of Vertico is to provide a UI which behaves correctly under all circumstances.
 ;; https://github.com/minad/vertico
 ;; https://kristofferbalintona.me/posts/202202211546/

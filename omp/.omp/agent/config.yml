@@ -1,0 +1,31 @@
+modelRoles: 
+  default: anthropic/claude-opus-5
+symbolPreset: nerd
+theme: 
+  light: light-dunes
+setupVersion: 1
+statusLine: 
+  preset: default
+  separator: pipe
+  sessionAccent: true
+  transparent: true
+  compactThinkingLevel: false
+tui: 
+  textSizing: false
+  tight: true
+startup: 
+  quiet: true
+terminal: 
+  showImages: false
+bash:
+  patterns:
+    - match: "rm -rf /*"
+      approval: deny
+    - match: "curl *|*sh"
+      approval: deny
+    - match: "curl *|*sh *"
+      approval: deny
+    - match: "wget *|*sh"
+      approval: deny
+    - match: "wget *|*sh *"
+      approval: deny

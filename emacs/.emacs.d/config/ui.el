@@ -1,4 +1,4 @@
-;;; ui --- Summary
+;;; ui --- Summary  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -124,5 +124,19 @@
   (set-face-attribute 'markdown-code-face nil
                       :background 'unspecified))
 
+;; Emacs 31 draws borders around child frames on TTY frames -- the popups from
+;; corfu, corfu-popupinfo and eldoc-box -- using glyphs from
+;; `standard-display-table's extra slots. Those slots are empty by default, so
+;; nothing is drawn; this fills them with Unicode box-drawing characters. It
+;; also upgrades the TTY `vertical-border' between windows from `|' to U+2502.
+;; GUI frames ignore these slots and draw real borders instead.
+(standard-display-unicode-special-glyphs)
+
+;; Enable undercurl support in terminal Emacs
+;; Set the undercurl sequence
+(define-coding-system-alias 'undercurl 'utf-8)
+
+;; Add terminal capabilities
+(define-key input-decode-map "\e[4:3m" [undercurl])
 
 ;;; ui.el ends here

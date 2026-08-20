@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -22,6 +22,7 @@
     ollama
     opencode
     claude-code
+    (pkgs.callPackage ./omp-bin.nix { })
   ];
     
   imports = [

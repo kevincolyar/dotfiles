@@ -1,3 +1,5 @@
+;;; init.el --- Personal Emacs configuration -*- lexical-binding: t; -*-
+
 ;; Bootstrap straight.el
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -58,11 +60,13 @@
 (load "~/.emacs.d/config/embark.el")
 (load "~/.emacs.d/config/tramp.el")
 
+(load "~/.emacs.d/config/gptel.el")
+
 ;; Don't let Emacs' customize system pollute our configs
 (setq custom-file "~/.emacs.d/custom-vars.el")
 (load custom-file 'noerror 'nomessage)
 
 ;; Load private config
-(setq-default private-config (expand-file-name "~/.emacs.private.gpg"))
-(when (file-exists-p private-config)
-  (load-file private-config))
+(let ((private-config (expand-file-name "~/.emacs.local.el")))
+  (when (file-exists-p private-config)
+    (load-file private-config)))

@@ -9,8 +9,11 @@
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows= "nixpkgs";
-  };
 
+    # omp comes from ./omp-bin.nix (prebuilt GitHub release asset) instead of
+    # github:can1357/oh-my-pi, whose omp derivation has no populated binary
+    # cache and so builds rust natives + bun deps from source.
+  };
 
   outputs = { self, nixpkgs, nix-darwin, home-manager, ...}@inputs:
     let
@@ -60,12 +63,13 @@
           ];
         };
 
-        # home-manager switch --flake ~/.dotfiles/nix/.config/nix#fishident
-        homeConfigurations.fishident = home-manager.lib.homeManagerConfiguration {
+        # home-manager switch --flake ~/.dotfiles/nix/.config/nix#is-kevin-ub
+        homeConfigurations.is-kevinc-ub = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          extraSpecialArgs = { inherit inputs; };
 
           modules = [
-            ./fishident.nix
+            ./is-kevinc-ub.nix
           ];
         };
 

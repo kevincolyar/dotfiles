@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 (use-package kirigami
   :config
   (with-eval-after-load 'evil

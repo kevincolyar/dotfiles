@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
  (use-package format-all
    :commands format-all-mode
    :hook

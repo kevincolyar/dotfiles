@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;; Key Mapping
 ;; --------------------------------------------------------------------------------
 
@@ -74,7 +75,7 @@
   "f"  '(:ignore t :which-key "files")
   "fs" 'save-buffer
   "fd" 'delete-file
-  "ff" 'find-file
+  "ff" 'consult-find-file
   "fc" 'copy-file
   "fR" 'rename-file-and-buffer
 
@@ -98,11 +99,6 @@
   "w"   '(:ignore t :which-key "web")
   "ws"  'search-web
 
-  "z="  'jinx-correct
-  "zw"  'jinx-correct
-  "za"  'jinx-correct-all
-  "zn"  'jinx-next
-  "zp"  'jinx-previous
   )
 
 (use-package which-key

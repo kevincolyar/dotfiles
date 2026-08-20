@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;; Dumb Jump is an Emacs "jump to definition" package with support for 50+ programming languages that favors "just working". 
 ;; https://github.com/jacktasia/dumb-jump
 ;; Usage: SPC c d - Jump to code definition
