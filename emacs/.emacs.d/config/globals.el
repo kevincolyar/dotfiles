@@ -1,5 +1,4 @@
 ;;; -*- lexical-binding: t; -*-
-(use-package auto-package-update)
 (use-package better-defaults)
 (use-package no-littering)
 ;; Below is more useful for GUI emacs
@@ -27,8 +26,11 @@
 (add-hook 'prog-mode-hook 'display-line-numbers-hook)
 (add-hook 'text-mode-hook 'display-line-numbers-hook)
 
-(recentf-mode 1) ;; Save recent files
+;; Must precede `recentf-mode': the default `mode' value makes enabling the
+;; mode run `recentf-cleanup', which expands every saved path, trips tramp's
+;; autoload file-name handler and pulls in the whole tramp stack (~0.23s).
 (setq recentf-auto-cleanup 'never)
+(recentf-mode 1) ;; Save recent files
 
 ;; Max echo area height
 (setq max-mini-window-height 10)
@@ -81,8 +83,8 @@
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
-;; The default is 800 kilobytes.  Measured in bytes.
-(setq gc-cons-threshold (* 50 1000 1000))
+;; `gc-cons-threshold' is raised in early-init.el, before the straight
+;; bootstrap, and lowered again on `emacs-startup-hook'.
 
 ;; Force the GPG password prompt into the minibuffer instead of a gui popup
 (setq epg-pinentry-mode 'loopback)

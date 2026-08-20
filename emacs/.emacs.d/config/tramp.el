@@ -2,8 +2,11 @@
 ;; https://coredumped.dev/2025/06/18/making-tramp-go-brrrr./
 ;; I don’t use rsync though because it breaks remote shells. Edit: This is going to be fixed in Emacs 30.2.
 
+;; No `:after org': that wraps the whole form in `with-eval-after-load 'org', so
+;; touching a remote path before org has loaded -- `consult-recent-file' in a
+;; fresh session, for instance -- loaded tramp with none of the settings below.
+;; `:defer t' alone already keeps it lazy.
 (use-package tramp
-  :after org
   :defer t
   :config
   ;; Prevent extra files
@@ -23,6 +26,9 @@
   (setq password-cache-expiry nil)
   (setq tramp-use-ssh-controlmaster-options nil)
   (setq remote-file-name-inhibit-cache nil)
+  ;; Default is 60s. An unreachable or unresolvable host (kubi.lan currently
+  ;; NXDOMAINs) otherwise blocks Emacs for a full minute on first touch.
+  (setq tramp-connection-timeout 5)
 
   ;; (customize-set-variable 'tramp-ssh-controlmaster-options
   ;;                         (concat

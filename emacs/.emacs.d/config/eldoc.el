@@ -15,6 +15,31 @@
 ;; once the cursor settles.
 (setq eldoc-idle-delay 0.6)
 
+;; In an elisp buffer `emacs-lisp-mode' installs `elisp-eldoc-funcall' and
+;; `elisp-eldoc-var-docstring' (elisp-mode.el:763-766), which report only the
+;; call signature and a one-line variable doc -- which is why the hover box
+;; showed `car: (LIST)' and nothing else. corfu's popupinfo looks richer
+;; because it reads a different source entirely: the completion metadata's
+;; `:company-doc-buffer', i.e. `describe-function' output.
+;;
+;; Emacs 31 ships fuller backends. `eldoc-documentation-strategy' defaults to
+;; `eldoc-documentation-default', which stops at the first function returning
+;; non-nil, so order matters -- `add-hook' prepends, hence adding the funcall
+;; one last to keep it ahead of the variable one, as upstream has it.
+(defun my-elisp-eldoc-full-docs ()
+  "Report docstrings, not just signatures, for elisp at point."
+  (remove-hook 'eldoc-documentation-functions #'elisp-eldoc-funcall t)
+  (remove-hook 'eldoc-documentation-functions #'elisp-eldoc-var-docstring t)
+  (add-hook 'eldoc-documentation-functions
+            #'elisp-eldoc-var-docstring-with-value nil t)
+  (add-hook 'eldoc-documentation-functions
+            #'elisp-eldoc-funcall-with-docstring nil t))
+
+(add-hook 'emacs-lisp-mode-hook #'my-elisp-eldoc-full-docs)
+
+;; `short' (the default) truncates to the first sentence.
+(setq elisp-eldoc-funcall-with-docstring-length 'full)
+
 ;; `eldoc-mode-hook' fires more than once per buffer -- eglot toggles
 ;; `eldoc-mode' in the buffers it manages -- and `eldoc-box--enable' conses its
 ;; display function onto `eldoc-display-functions' without checking whether it

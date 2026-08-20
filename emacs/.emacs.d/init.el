@@ -60,11 +60,13 @@
 (load "~/.emacs.d/config/embark.el")
 (load "~/.emacs.d/config/tramp.el")
 
+(load "~/.emacs.d/config/gptel.el")
+
 ;; Don't let Emacs' customize system pollute our configs
 (setq custom-file "~/.emacs.d/custom-vars.el")
 (load custom-file 'noerror 'nomessage)
 
 ;; Load private config
-(let ((private-config (expand-file-name "~/.emacs.private.gpg")))
+(let ((private-config (expand-file-name "~/.emacs.local.el")))
   (when (file-exists-p private-config)
     (load-file private-config)))
