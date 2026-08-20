@@ -30,6 +30,16 @@
          c++-ts-mode
          ) . eglot-ensure)
 
+  ;; `eglot-code-action-indications' defaults to `(eldoc-hint left-fringe
+  ;; margin)' (eglot.el:612). The `eldoc-hint' member makes
+  ;; `eglot--update-hints'-style suggestions arrive through
+  ;; `eldoc-documentation-functions', and with
+  ;; `eldoc-box-hover-at-point-mode' (config/eldoc.el) any eldoc output pops
+  ;; the childframe -- so merely sitting on a line with an available action
+  ;; opened a box saying so. Keep only the passive indicators; SPC c a
+  ;; (`eglot-code-actions', config/key-mapping.el) is the entry point.
+  :custom
+  (eglot-code-action-indications '(left-fringe margin))
 
   :config
   (defun my/eglot-set-server (modes command)
