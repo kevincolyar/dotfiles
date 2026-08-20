@@ -22,15 +22,29 @@
   ;; (evil-define-key 'normal 'lsp-mode "K" 'lsp-describe-thing-at-point)
   ;; (evil-define-key 'normal 'lsp-mode "K" 'lsp-ui-doc-glance)
 
+  ;; The `eldoc-box-hover-at-point-mode' childframe (config/eldoc.el) is
+  ;; transient and capped at a third of the frame height, so it truncates long
+  ;; docstrings. K toggles a real window on the same documentation, which
+  ;; scrolls and can show examples in full. `eldoc-display-in-buffer' stays on
+  ;; `eldoc-display-functions' while eldoc-box is active, so the box and this
+  ;; buffer are fed from the same request -- the hover box keeps working
+  ;; untouched. `helpful-at-point' above remains K in buffers without eldoc.
   (defun my-eldoc-toggle ()
-    "Toggle the eldoc documentation buffer."
+    "Toggle a window showing the full eldoc documentation buffer."
     (interactive)
-    (let ((buf eldoc--doc-buffer))
-      (if (and buf (get-buffer-window buf))
-          ;; Buffer exists and is visible, hide it
-          (quit-window nil (get-buffer-window buf))
-        ;; Buffer doesn't exist or isn't visible, show it
-        (call-interactively #'eldoc-doc-buffer))))
+    (let ((win (and (buffer-live-p eldoc--doc-buffer)
+                    (get-buffer-window eldoc--doc-buffer))))
+      (if win
+          (quit-window nil win)
+        ;; INTERACTIVE t makes eldoc recompute and hand the docs to
+        ;; `eldoc-display-in-buffer', which creates `eldoc--doc-buffer' and
+        ;; displays it. Going through eldoc rather than `eldoc-doc-buffer'
+        ;; avoids its `user-error' when nothing has been documented yet.
+        (eldoc-print-current-symbol-info t)
+        (when-let* ((new (and (buffer-live-p eldoc--doc-buffer)
+                              (get-buffer-window eldoc--doc-buffer))))
+          ;; Select it so it can be scrolled straight away; `q' quits back.
+          (select-window new)))))
 
   (evil-define-key 'normal 'eldoc-mode "K" 'my-eldoc-toggle)
 

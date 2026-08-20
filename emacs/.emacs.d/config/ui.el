@@ -124,5 +124,13 @@
   (set-face-attribute 'markdown-code-face nil
                       :background 'unspecified))
 
+;; Emacs 31 draws borders around child frames on TTY frames -- the popups from
+;; corfu, corfu-popupinfo and eldoc-box -- using glyphs from
+;; `standard-display-table's extra slots. Those slots are empty by default, so
+;; nothing is drawn; this fills them with Unicode box-drawing characters. It
+;; also upgrades the TTY `vertical-border' between windows from `|' to U+2502.
+;; GUI frames ignore these slots and draw real borders instead.
+(standard-display-unicode-special-glyphs)
+
 
 ;;; ui.el ends here

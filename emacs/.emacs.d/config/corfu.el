@@ -34,6 +34,15 @@
   ;; Emacs 31 provides `tty-child-frames', which is what `corfu--popup-support-p'
   ;; checks, so the doc popup now renders in terminal frames too.
   (corfu-popupinfo-mode)
+
+  ;; Emacs 31 draws a border around a TTY child frame only when it is not
+  ;; `undecorated'; the glyphs come from
+  ;; `standard-display-unicode-special-glyphs' in config/ui.el. corfu's own
+  ;; `corfu-border-width' is documented as GUI-only and its terminal placement
+  ;; math assumes a zero-width border (corfu.el:1062), so the popup can sit a
+  ;; cell off from where it would land unbordered.
+  (setf (alist-get 'undecorated corfu--frame-parameters) nil)
+
   ;; (corfu-history-mode)
   )
 
