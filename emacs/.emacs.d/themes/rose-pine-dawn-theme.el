@@ -1,4 +1,4 @@
-;;; rose-pine-dawn-theme.el --- All natural pine, faux fur and a bit of soho vibes for the classy minimalist.
+;;; rose-pine-dawn-theme.el --- All natural pine, faux fur and a bit of soho vibes for the classy minimalist.  -*- lexical-binding: t; -*-
 
 ;; Authors: Israel Romero <@caelie>
 ;; URL: http://github.com/caelie/rose-pine-emacs

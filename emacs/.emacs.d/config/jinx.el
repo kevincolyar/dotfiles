@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 (use-package jinx
   :hook (emacs-startup . global-jinx-mode)
   :config

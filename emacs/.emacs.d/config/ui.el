@@ -1,4 +1,4 @@
-;;; ui --- Summary
+;;; ui --- Summary  -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
 

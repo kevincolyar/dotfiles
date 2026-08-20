@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 (use-package auto-package-update)
 (use-package better-defaults)
 (use-package no-littering)

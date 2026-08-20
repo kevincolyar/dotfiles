@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;; https://coredumped.dev/2025/06/18/making-tramp-go-brrrr./
 ;; I don’t use rsync though because it breaks remote shells. Edit: This is going to be fixed in Emacs 30.2.
 

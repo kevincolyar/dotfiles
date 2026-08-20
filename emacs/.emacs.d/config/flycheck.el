@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 (use-package flycheck
   :init (global-flycheck-mode)
   :config

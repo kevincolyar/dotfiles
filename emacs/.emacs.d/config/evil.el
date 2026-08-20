@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 (use-package evil
   :init
   (setq evil-want-integration t)

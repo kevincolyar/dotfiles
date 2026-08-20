@@ -1,3 +1,5 @@
+;;; init.el --- Personal Emacs configuration -*- lexical-binding: t; -*-
+
 ;; Bootstrap straight.el
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -63,6 +65,6 @@
 (load custom-file 'noerror 'nomessage)
 
 ;; Load private config
-(setq-default private-config (expand-file-name "~/.emacs.private.gpg"))
-(when (file-exists-p private-config)
-  (load-file private-config))
+(let ((private-config (expand-file-name "~/.emacs.private.gpg")))
+  (when (file-exists-p private-config)
+    (load-file private-config)))

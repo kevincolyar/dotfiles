@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;; https://github.com/minad/marginalia
 ;;
 ;; This package provides marginalia-mode which adds marginalia to the minibuffer completions.

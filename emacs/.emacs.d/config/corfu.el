@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;; Corfu enhances in-buffer completion with a small completion popup.
 ;; https://github.com/minad/corfu
 ;; https://youtu.be/Vx0bSKF4y78?t=570
@@ -39,27 +40,27 @@
   (add-to-list 'completion-at-point-functions #'cape-file)
   )
 
-(straight-use-package
- '(popon
-   :type git
-   :repo "https://codeberg.org/akib/emacs-popon.git"))
+;; (straight-use-package
+;;  '(popon
+;;    :type git
+;;    :repo "https://codeberg.org/akib/emacs-popon.git"))
 
-;; NOTE: Corfu relies on child frames to show the popup. On Emacs 31 this works even for terminal Emacs, but support is still experimental. Use the corfu-terminal package on older Emacs versions.
-(straight-use-package
- '(corfu-terminal
-   :type git
-   :repo "https://codeberg.org/akib/emacs-corfu-terminal.git"))
+;; ;; NOTE: Corfu relies on child frames to show the popup. On Emacs 31 this works even for terminal Emacs, but support is still experimental. Use the corfu-terminal package on older Emacs versions.
+;; (straight-use-package
+;;  '(corfu-terminal
+;;    :type git
+;;    :repo "https://codeberg.org/akib/emacs-corfu-terminal.git"))
 
 ;; Currently broken
 ;; (quelpa '(corfu-doc-terminal
 ;;           :fetcher git
 ;;           :url "https://codeberg.org/akib/emacs-corfu-doc-terminal.git"))
 
-(unless (display-graphic-p)
-  (corfu-terminal-mode +1))
+;; (unless (display-graphic-p)
+;;   (corfu-terminal-mode +1))
 
 (use-package nerd-icons-corfu
   :defer t)
 
-(unless (display-graphic-p)
-  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+;; (unless (display-graphic-p)
+;;   (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))

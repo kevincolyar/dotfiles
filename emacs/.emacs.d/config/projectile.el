@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 (use-package projectile
   :defer t
   :diminish projectile-mode

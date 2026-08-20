@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;; https://github.com/minad/consult
 ;; Consult provides search and navigation commands based on the Emacs completion function completing-read.
 ;; Completion allows you to quickly select an item from a list of candidates.

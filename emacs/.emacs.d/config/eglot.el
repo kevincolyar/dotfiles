@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 ;; Eglot
 ;; ------------------------------------------------------------------------------
 ;; https://joaotavora.github.io/eglot/#Using-Eglot
