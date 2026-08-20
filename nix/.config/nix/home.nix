@@ -27,7 +27,7 @@
     snitch
     dust
     eza
-    emacs
+    emacs31
     # emacs-lsp-booster
     emacs.pkgs.jinx
     starship
