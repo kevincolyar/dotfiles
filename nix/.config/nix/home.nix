@@ -178,9 +178,18 @@
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
 
-    # Disable completion because completion is already enabled in nix config.
-    # Zsh startup is slow if set to true.
-    enableCompletion = false;
+    # Ubuntu's /etc/zsh/zshrc used to run compinit for us, but that file is
+    # only read by the distro zsh; the Nix zsh never sources it, so completion
+    # has to be initialized here. The dump is keyed by $ZSH_VERSION so distro
+    # and Nix zsh never share an incompatible cache.
+    enableCompletion = true;
+    completionInit = ''
+      autoload -Uz compinit
+      _zcompdump="''${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-$ZSH_VERSION"
+      mkdir -p "''${_zcompdump:h}"
+      compinit -d "$_zcompdump"
+      unset _zcompdump
+    '';
 
     initContent = ''
        # Dumb terminal (e.g. emacs tramp)
