@@ -71,8 +71,10 @@
 
 (setq redisplay-skip-fontification-on-input t)
 
-;; Supress compilation warnings
-(setq warning-suppress-types '(comp))
+;; Suppress native-compilation warnings. Each entry is a warning-type *list*,
+;; not a bare symbol; a bare `comp' makes `display-delayed-warnings' fail with
+;; (wrong-type-argument listp comp).
+(setq warning-suppress-types '((comp)))
 
 ;; Disable line numbers for some modes
 (dolist (mode '(org-mode-hook

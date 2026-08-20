@@ -51,16 +51,19 @@
   ;; Don't use proxy for localhost connections (e.g. Ollama, Llama.cpp)
   (setenv "NO_PROXY" "localhost,127.0.0.1")
 
+  ;; `:key' is resolved lazily: a bare `gptel-api-key-from-auth-source' call
+  ;; signals at load time on hosts with no matching auth-source entry, which
+  ;; aborts the whole `:config' block. A function is looked up per request.
   (gptel-make-anthropic "Claude"
     :stream t
-    :key (gptel-api-key-from-auth-source "api.anthropic.com"))
+    :key (lambda () (gptel-api-key-from-auth-source "api.anthropic.com")))
 
     ;; Cerebras offers an instant OpenAI compatible API
   (gptel-make-openai "Cerebras"
     :host "api.cerebras.ai"
     :endpoint "/v1/chat/completions"
     :stream t                             ;optionally nil as Cerebras is instant AI
-    :key (gptel-api-key-from-auth-source "api.cerebras.ai")  ;can be a function that returns the key
+    :key (lambda () (gptel-api-key-from-auth-source "api.cerebras.ai"))
     :models '(llama3.3-70b
                 llama3.3-8b))
 

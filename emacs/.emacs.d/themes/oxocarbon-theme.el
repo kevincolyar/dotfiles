@@ -1,3 +1,5 @@
+;;; oxocarbon-theme.el --- A port of oxocarbon  -*- lexical-binding: t; -*-
+
 (autothemer-deftheme oxocarbon "A port of oxocarbon"
 
   ;; Specify the color classes used by the theme
