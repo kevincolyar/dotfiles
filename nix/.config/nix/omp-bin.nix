@@ -1,4 +1,10 @@
-{ lib, stdenvNoCC, fetchurl }:
+{
+  lib,
+  stdenvNoCC,
+  fetchurl,
+  autoPatchelfHook,
+  glibc,
+}:
 
 let
   version = "17.4.0";
@@ -19,14 +25,17 @@ let
       asset = "omp-darwin-x64";
       hash = "sha256-Hv02lUMN/d2CTkMfm5aL3hUaGIDqnZtYcONjHVjU2Sc=";
     };
-    # musl builds are static, so they need no autoPatchelfHook.
+    # Linux release assets are dynamically linked (the musl ones against
+    # /lib/ld-musl-x86_64.so.1, which does not exist under Nix), so the glibc
+    # assets are used and autoPatchelfHook rewrites their interpreter. They
+    # need nothing beyond glibc; the C++ runtime is linked statically.
     aarch64-linux = {
-      asset = "omp-linux-musl-arm64";
-      hash = "sha256-wRdXoHUjOk5prHTUTBGBUpj5/nmY+DQEgK2u7WftnTM=";
+      asset = "omp-linux-arm64";
+      hash = "sha256-tbBUzKGXZR090Lf64L9v4NLNZT6MvttiPSb6ztQEruY=";
     };
     x86_64-linux = {
-      asset = "omp-linux-musl-x64";
-      hash = "sha256-0dTqnU5ToXTS6xroEZ5XSbhN3EwHa/WZEGy/mHuI7OA=";
+      asset = "omp-linux-x64";
+      hash = "sha256-bVQxxp/W25dxq9Uax234gg/XGK4zrGVKgF/X+0S2hcc=";
     };
   };
 
@@ -47,7 +56,9 @@ stdenvNoCC.mkDerivation {
 
   dontUnpack = true;
   dontStrip = true;
-  dontPatchELF = true;
+
+  nativeBuildInputs = lib.optionals stdenvNoCC.hostPlatform.isLinux [ autoPatchelfHook ];
+  buildInputs = lib.optionals stdenvNoCC.hostPlatform.isLinux [ glibc ];
 
   installPhase = ''
     runHook preInstall
