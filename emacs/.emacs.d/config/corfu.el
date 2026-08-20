@@ -11,23 +11,30 @@
             "C-u" #'corfu-scroll-up
             "C-d" #'corfu-scroll-down
             "C-[" #'corfu-quit)
+  ;; `:general' emits autoloads for the commands it binds, which makes
+  ;; use-package defer the package. Every binding above lives in `corfu-map',
+  ;; which only exists while a popup is open, so nothing could ever trigger the
+  ;; load and `:config' below never ran. Corfu has to be globally active from
+  ;; startup anyway, so demand it.
+  :demand t
   :init
   (setq corfu-auto t                           ;; Enable auto completion, required for eglot methods, etc
         corfu-cycle t                          ;; Enable cycling for `corfu-next/previous'
         corfu-quit-no-match 'separator         ;; or t
         corfu-auto-prefix 2
         ;; corfu-auto-delay 0.0
-        corfu-echo-documentation 0.25
+        corfu-popupinfo-delay 0.25             ;; docs popup; was `corfu-echo-documentation'
         corfu-preview-current 'insert
-        corfu-preselect-first nil
+        corfu-preselect 'prompt                ;; replaces `corfu-preselect-first' nil
         corfu-min-width 100
         corfu-max-width corfu-min-width
         )       ; Always have the same width
   :config
   (global-corfu-mode)
+  ;; Emacs 31 provides `tty-child-frames', which is what `corfu--popup-support-p'
+  ;; checks, so the doc popup now renders in terminal frames too.
+  (corfu-popupinfo-mode)
   ;; (corfu-history-mode)
-  ;; (corfu-popupinfo-mode) ;; TODO not working in terminal yet
-  ;; (corfu-mode)
   )
 
 ;; Cape provides Completion At Point Extensions which can be used in combination with Corfu, Company or the default completion UI.
@@ -62,5 +69,5 @@
 (use-package nerd-icons-corfu
   :defer t)
 
-;; (unless (display-graphic-p)
-;;   (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+(unless (display-graphic-p)
+  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
