@@ -41,6 +41,34 @@ up front rather than completed path-by-path."
   "DEL" #'consult-find-file-up
   "<backspace>" #'consult-find-file-up)
 
+;; Functional core: decide what the selection means, without touching the
+;; filesystem or any buffer, so the choice is inspectable on its own.
+(defun consult-find-file--plan (selection dir known)
+  "Return a plan for visiting SELECTION under DIR, given KNOWN candidates.
+The plan is a plist of :path (absolute) and :typed, the latter non-nil when
+SELECTION is not one of KNOWN — i.e. it was typed rather than picked. Note
+that :typed says nothing about existence on disk, only that the listing did
+not offer it. Pure: derives names, reads no files."
+  (list :path (expand-file-name selection dir)
+        :typed (not (member selection known))))
+
+;; Imperative shell: the only part that reads the filesystem or opens a buffer.
+(defun consult-find-file--visit (plan)
+  "Visit the file described by PLAN, from `consult-find-file--plan'.
+Offers to create a missing parent directory first; declining still visits,
+since `save-buffer' asks again. Typed input naming a file that does not exist
+is reported, so creating one is never silent."
+  (let* ((path (plist-get plan :path))
+         (parent (file-name-directory path)))
+    (when (and parent
+               (not (file-directory-p parent))
+               (yes-or-no-p (format "Create directory %s? "
+                                    (abbreviate-file-name parent))))
+      (make-directory parent t))
+    (when (and (plist-get plan :typed) (not (file-exists-p path)))
+      (message "New file: %s" (abbreviate-file-name path)))
+    (find-file path)))
+
 ;; `consult-fd'/`consult-find' stream candidates from an async process that
 ;; only starts once you type, so there's no initial listing and (since they
 ;; never pass `:state' to `consult--read') no preview either. This instead
@@ -51,7 +79,10 @@ up front rather than completed path-by-path."
   "Find a file under DIR (default `default-directory') with an immediate
 listing and live preview, like `consult-buffer' but for files.
 
-Backspace on an empty prompt moves the search root up one directory."
+Backspace on an empty prompt moves the search root up one directory.
+RET on input matching no candidate creates that file instead; `M-RET'
+(`vertico-exit-input') forces the typed text even when a candidate is
+selected."
   (interactive)
   (require 'consult)
   ;; Normalized so `consult-find-file-up' can walk to the parent reliably.
@@ -60,16 +91,19 @@ Backspace on an empty prompt moves the search root up one directory."
          (consult-find-file--dir dir)
          (fd (if (executable-find "fd") "fd" "fdfind"))
          (files (process-lines fd "--type" "f" "--color=never")))
-    (find-file
-     (consult--read
-      files
-      :prompt (format "Find file (%s): " (abbreviate-file-name dir))
-      :sort nil
-      :require-match t
-      :category 'file
-      :keymap consult-find-file-map
-      :state (consult--file-preview)
-      :history 'file-name-history))))
+    (consult-find-file--visit
+     (consult-find-file--plan
+      (consult--read
+       files
+       :prompt (format "Find file (%s): " (abbreviate-file-name dir))
+       :sort nil
+       ;; nil so unmatched input is returned verbatim and becomes a new file.
+       :require-match nil
+       :category 'file
+       :keymap consult-find-file-map
+       :state (consult--file-preview)
+       :history 'file-name-history)
+      dir files))))
 
 ;; https://www.youtube.com/watch?v=UtqE-lR2HCA&t=1246s
 ;; https://youtu.be/5ffb2at2d7w?t=412
