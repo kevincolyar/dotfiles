@@ -3,6 +3,9 @@
 {
   nixpkgs.hostPlatform = "aarch64-darwin";
 
+  # `pkgs.yt-dlp` needs curl-cffi, which does not link on darwin as packaged.
+  nixpkgs.overlays = [ (import ./curl-cffi-darwin.nix) ];
+
   # Turn off nix-darwin's management of the Nix installation
   nix.enable = false;
 
