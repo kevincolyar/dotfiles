@@ -66,10 +66,98 @@
   ;; 120x40 terminal, leaving its size (and therefore its placement) driven
   ;; entirely by the length of the docstring. Both maximums accept a function,
   ;; re-evaluated on every display, so scale them to the frame in use.
+  ;;
+  ;; The terminal width is deliberately close to the whole pane: the doc buffer
+  ;; wraps (`visual-line-mode', eldoc-box.el:480), so a narrow box does not
+  ;; drop the overflow sideways, it turns every wide line into several rows and
+  ;; spends the height budget instead. At half a 120-column pane the `sort'
+  ;; docstring needs 34 rows; at full width it needs 24. The box still shrinks
+  ;; to fit its content, so short docs stay small.
   (setq eldoc-box-max-pixel-width
-        (lambda () (if (display-graphic-p) 800 (max 40 (/ (frame-width) 2))))
+        (lambda () (if (display-graphic-p) 800 (max 40 (- (frame-width) 4))))
         eldoc-box-max-pixel-height
-        (lambda () (if (display-graphic-p) 700 (max 8 (/ (frame-height) 3)))))
+        (lambda () (if (display-graphic-p) 700
+                     (max 8 (/ (* 2 (frame-height)) 3)))))
+
+  ;; `eldoc-box--update-childframe-geometry' (eldoc-box.el:596-648) is written
+  ;; for pixels and breaks twice over on a terminal, where a "pixel" is a cell:
+  ;;
+  ;;   1. It clamps the box to `(- (frame-pixel-height parent) 32)' -- 32
+  ;;      pixels of slack on a GUI, but 32 *rows* here. A 40-row tmux pane
+  ;;      capped the box at 8 rows regardless of the maximums above, which is
+  ;;      what truncated long docs; a pane under 33 rows caps it at nothing.
+  ;;   2. It measures the text before resizing the frame, so the row count it
+  ;;      gets describes the wrapping of the *previous* width; once the frame
+  ;;      is resized the text rewraps into more rows than the frame now has,
+  ;;      and the overflow is cut off.
+  ;;
+  ;; Sizing width-first fixes both: pin the width, let the buffer wrap at it,
+  ;; then count the rows that wrapping actually needs.
+  ;;
+  ;; The rows are counted rather than measured. `window-text-pixel-size'
+  ;; under-reports whenever the doc carries a `(space :width text)' display
+  ;; property or a fractional `:height' face -- both of which eldoc-box puts on
+  ;; the markdown separators in eglot's output (eldoc-box.el:91-93, 1069-1092,
+  ;; and the issue#68 comment at eldoc-box.el:599-618). A clangd hover measured
+  ;; 18 rows for a layout that needs 19, so the last line was cut off. On a
+  ;; character grid `count-screen-lines' is both exact and cheaper: it walks
+  ;; the same wrapping the terminal will draw.
+
+  ;; Functional core: widest line in columns, no frames involved.
+  (defun my-eldoc-box--text-width ()
+    "Return the width in columns of the widest line in the current buffer."
+    (save-excursion
+      (goto-char (point-min))
+      (let ((width 0))
+        (while (not (eobp))
+          (setq width (max width (string-width
+                                  (buffer-substring-no-properties
+                                   (line-beginning-position)
+                                   (line-end-position)))))
+          (forward-line))
+        width)))
+
+  (defun my-eldoc-box-tty-geometry (frame window)
+    "Size and place the terminal childframe FRAME showing WINDOW."
+    (let* ((parent (frame-parent frame))
+           ;; A TTY childframe's border is drawn around the frame rectangle,
+           ;; not inside it (`window-body-width' equals `frame-width'), so it
+           ;; costs nothing in text but does need a cell of clearance per side.
+           (chrome 2)
+           (max-width (min (funcall eldoc-box-max-pixel-width)
+                           (- (frame-width parent) chrome)))
+           (max-height (min (funcall eldoc-box-max-pixel-height)
+                            (- (frame-height parent) chrome)))
+           (frame-resize-pixelwise t))
+      ;; Restore line continuation for this frame; see the
+      ;; `no-special-glyphs' note below. Set per frame rather than in
+      ;; `eldoc-box-frame-parameters' so graphical boxes keep eldoc-box's
+      ;; own choice and gain no fringe continuation arrows.
+      (set-frame-parameter frame 'no-special-glyphs nil)
+      (when (and (> max-width 0) (> max-height 0))
+        (let ((width (max 1 (min max-width
+                                 ;; One spare column keeps the last glyph off
+                                 ;; the border.
+                                 (1+ (with-current-buffer (window-buffer window)
+                                       (my-eldoc-box--text-width)))))))
+          ;; Wrap at the final width before counting, so the count describes
+          ;; the layout that will be displayed.
+          (set-frame-size frame width max-height t)
+          (let* ((rows (with-selected-window window
+                         (count-screen-lines (point-min) (point-max))))
+                 (height (max 1 (min max-height rows)))
+                 (pos (funcall eldoc-box-position-function width height)))
+            (set-frame-size frame width height t)
+            (set-frame-position frame (car pos) (cdr pos)))))))
+
+  (defun my-eldoc-box-geometry (orig frame window)
+    "Use terminal-aware geometry for FRAME; ORIG handles graphical frames."
+    (if (display-graphic-p frame)
+        (funcall orig frame window)
+      (my-eldoc-box-tty-geometry frame window)))
+
+  (advice-add 'eldoc-box--update-childframe-geometry
+              :around #'my-eldoc-box-geometry)
 
   ;; `eldoc-box-body' ships with no attributes at all (eldoc-box.el:88), so the
   ;; box is painted in whatever `default' resolves to -- and in a terminal this
@@ -90,16 +178,43 @@
   ;; `standard-display-unicode-special-glyphs' in config/ui.el.
   (setf (alist-get 'undecorated eldoc-box-frame-parameters) nil)
 
-  ;; The border adds a row above the text, which would otherwise land on the
-  ;; line being inspected. Nudge the box down one row when there is space.
+  ;; eldoc-box sets `(no-special-glyphs . t)' (eldoc-box.el:158). On a terminal
+  ;; that does not merely hide the continuation glyph, it disables continuation
+  ;; altogether: a line wider than the frame is cut at the edge and its
+  ;; remainder never drawn, whatever `truncate-lines' and `word-wrap' say in
+  ;; the buffer. Verified with a bare `make-frame' child frame under `emacs -Q'
+  ;; -- identical frames, and the parameter alone decides whether a 200-column
+  ;; line renders as four wrapped rows or one truncated row. This is why long
+  ;; eglot signatures came out clipped while `vertical-motion' in the same
+  ;; window still reported the line as wrapped. `my-eldoc-box-tty-geometry'
+  ;; above clears it, per frame, on every terminal display.
+
+  ;; Functional core: one axis, no frames touched.
+  (defun my-eldoc-box--clamp (start size limit)
+    "Return START moved so a SIZE-long box keeps a cell of border clearance.
+LIMIT is the parent frame's extent on the same axis.  A box too large to
+clear both edges is pinned at 1, so the near border stays visible and the
+far one is the side that gets clipped."
+    (max 1 (min start (- limit size 1))))
+
+  ;; The border ring is drawn around the frame rectangle, not inside it, so it
+  ;; sits in the cell either side of the box: at x=0 the left border would be
+  ;; at column -1 and is simply not drawn, which is what hid the left edge of
+  ;; wide boxes -- `eldoc-box--default-at-point-position-function-1' floors x
+  ;; at 0 (eldoc-box.el:567) and wide boxes land exactly there. Keep a column,
+  ;; and a row, of clearance on every side. The y clamp subsumes the old nudge
+  ;; that kept the top border off the line being inspected.
   (defun my-eldoc-box-at-point-position (width height)
     "Place the box below point, leaving the cursor's own row uncovered.
 WIDTH and HEIGHT are the childframe's text dimensions."
-    (let* ((pos (eldoc-box--default-at-point-position-function width height))
-           (y (cdr pos)))
-      (if (or (display-graphic-p)
-              (>= (+ y height 2) (frame-inner-height)))
+    (let ((pos (eldoc-box--default-at-point-position-function width height)))
+      (if (display-graphic-p)
           pos
-        (cons (car pos) (1+ y)))))
+        (let ((x (car pos))
+              (y (cdr pos)))
+          (cons (my-eldoc-box--clamp x width (frame-inner-width))
+                (my-eldoc-box--clamp
+                 (if (>= (+ y height 2) (frame-inner-height)) y (1+ y))
+                 height (frame-inner-height)))))))
 
   (setq eldoc-box-at-point-position-function #'my-eldoc-box-at-point-position))
