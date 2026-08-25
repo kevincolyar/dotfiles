@@ -70,6 +70,29 @@ is reported, so creating one is never silent."
       (message "New file: %s" (abbreviate-file-name path)))
     (find-file path)))
 
+;; Imperative shell: `process-lines' calls `call-process', which ignores a
+;; remote `default-directory' and runs the program locally, so a tramp DIR
+;; listed the local tree. `process-file' dispatches through tramp's handler
+;; instead, and `executable-find' needs its REMOTE argument to look for the
+;; binary on the right host.
+(defun consult-find-file--files (dir)
+  "Return the file names under DIR, relative to DIR, as listed by `fd'.
+Runs on the remote host when DIR is remote."
+  (let* ((default-directory dir)
+         (remote (file-remote-p dir))
+         (fd (or (executable-find "fd" remote)
+                 (executable-find "fdfind" remote)
+                 (user-error "Neither fd nor fdfind found on %s"
+                             (or remote "this host")))))
+    (with-temp-buffer
+      (let ((status (process-file fd nil t nil "--type" "f" "--color=never")))
+        ;; fd exits 1 on a genuine error; a partially readable tree still
+        ;; exits 0, so only a hard failure aborts the listing.
+        (unless (eq status 0)
+          (user-error "%s exited with %s: %s" fd status
+                      (string-trim (buffer-string))))
+        (split-string (buffer-string) "\n" t)))))
+
 ;; `consult-fd'/`consult-find' stream candidates from an async process that
 ;; only starts once you type, so there's no initial listing and (since they
 ;; never pass `:state' to `consult--read') no preview either. This instead
@@ -90,8 +113,7 @@ selected."
   (let* ((dir (file-name-as-directory (expand-file-name (or dir default-directory))))
          (default-directory dir)
          (consult-find-file--dir dir)
-         (fd (if (executable-find "fd") "fd" "fdfind"))
-         (files (process-lines fd "--type" "f" "--color=never")))
+         (files (consult-find-file--files dir)))
     (consult-find-file--visit
      (consult-find-file--plan
       (consult--read
