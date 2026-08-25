@@ -8,14 +8,31 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 Then in tmux, ctrl-f I
 
-** On MacOS with Ghostty: Fix undercurls, etc
+** On MacOS with Ghostty: Fix undercurls
 
-Follow: https://gist.github.com/bbqtd/a4ac060d6f6b9ea6fe3aabe735aa9d95
+Emacs 31 (and nvim, less, ...) only emits =SGR 4:3= / =SGR 58= -- curly and
+colored underlines -- when the terminfo entry for =$TERM= advertises the
+extended capabilities =Smulx= and =Setulc=. Upstream's =tmux-256color= entry
+has neither, so inside tmux those faces silently degrade to a plain =SGR 4=.
+
+Ghostty's =xterm-ghostty= entry does advertise both, so tmux already enables
+its =usstyle= feature and forwards the sequences outward; only the inward
+advertisement is missing. =terminal-overrides= cannot fix this -- it describes
+the outer terminal, not what tmux reports to the pane.
 
 #+begin_src sh
-curl -LO https://invisible-island.net/datafiles/current/terminfo.src.gz && gunzip terminfo.src.gz
-/usr/bin/tic -xe tmux-256color terminfo.src
+~/.dotfiles/terminfo/install.sh
 #+end_src
+
+That recompiles =~/.terminfo/74/tmux-256color= from the system entry with both
+capabilities added. Verify:
+
+#+begin_src sh
+infocmp -x tmux-256color | grep -E 'Smulx|Setulc'
+#+end_src
+
+Existing tty frames cache terminal capabilities; restart emacs (or open a new
+frame) afterwards.
 
 In ~/.tmux.conf:
 
