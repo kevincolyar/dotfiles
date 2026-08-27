@@ -76,7 +76,8 @@ _zsh_source_first \
 ZSH_AUTOSUGGEST_STRATEGY=(history)
 
 # fzf --zsh needs 0.48+. Ubuntu 20.04/22.04 fzf has no --zsh; fall back to shell scripts.
-# fzf-tab native module fails to rebuild on older Ubuntu; do not compile it.
+# fzf-tab native module is Nix-built; Ubuntu zsh cannot load it and then
+# prompts to rebuild. x86_64-linux uses a copy with no .so (zsh fallback).
 if (( $+commands[fzf] )); then
   if [[ $options[zle] = on ]]; then
     if fzf_zsh_init=$(fzf --zsh 2>/dev/null); then
@@ -100,11 +101,31 @@ if (( $+commands[fzf] )); then
 
   FZF_TAB_MODULE_BUILD=0
   zstyle ':fzf-tab:*' use-fzf-default-opts yes
-  _zsh_source_first \
+  _fzf_tab=
+  for _fzf_tab in \
     ${HOME}/.nix-profile/share/fzf-tab/fzf-tab.plugin.zsh \
     /etc/profiles/per-user/${USER}/share/fzf-tab/fzf-tab.plugin.zsh \
     ${HOME}/.local/state/nix/profiles/profile/share/fzf-tab/fzf-tab.plugin.zsh \
     /usr/share/fzf-tab/fzf-tab.plugin.zsh
+  do
+    [[ -r $_fzf_tab ]] && break
+    _fzf_tab=
+  done
+  if [[ -n $_fzf_tab ]]; then
+    if [[ $OSTYPE == linux-gnu* && $CPUTYPE == x86_64 && $_fzf_tab != /usr/share/* ]]; then
+      _fzf_tab_nomod="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/fzf-tab-nomodule"
+      if [[ ! -e $_fzf_tab_nomod/fzf-tab.plugin.zsh || $_fzf_tab -nt $_fzf_tab_nomod/fzf-tab.plugin.zsh ]]; then
+        mkdir -p "$_fzf_tab_nomod"
+        cp -f "${_fzf_tab:h}/fzf-tab.plugin.zsh" "${_fzf_tab:h}/fzf-tab.zsh" "$_fzf_tab_nomod/"
+        ln -sfn "${_fzf_tab:h}/lib" "$_fzf_tab_nomod/lib"
+        rm -rf "$_fzf_tab_nomod/modules"
+      fi
+      source "$_fzf_tab_nomod/fzf-tab.plugin.zsh"
+    else
+      source "$_fzf_tab"
+    fi
+  fi
+  unset _fzf_tab _fzf_tab_nomod
 fi
 
 (( $+commands[zoxide] )) && eval "$(zoxide init zsh)"
