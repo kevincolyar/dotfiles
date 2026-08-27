@@ -3,6 +3,12 @@
 
 [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
 
+# Termius SSH: dedicated tmux session, never the local desktop one.
+# Set Host env LC_TERMINAL=Termius (sshd AcceptEnv LC_*).
+if [[ -z $TMUX && -n $SSH_CONNECTION && ${LC_TERMINAL:l} == termius* ]] && (( $+commands[tmux] )); then
+  exec tmux new-session -A -s termius
+fi
+
 typeset -U path cdpath fpath manpath
 
 if [[ -n ${NIX_PROFILES-} ]]; then
