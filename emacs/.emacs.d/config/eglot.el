@@ -6,6 +6,8 @@
 (setq read-process-output-max (* 4 1024 1024)) ; 4MB
 
 (use-package eglot
+  :straight nil
+  :ensure nil
   :defer t
   :hook ((
          python-mode
@@ -19,9 +21,14 @@
          html-mode
          html-ts-mode
          mhtml-mode
+         mhtml-ts-mode
          css-mode
          css-ts-mode
-         markdown-mode
+         typescript-ts-mode
+         tsx-ts-mode
+         json-ts-mode
+         go-ts-mode
+         yaml-ts-mode
          go-mode
          nix-mode
          c-mode
@@ -58,9 +65,10 @@
      ((python-mode python-ts-mode) . ("ty" "server"))
      ;; ((python-mode python-ts-mode) . ("pyrefly" "lsp"))
      ;; ((python-mode python-ts-mode) . ("ruff"))
-     ((html-mode html-ts-mode mhtml-mode) . ("vscode-html-language-server" "--stdio"))
-     ((css-mode css-ts-mode) . ("vscode-css-language-server" "--stdio"))
-     ((markdown-mode) . ("vscode-markdown-language-server" "--stdio"))))
+     ;; ((html-mode html-ts-mode mhtml-mode) . ("vscode-html-language-server" "--stdio"))
+     ;; ((css-mode css-ts-mode) . ("vscode-css-language-server" "--stdio"))
+     ;; ((markdown-mode) . ("vscode-markdown-language-server" "--stdio"))
+     ))
 
   (defun my/eglot-capf ()
     (setq-local completion-at-point-functions

@@ -84,7 +84,8 @@
     # ollama - Currently broken on arm64. Using brew version instead
     mkcert
     prettierd # html formatter, used by emacs format-all 
-    vscode-langservers-extracted # for html-mode
+    # vscode-langservers-extracted # for html-mode
+    marksman
 
     # python
     # black
@@ -172,126 +173,8 @@
 
   programs.direnv.enable = true;
 
-  # https://github.com/starcraft66/os-config/blob/master/home-manager/programs/zsh.nix
-  programs.zsh = {
-    enable = true;
-    autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
-
-    # Ubuntu's /etc/zsh/zshrc used to run compinit for us, but that file is
-    # only read by the distro zsh; the Nix zsh never sources it, so completion
-    # has to be initialized here. The dump is keyed by $ZSH_VERSION so distro
-    # and Nix zsh never share an incompatible cache.
-    enableCompletion = true;
-    completionInit = ''
-      autoload -Uz compinit
-      _zcompdump="''${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-$ZSH_VERSION"
-      mkdir -p "''${_zcompdump:h}"
-      compinit -d "$_zcompdump"
-      unset _zcompdump
-    '';
-
-    initContent = ''
-       # Dumb terminal (e.g. emacs tramp)
-       [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
-
-       # Vim Mode
-       bindkey -v
-
-       # Set maximum number of open file descriptors to 65536
-       ulimit -n 65536
-
-       zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|=*' 'l:|=*'
- 
-       # Optional: you may want to add other useful options
-       setopt AUTO_MENU    # enables automatic selection in the completion menu.
-       setopt CORRECT      # enables spelling correction
-       setopt REC_EXACT    # don't correct matches even though they are typographical mistakes
-
-       path=(
-         ./bin
-         $HOME/bin
-         $HOME/bin/ssh
-         $HOME/bin/mount
-         $HOME/.docker/bin
-         $path
-       )
-
-       # Homebrew
-       if [[ -d /opt/homebrew ]]; then
-         eval "$(/opt/homebrew/bin/brew shellenv)"
-       fi
-
-       # fzf
-       if [ -n "''${commands[fzf-share]}" ]; then
-         # source "$(fzf-share)/key-bindings.zsh"
-         # source "$(fzf-share)/completion.zsh"
-
-         # Having problems on older ubuntu systems unable recompile fzf-tab binary? Remove the old one:
-         # e.g.: rm root@kubi:/nix/store/hzvfypkvkcx9axfw4wrzi69pr3y6bp6p-zsh-fzf-tab-1.3.0/share/fzf-tab/modules/Src/aloxaf/fzftab.so
-         FZF_TAB_MODULE_BUILD=0
-         zstyle ':fzf-tab:*' use-fzf-default-opts yes
-         source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
-       fi
-
-       # Required by gnupg-vim, zsh, etc
-       export GPG_TTY=$(tty)
-
-       # Ripgrep
-       export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
-
-       # Pyrefly
-       export PYREFLY_STACK_SIZE=100000000
-       
-       # zoxide
-       eval "$(zoxide init zsh)"
-    '';
-
-    shellAliases = {
-
-      ".." = "cd ..";
-      less="less -R";
-      du="dua -i .git -i node_modules interactive";
-      cat="bat";
-      e="emacs -nw";
-      ec="emacsclient -t";
-
-      ls="eza --git";
-      l="eza -lgh";
-      ll="eza -lgah";
-      la="ls -lAGh --color";
-
-      # Git
-      gl="git pull";
-      gp="git push";
-      gd="git diff";
-      gc="git commit";
-      gca="git commit -a";
-      gco="git checkout";
-      gb="git branch";
-      gs="git status";
-      grm="git status | grep deleted | awk '{print \$3}' | xargs git rm";
-      git_diff="git diff --no-ext-diff -w '$@' | vim -R -";
-      glg="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
-
-      # docker
-      dc="docker compose";
-      dcl="docker compose -f docker-compose.yml -f docker-compose.local.yml";
-
-      # kubernetes
-      k8="kubectl";
-
-      # Other
-      vi="vim";
-      vim="nvim";
-
-      # Globbing issues
-      curl="noglob curl";
-      wget="noglob wget";
-      git="noglob git";
-
-    };
-  };
+  # zsh config is stow-managed: ~/.dotfiles/zsh/.zshrc
+  # Do not set Home Manager programs.zsh.enable — it writes ~/.zshrc on switch.
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

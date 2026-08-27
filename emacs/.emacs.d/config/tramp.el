@@ -7,6 +7,8 @@
 ;; fresh session, for instance -- loaded tramp with none of the settings below.
 ;; `:defer t' alone already keeps it lazy.
 (use-package tramp
+  :straight nil
+  :ensure nil
   :defer t
   :config
   ;; Prevent extra files
@@ -29,6 +31,14 @@
   ;; Default is 60s. An unreachable or unresolvable host (kubi.lan currently
   ;; NXDOMAINs) otherwise blocks Emacs for a full minute on first touch.
   (setq tramp-connection-timeout 5)
+
+  ;; Default `tramp-remote-path' is a fixed list of system directories, so
+  ;; anything installed under the login shell's PATH (~/.nix-profile/bin,
+  ;; ~/.local/bin) is invisible to `executable-find'/`process-file' -- which
+  ;; is how `consult-find-file' locates `fd' on a remote host. The
+  ;; `tramp-own-remote-path' placeholder splices in the remote user's own
+  ;; PATH; appended, so system directories still win on ambiguity.
+  (add-to-list 'tramp-remote-path 'tramp-own-remote-path t)
 
   ;; (customize-set-variable 'tramp-ssh-controlmaster-options
   ;;                         (concat

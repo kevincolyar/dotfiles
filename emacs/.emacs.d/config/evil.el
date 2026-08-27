@@ -23,9 +23,10 @@
   ;; (evil-define-key 'normal 'lsp-mode "K" 'lsp-ui-doc-glance)
 
   ;; The `eldoc-box-hover-at-point-mode' childframe (config/eldoc.el) is
-  ;; transient and capped at a third of the frame height, so it truncates long
-  ;; docstrings. K toggles a real window on the same documentation, which
-  ;; scrolls and can show examples in full. `eldoc-display-in-buffer' stays on
+  ;; transient and capped at two thirds of the frame height, so it still
+  ;; truncates the longest docstrings. K toggles a real window on the same
+  ;; documentation, which scrolls and can show examples in full.
+  ;; `eldoc-display-in-buffer' stays on
   ;; `eldoc-display-functions' while eldoc-box is active, so the box and this
   ;; buffer are fed from the same request -- the hover box keeps working
   ;; untouched. `helpful-at-point' above remains K in buffers without eldoc.

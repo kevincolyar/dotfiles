@@ -36,6 +36,7 @@
         )       ; Always have the same width
   :config
   (global-corfu-mode)
+  (setq completion-preview-sort-function corfu-sort-function)
   ;; Emacs 31 provides `tty-child-frames', which is what `corfu--popup-support-p'
   ;; checks, so the doc popup now renders in terminal frames too.
   (corfu-popupinfo-mode)
