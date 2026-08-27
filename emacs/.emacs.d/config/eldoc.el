@@ -40,6 +40,17 @@
 ;; `short' (the default) truncates to the first sentence.
 (setq elisp-eldoc-funcall-with-docstring-length 'full)
 
+;; Both elisp backends cut the docstring at `elisp-eldoc-docstring-length-limit'
+;; characters and append a `[Nc more]' marker (elisp-mode.el:2299-2305,
+;; 2350-2358). That happens in `eldoc-documentation-functions', i.e. before any
+;; display function sees the text, so the 1000-character default amputated the
+;; childframe *and* the `*eldoc*' buffer that K opens (config/evil.el) -- and
+;; the marker's advice, `M-x eldoc-doc-buffer', led to the same truncated text.
+;; Truncation belongs to the display, not the source: the childframe is capped
+;; at two thirds of the frame height by `my-eldoc-box-tty-geometry' below and
+;; simply shows what fits, while the buffer scrolls through the rest.
+(setq elisp-eldoc-docstring-length-limit most-positive-fixnum)
+
 ;; `eldoc-mode-hook' fires more than once per buffer -- eglot toggles
 ;; `eldoc-mode' in the buffers it manages -- and `eldoc-box--enable' conses its
 ;; display function onto `eldoc-display-functions' without checking whether it

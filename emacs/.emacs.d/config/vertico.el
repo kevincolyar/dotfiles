@@ -31,8 +31,9 @@
 
 (use-package compat)
 ;; (use-package wgrep)
-(use-package vertico-posframe
-  :defer t
-  :config
-  (vertico-posframe-mode 1))
+
+;; Uses child frame instead of minibuffer
+;; (use-package vertico-posframe
+;;   :init
+;;   (vertico-posframe-mode 1))
   

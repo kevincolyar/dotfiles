@@ -58,9 +58,10 @@
      ((python-mode python-ts-mode) . ("ty" "server"))
      ;; ((python-mode python-ts-mode) . ("pyrefly" "lsp"))
      ;; ((python-mode python-ts-mode) . ("ruff"))
-     ((html-mode html-ts-mode mhtml-mode) . ("vscode-html-language-server" "--stdio"))
-     ((css-mode css-ts-mode) . ("vscode-css-language-server" "--stdio"))
-     ((markdown-mode) . ("vscode-markdown-language-server" "--stdio"))))
+     ;; ((html-mode html-ts-mode mhtml-mode) . ("vscode-html-language-server" "--stdio"))
+     ;; ((css-mode css-ts-mode) . ("vscode-css-language-server" "--stdio"))
+     ;; ((markdown-mode) . ("vscode-markdown-language-server" "--stdio"))
+     ))
 
   (defun my/eglot-capf ()
     (setq-local completion-at-point-functions

@@ -1,8 +1,14 @@
 ;;; -*- lexical-binding: t; -*-
-(use-package markdown-mode
-  :defer t
-  :mode ("README\\.md\\'" . gfm-mode)
-  :init (setq markdown-command "multimarkdown"))
+
+(use-package markdown-ts-mode
+  ;; Built-in on Emacs 31. `straight-use-package-by-default' would
+  ;; install MELPA markdown-ts-mode, which errors on 31 and leaves
+  ;; buffers in fundamental-mode.
+  :straight nil
+  :ensure nil
+  :mode ("\\.md\\'" "\\.mdx\\'" "\\.markdown\\'")
+  :config
+  (require 'markdown-ts-mode-x))
 
 (use-package dockerfile-mode :defer t)
 (use-package yaml-mode :defer t)
@@ -24,7 +30,11 @@
    ("\\.mustache\\'" . web-mode)
    ("\\.djhtml\\'" . web-mode)))
 
-(use-package poly-markdown :defer t)
+;; poly-markdown's autoload maps .md to itself. Fenced python chunks
+;; then run python-ts-mode-hook → eglot-ensure → `ty` on the whole
+;; markdown file. markdown-ts-mode fontifies and indents fences without
+;; those hooks.
+;; (use-package poly-markdown :defer t)
 (use-package poly-ruby :defer t)
 
 ;; Make ruby-mode define '_' as part of a word, not a symbol (e.g. when using *)
@@ -33,7 +43,7 @@
             (superword-mode 1)
             (modify-syntax-entry ?_ "w")))
 
-(add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode))
+;; (add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.erb" . poly-ruby-mode))
 
 (defun platformio-conditionally-enable ()
