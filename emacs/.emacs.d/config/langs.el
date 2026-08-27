@@ -10,11 +10,6 @@
   :config
   (require 'markdown-ts-mode-x))
 
-(use-package dockerfile-mode :defer t)
-(use-package yaml-mode :defer t)
-(use-package toml-mode :defer t)
-(use-package lua-mode :defer t)
-(use-package go-mode :defer t)
 (use-package clojure-mode :defer t)
 (use-package basic-mode :defer t)
 

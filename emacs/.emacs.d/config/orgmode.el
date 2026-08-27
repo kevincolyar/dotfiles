@@ -1,5 +1,7 @@
 ;;; -*- lexical-binding: t; -*-
 (use-package org
+  :straight nil
+  :ensure nil
   :defer t
   :hook
   (org-mode . org-indent-mode)

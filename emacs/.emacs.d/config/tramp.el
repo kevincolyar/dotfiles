@@ -7,6 +7,8 @@
 ;; fresh session, for instance -- loaded tramp with none of the settings below.
 ;; `:defer t' alone already keeps it lazy.
 (use-package tramp
+  :straight nil
+  :ensure nil
   :defer t
   :config
   ;; Prevent extra files

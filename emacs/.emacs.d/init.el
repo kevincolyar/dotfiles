@@ -20,6 +20,11 @@
 ;; Install and integrate use-package with straight.el
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t) ;; replaces :ensure t
+;; Emacs 31 ships these. `:straight nil' on their use-package forms is
+;; not enough: consult-eglot / org-super-agenda still declare them as
+;; deps and would clone GNU ELPA copies that shadow 31.1.
+(dolist (pkg '(eglot org))
+  (straight-use-package `(,pkg :type built-in)))
 
 (load "~/.emacs.d/config/globals.el")
 (load "~/.emacs.d/config/evil.el")
@@ -61,6 +66,7 @@
 (load "~/.emacs.d/config/tramp.el")
 
 (load "~/.emacs.d/config/gptel.el")
+(load "~/.emacs.d/config/agent-shell.el")
 
 ;; Don't let Emacs' customize system pollute our configs
 (setq custom-file "~/.emacs.d/custom-vars.el")

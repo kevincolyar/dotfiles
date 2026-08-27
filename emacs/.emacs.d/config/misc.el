@@ -46,6 +46,8 @@
 (add-hook 'emacs-startup-hook #'efs/display-startup-time)
 
 (use-package editorconfig
+  :straight nil
+  :ensure nil
   :config
   (editorconfig-mode 1))
 
