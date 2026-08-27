@@ -48,16 +48,22 @@
     (_ t)))
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(use-package autothemer
-  :config
-  (load-theme 'doom-rose-pine-moon t)
-  (load-theme 'doom-rose-pine-dawn t)
-  :init
-  ;; Set light/dark theme based on system
-  (if (my/system-dark-mode-p)
-      (load-theme 'rose-pine-moon t)
-    (load-theme 'rose-pine-dawn t))
-  )
+(use-package autothemer :defer t)
+
+;; One theme, matching OS appearance. The autothemer `rose-pine-*' themes do
+;; not define `doom-modeline-*' faces, and `:config' previously loaded both
+;; doom variants so dawn always sat on top -- modeline stayed light (and
+;; inherited autothemer `italic' = faded for the host segment) regardless of
+;; dark mode. `doom-rose-pine-*' already colour the bar and evil states.
+(defun my/load-rose-pine-theme ()
+  "Enable `doom-rose-pine-moon' or `doom-rose-pine-dawn' from OS appearance."
+  (let ((theme (if (my/system-dark-mode-p)
+                   'doom-rose-pine-moon
+                 'doom-rose-pine-dawn)))
+    (mapc #'disable-theme (copy-sequence custom-enabled-themes))
+    (load-theme theme t)))
+
+(my/load-rose-pine-theme)
 
 ;; Not working on remote, tramp (rsync) files
 ;; (use-package auto-dark
