@@ -3,7 +3,7 @@ modelRoles:
 symbolPreset: nerd
 theme: 
   light: light-dunes
-setupVersion: 1
+setupVersion: 2
 statusLine: 
   preset: default
   separator: pipe
@@ -17,15 +17,17 @@ startup:
   quiet: true
 terminal: 
   showImages: false
-bash:
-  patterns:
-    - match: "rm -rf /*"
+bash: 
+  patterns: 
+    - match: rm -rf /*
       approval: deny
-    - match: "curl *|*sh"
+    - match: curl *|*sh
       approval: deny
-    - match: "curl *|*sh *"
+    - match: curl *|*sh *
       approval: deny
-    - match: "wget *|*sh"
+    - match: wget *|*sh
       approval: deny
-    - match: "wget *|*sh *"
+    - match: wget *|*sh *
       approval: deny
+display: 
+  shimmer: disabled

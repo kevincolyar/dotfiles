@@ -6,7 +6,19 @@
 # Termius SSH: dedicated tmux session, never the local desktop one.
 # Set Host env LC_TERMINAL=Termius (sshd AcceptEnv LC_*).
 if [[ -z $TMUX && -n $SSH_CONNECTION && ${LC_TERMINAL:l} == termius* ]] && (( $+commands[tmux] )); then
-  exec tmux new-session -A -s termius
+  export LANG=en_US.UTF-8
+  export LC_ALL=en_US.UTF-8
+  # Session-scoped bar: rose-pine nerd separators overflow Termius width and
+  # wrap; 󰃰 at the end is the date icon. Desktop sessions keep rose-pine.
+  exec tmux -u new-session -A -s termius \; \
+    set-option status-left-length 20 \; \
+    set-option status-right-length 8 \; \
+    set-option status-left ' #S ' \; \
+    set-option status-right ' %H:%M' \; \
+    set-option -w window-status-format ' #I:#W ' \; \
+    set-option -w window-status-current-format ' #I:#W ' \; \
+    set-option -w window-status-separator '|' \; \
+    set-option set-titles off
 fi
 
 typeset -U path cdpath fpath manpath
