@@ -11,6 +11,7 @@ if [[ -z $TMUX && -n $SSH_CONNECTION && ${LC_TERMINAL:l} == termius* ]] && (( $+
   # Session-scoped bar: rose-pine nerd separators overflow Termius width and
   # wrap; 󰃰 at the end is the date icon. Desktop sessions keep rose-pine.
   exec tmux -u new-session -A -s termius \; \
+    set-option mouse on \; \
     set-option status-left-length 20 \; \
     set-option status-right-length 8 \; \
     set-option status-left ' #S ' \; \
