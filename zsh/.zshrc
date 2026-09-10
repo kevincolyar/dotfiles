@@ -83,6 +83,18 @@ fi
 
 export EDITOR="emacs -nw"
 export COLORTERM="truecolor"
+# Client light/dark for remote Emacs/omp. sshd AcceptEnv LC_*; Ghostty does
+# not set COLORFGBG. Index < 8 = dark bg. Stale in long-lived shells -- DSR
+# 996 is the live signal; this is the SSH fallback when tmux's pane theme is
+# unknown and 996 is silent.
+if [[ -z $SSH_CONNECTION && $OSTYPE == darwin* ]]; then
+  if [[ $(defaults read -g AppleInterfaceStyle 2>/dev/null) == Dark ]]; then
+    export LC_COLORFGBG='15;0'
+  else
+    export LC_COLORFGBG='0;15'
+  fi
+fi
+[[ -n $LC_COLORFGBG && -z $COLORFGBG ]] && export COLORFGBG=$LC_COLORFGBG
 export GPG_TTY=$(tty)
 export RIPGREP_CONFIG_PATH=$HOME/.ripgreprc
 export PYREFLY_STACK_SIZE=100000000

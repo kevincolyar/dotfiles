@@ -38,15 +38,29 @@
 ;;   ;; (load-theme 'kaolin-dark t)
 ;;   (load-theme 'kaolin-shiva t))
 
-(defun my/system-dark-mode-p ()
+(defun my/ssh-session-p ()
+  "Non-nil when this Emacs is on the far side of SSH."
+  (or (getenv "SSH_CONNECTION")
+      (getenv "SSH_CLIENT")
+      (getenv "SSH_TTY")))
+
+(defun my/env-color-scheme ()
+  "Return `dark', `light', or nil from COLORFGBG / LC_COLORFGBG.
+
+Background index < 8 is dark, >= 8 is light.  `LC_COLORFGBG' is the
+SSH-forwarded copy (sshd `AcceptEnv LC_*')."
+  (let* ((raw (or (getenv "COLORFGBG") (getenv "LC_COLORFGBG")))
+         (parts (and raw (split-string raw ";" t)))
+         (bg (car (last parts))))
+    (when (and bg (string-match-p "\\`[0-9]+\\'" bg))
+      (if (< (string-to-number bg) 8) 'dark 'light))))
+
+(defun my/host-dark-mode-p ()
   "Return non-nil if this machine's OS appearance is dark.
 
-Fallback only.  TTY Emacs (including a remote session) should use
-`my/color-scheme', which tracks the *client* terminal via DSR 996 /
-mode 2031 -- Ghostty reports `CSI ? 997 ; 1 n' for dark and
-`; 2 n' for light, and tmux forwards that from the attaching client.
-Linux hosts have no AppleInterfaceStyle, so this would otherwise
-always pick moon."
+Fallback only, and never over SSH -- mini.lan's AppleInterfaceStyle is
+not the laptop that SSHed in.  Linux hosts have no AppleInterfaceStyle,
+so this would otherwise always pick moon."
   (pcase system-type
     ('darwin
      (string= "Dark"
@@ -62,12 +76,13 @@ always pick moon."
   "Return non-nil if the active theme should be the dark variant.
 
 Prefers the client terminal's light/dark report over the host OS, so
-Emacs on kubi.lan follows the Ghostty/macOS appearance of the laptop
-that SSHed in, not GNOME on the server."
-  (pcase my/color-scheme
+Emacs on mini.lan / kubi.lan follows the Ghostty appearance of the
+laptop that SSHed in, not Aqua on the Mini or GNOME on the server."
+  (pcase (or my/color-scheme (my/env-color-scheme))
     ('dark t)
     ('light nil)
-    (_ (my/system-dark-mode-p))))
+    (_ (and (not (my/ssh-session-p))
+            (my/host-dark-mode-p)))))
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (use-package autothemer :defer t)
@@ -109,7 +124,7 @@ that SSHed in, not GNOME on the server."
                 (my/set-color-scheme 'light)
                 [])))
 
-(defun my/tty-follow-client-color-scheme ()
+(defun my/tty-follow-client-color-scheme (&optional frame)
   "Ask the client terminal its light/dark mode and subscribe to changes.
 
 `CSI ? 996 n' is answered with `CSI ? 997 ; 1 n' (dark) or `; 2 n'
@@ -117,24 +132,34 @@ that SSHed in, not GNOME on the server."
 client appearance flips, so a remote Emacs tracks the laptop
 without polling.
 
-The initial query is synchronous through `xterm--query' with a
-0.3s timeout -- `sit-for' does not run `input-decode-map', so an
-async 996 reply would be missed during startup.  2031 reports
-after that are decoded from `input-decode-map' in the command loop."
-  (unless (or (display-graphic-p)
-              (terminal-parameter nil 'my/color-scheme-tracking))
-    (set-terminal-parameter nil 'my/color-scheme-tracking t)
-    (my/tty-bind-color-scheme-reports)
-    (send-string-to-terminal "\e[?2031h")
-    (push "\e[?2031l" (terminal-parameter nil 'tty-mode-reset-strings))
-    (push "\e[?2031h" (terminal-parameter nil 'tty-mode-set-strings))
-    (when (fboundp 'xterm--query)
-      (let ((xterm-query-timeout 0.3))
-        (xterm--query
-         "\e[?996n"
-         `(("\e[?997;1n" . ,(lambda () (my/set-color-scheme 'dark)))
-           ("\e[?997;2n" . ,(lambda () (my/set-color-scheme 'light))))
-         t)))))
+tmux answers 996 from the pane theme; THEME_UNKNOWN is silent (no
+reply).  Nested tmux over SSH often lands there, so the host OS
+must not be the fallback -- `LC_COLORFGBG' and a late 996 via
+`input-decode-map' cover that path.
+
+The initial query is synchronous through `xterm--query'.  `sit-for'
+does not run `input-decode-map', so an async 996 reply would be
+missed during startup.  2031 reports after that are decoded from
+`input-decode-map' in the command loop."
+  (with-selected-frame (or frame (selected-frame))
+    (unless (or (display-graphic-p)
+                (terminal-parameter nil 'my/color-scheme-tracking))
+      (set-terminal-parameter nil 'my/color-scheme-tracking t)
+      (my/tty-bind-color-scheme-reports)
+      (send-string-to-terminal "\e[?2031h")
+      (push "\e[?2031l" (terminal-parameter nil 'tty-mode-reset-strings))
+      (push "\e[?2031h" (terminal-parameter nil 'tty-mode-set-strings))
+      (require 'term/xterm nil t)
+      (when (fboundp 'xterm--query)
+        (let ((xterm-query-timeout (if (my/ssh-session-p) 1.0 0.3)))
+          (xterm--query
+           "\e[?996n"
+           `(("\e[?997;1n" . ,(lambda () (my/set-color-scheme 'dark)))
+             ("\e[?997;2n" . ,(lambda () (my/set-color-scheme 'light))))
+           t)))
+      (unless my/color-scheme
+        (send-string-to-terminal "\e[?996n")
+        (my/load-rose-pine-theme)))))
 
 
 (defun my/termius-terminal-p ()
@@ -158,6 +183,7 @@ tmux then sees mouse_any_flag and passes wheel/taps through to Emacs."
 (add-hook 'tty-setup-hook #'my/tty-termius-mouse)
 (add-hook 'emacs-startup-hook #'my/tty-termius-mouse)
 (add-hook 'emacs-startup-hook #'my/tty-follow-client-color-scheme)
+(add-hook 'after-make-frame-functions #'my/tty-follow-client-color-scheme)
 (my/load-rose-pine-theme)
 
 ;; Not working on remote, tramp (rsync) files
