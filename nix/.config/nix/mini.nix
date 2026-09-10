@@ -13,6 +13,8 @@
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     yt-dlp
+    ffmpeg
+    dvdauthor
   ];
 
   environment = {
@@ -21,6 +23,8 @@
         LIBRARY_PATH = "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib";
     };
   };
+
+  system.primaryUser = "kevincolyar";
 
   users.users."kevincolyar" = {
     name = "kevincolyar";
@@ -44,6 +48,8 @@
       };
     };
   };
+  
+  home-manager.backupFileExtension = "backup";
 
   # Create /etc/zshrc that loads the nix-darwin environment.
   programs.zsh.enable = true;  # default shell on catalina
@@ -64,7 +70,7 @@
     enable = true;
     onActivation = {
       autoUpdate = true;
-      cleanup = "zap";
+      # cleanup = "zap";
     };
     casks = [
       "adobe-creative-cloud"
@@ -80,7 +86,7 @@
       "microsoft-remote-desktop"
       "minecraft"
       "openemu"
-      "protonmail-bridge"
+      "proton-mail-bridge"
       "signal"
       "steam"
       "thunderbird"

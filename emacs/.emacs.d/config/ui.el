@@ -136,7 +136,27 @@ after that are decoded from `input-decode-map' in the command loop."
            ("\e[?997;2n" . ,(lambda () (my/set-color-scheme 'light))))
          t)))))
 
+
+(defun my/termius-terminal-p ()
+  "Non-nil when this Emacs was started from Termius.
+Matches zshrc: LC_TERMINAL=Termius, or tmux session name `termius'."
+  (or (string-prefix-p "termius" (downcase (or (getenv "LC_TERMINAL") "")))
+      (and (getenv "TMUX")
+           (equal "termius"
+                  (string-trim
+                   (shell-command-to-string
+                    "tmux display-message -p '#S' 2>/dev/null"))))))
+
+(defun my/tty-termius-mouse ()
+  "Enable xterm mouse tracking on Termius TTY frames.
+tmux then sees mouse_any_flag and passes wheel/taps through to Emacs."
+  (when (and (not (display-graphic-p))
+             (my/termius-terminal-p))
+    (xterm-mouse-mode 1)))
+
 (add-hook 'tty-setup-hook #'my/tty-follow-client-color-scheme)
+(add-hook 'tty-setup-hook #'my/tty-termius-mouse)
+(add-hook 'emacs-startup-hook #'my/tty-termius-mouse)
 (add-hook 'emacs-startup-hook #'my/tty-follow-client-color-scheme)
 (my/load-rose-pine-theme)
 
