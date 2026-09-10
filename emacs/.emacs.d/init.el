@@ -29,6 +29,7 @@
 (load "~/.emacs.d/config/globals.el")
 (load "~/.emacs.d/config/evil.el")
 (load "~/.emacs.d/config/ui.el")
+(load "~/.emacs.d/config/theme.el")
 (load "~/.emacs.d/config/key-mapping.el")
 (load "~/.emacs.d/config/crux.el")
 (load "~/.emacs.d/config/kirigami.el")
