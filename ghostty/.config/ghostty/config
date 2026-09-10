@@ -26,3 +26,25 @@ mouse-hide-while-typing = true
 cursor-style = block
 cursor-style-blink = true
 cursor-color = "#FF5F00"
+
+clipboard-read = allow
+clipboard-write = allow
+
+# Ctrl+[ must send a bare ESC.
+#
+# Ghostty's legacy key encoder deliberately omits `[` from its C0 control
+# table (src/input/key_encode.zig, ctrlSeq -- ctrl+i and ctrl+m are dropped
+# there too) and routes it through the fixterms branch instead, so Ctrl+[
+# emits ESC [ 9 1 ; 5 u. That happens in the default encoder; it is not tied
+# to modifyOtherKeys, and no config option disables it.
+#
+# Emacs' term/xterm.el does decode both CSI-u and the xterm numeric form, but
+# only for an explicit table of ctrl-combinations that have no ASCII control
+# character (C-,, C-tab, ...). Code 91 is absent, because Ctrl+[ is expected
+# to arrive as plain ESC. So Emacs inserts `;5u` literally. zsh runs
+# `bindkey -v`, so the same tail is re-read as vi commands ending in `u`
+# (undo) and the line is wiped.
+#
+# tmux hides all of this: it decodes CSI-u itself and, with the default
+# `extended-keys off`, hands the pane a plain ESC.
+keybind = ctrl+[=text:\x1b
