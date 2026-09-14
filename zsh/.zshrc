@@ -171,6 +171,13 @@ _keychain_zsh=${XDG_CONFIG_HOME:-$HOME/.config}/zsh/keychain.zsh
 [[ -r $_keychain_zsh ]] && source "$_keychain_zsh"
 unset _keychain_zsh
 
+# Per-machine omp settings: omp/.omp/agent/config.<short-hostname>.yml, layered
+# over the shared ~/.omp/agent/config.yml. Guarded because most hosts have no
+# such file and omp hard-errors on a PI_CONFIG_FILES path that does not exist.
+_omp_host_config=$HOME/.omp/agent/config.${HOST%%.*}.yml
+[[ -r $_omp_host_config ]] && export PI_CONFIG_FILES=$_omp_host_config
+unset _omp_host_config
+
 (( $+commands[direnv] )) && eval "$(direnv hook zsh)"
 
 alias -- ..=cd\ ..
