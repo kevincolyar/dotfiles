@@ -1,0 +1,19 @@
+# Per-machine omp settings for is-kevinc. zsh/.zshrc picks the file matching
+# ${HOST%%.*} and exports it as PI_CONFIG_FILES, layered over the shared
+# ~/.omp/agent/config.yml (omp/.omp/agent/config.yml in this repo).
+#
+# One file per machine lives here: config.<short-hostname>.yml. omp only
+# auto-loads config.yml, so every other host's file is inert on this machine.
+#
+# This layer outranks the shared base AND any project <repo>/.omp/config.yml,
+# so keep it to genuinely host-bound keys.
+#
+# Hand-edited only: /settings and `omp config set` write the SHARED base, and a
+# key pinned here keeps winning over what they write.
+modelRoles:
+  default: xai-oath/grok-4.6:high
+  plan: xai-oath/grok-4.6:high
+  vision: xai-oath/grok-4.6:medium
+  tiny: xai-oath/grok-4.6:small
+  # smol: <provider>/<model-id>
+  # slow: <provider>/<model-id>
