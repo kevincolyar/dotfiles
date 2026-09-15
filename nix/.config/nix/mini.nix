@@ -15,6 +15,7 @@
     yt-dlp
     ffmpeg
     dvdauthor
+    (pkgs.callPackage ./omp-bin.nix { })
   ];
 
   environment = {
@@ -70,28 +71,23 @@
     enable = true;
     onActivation = {
       autoUpdate = true;
-      # cleanup = "zap";
+      cleanup = "zap";
     };
     casks = [
       "adobe-creative-cloud"
       "airfoil"
-      "alfred"
-      "app-tamer"
       "backblaze"
       "blender"
       "brave-browser"
       "carbon-copy-cloner"
       "font-fira-code-nerd-font"
       "freecad"
-      "microsoft-remote-desktop"
-      "minecraft"
       "openemu"
       "proton-mail-bridge"
       "signal"
-      "steam"
       "thunderbird"
       "vlc"
-      "wezterm"
+      "ghostty"
     ];
   };
 }
