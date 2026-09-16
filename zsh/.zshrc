@@ -14,7 +14,7 @@ if [[ -z $TMUX && -n $SSH_CONNECTION && ${LC_TERMINAL:l} == termius* ]] && (( $+
     set-option mouse on \; \
     set-option status-left-length 20 \; \
     set-option status-right-length 8 \; \
-    set-option status-left ' #S ' \; \
+    set-option status-left ' #h ' \; \
     set-option status-right ' %H:%M' \; \
     set-option -w window-status-format ' #I:#W ' \; \
     set-option -w window-status-current-format ' #I:#W ' \; \
@@ -155,6 +155,13 @@ if (( $+commands[fzf] )); then
     else
       source "$_fzf_tab"
     fi
+    # fzf-tab bails out when zsh wants to insert a longest-common-prefix
+    # (compstate[insert] == *unambiguous), so TAB1 silently extends the word and
+    # beeps; only TAB2 opens fzf. `docker kill <TAB>` on containers sharing a
+    # compose project prefix looked broken for exactly this reason. MENU_COMPLETE
+    # makes compstate[insert] == menu, so fzf opens on the first TAB. Guarded on
+    # the widget: without fzf-tab, MENU_COMPLETE would blindly insert match #1.
+    (( $+functions[fzf-tab-complete] )) && setopt MENU_COMPLETE
   fi
   unset _fzf_tab _fzf_tab_nomod
 fi
