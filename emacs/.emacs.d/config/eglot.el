@@ -9,32 +9,34 @@
   :straight nil
   :ensure nil
   :defer t
+  ;; Emacs 31: `treesit-enabled-modes' (config/tree-sitter.el) puts every
+  ;; enabled pair from `treesit-major-mode-remap-alist' into
+  ;; `major-mode-remap-alist', so python-mode/ruby-mode/js-mode/css-mode/
+  ;; c-mode/c++-mode/csharp-mode/go-mode are never the selected major mode
+  ;; and their hooks never run -- only the -ts-mode hook does. The fake
+  ;; parents from `derived-mode-add-parents' make `provided-mode-derived-p'
+  ;; report t (so `eglot-server-programs' keys still match), but
+  ;; `run-mode-hooks' skips them. Non-ts entries below are the languages
+  ;; with no enabled ts mode: rustic owns .rs, nix-mode has no ts variant.
+  ;; mhtml-ts-mode also runs html-ts-mode-hook and html-mode-hook, so one
+  ;; entry covers .html.
   :hook ((
-         python-mode
          python-ts-mode
          rust-mode
          rustic-mode
-         ruby-mode
          ruby-ts-mode
-         js-mode
          js-ts-mode
-         html-mode
-         html-ts-mode
-         mhtml-mode
          mhtml-ts-mode
-         css-mode
          css-ts-mode
          typescript-ts-mode
          tsx-ts-mode
          json-ts-mode
          go-ts-mode
          yaml-ts-mode
-         go-mode
          nix-mode
-         c-mode
          c-ts-mode
-         c++-mode
          c++-ts-mode
+         csharp-ts-mode
          ) . eglot-ensure)
 
   ;; `eglot-code-action-indications' defaults to `(eldoc-hint left-fringe
@@ -63,6 +65,10 @@
   (my/eglot-configure-servers
    '(((ruby-mode ruby-ts-mode) . ("ruby-lsp"))
      ((python-mode python-ts-mode) . ("ty" "server"))
+     ;; SQL is linted by sqruff through flycheck (config/flycheck.el), not by
+     ;; an LSP server: every SQL server packaged in nixpkgs is PostgreSQL-only
+     ;; (squawk) or ships no diagnostics (sqls), and `sqruff lsp' publishes
+     ;; layout rules only -- it never reports parse errors.
      ;; ((python-mode python-ts-mode) . ("pyrefly" "lsp"))
      ;; ((python-mode python-ts-mode) . ("ruff"))
      ;; ((html-mode html-ts-mode mhtml-mode) . ("vscode-html-language-server" "--stdio"))
