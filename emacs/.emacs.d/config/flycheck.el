@@ -11,6 +11,88 @@
   :hook (find-file . flycheck-mode)
   :config
   (setq flycheck-ruby-rubocop-executable "bundle exec rubocop")
+
+  ;; Flycheck's only built-in SQL checker is `sql-sqlint', a Ruby gem last
+  ;; released in 2019 that parses PostgreSQL exclusively. sqruff is a Rust
+  ;; sqlfluff port covering 22 dialects (ansi, postgres, tsql, mysql,
+  ;; sqlite, bigquery, snowflake, ...).
+  ;;
+  ;; Parse failures are reported with the literal rule code `????' and the
+  ;; message "Unparsable section"; they only appear with `--parsing-errors'.
+  ;; Diagnostics go to stderr, which flycheck reads because
+  ;; `flycheck-start-command-checker' spawns via `start-file-process' with no
+  ;; separate stderr pipe. Long messages wrap onto continuation lines that
+  ;; carry the rule group, e.g. "| [layout.spacing]".
+  (flycheck-def-option-var flycheck-sqruff-dialect nil sql-sqruff
+    "Dialect passed to sqruff as `--dialect', overriding every other source.
+
+When nil the dialect comes from a `.sqruff' file if one exists,
+otherwise from `sql-product' via `my/sqruff-dialect-alist'."
+    :type '(choice (const :tag "Infer from .sqruff or `sql-product'" nil)
+                   (string :tag "Dialect name"))
+    :safe #'stringp)
+
+  ;; `sql-product' (sql-mode's own dialect setting, usually from
+  ;; `.dir-locals.el') is the dialect the buffer already declares, so reuse
+  ;; it. Only products sqruff implements are listed; `sqruff dialects' prints
+  ;; the full set. `ansi' is absent on purpose: it is sqruff's own default,
+  ;; and `sql-product' defaults to `ansi', so mapping it would silently
+  ;; override a `.sqruff' dialect in every unconfigured buffer.
+  (defvar my/sqruff-dialect-alist
+    '((postgres . "postgres")
+      (ms . "tsql")
+      (mysql . "mysql")
+      (sqlite . "sqlite")
+      (oracle . "oracle")
+      (db2 . "db2"))
+    "Map `sql-product' symbols onto sqruff `--dialect' names.")
+
+  (defun my/sqruff-dialect-args ()
+    "Return the sqruff `--dialect' argument list for the current buffer.
+
+Precedence: `flycheck-sqruff-dialect', then a `.sqruff' file (whose
+own dialect must win, so nothing is passed), then `sql-product'."
+    (when-let* ((dialect
+                 (or flycheck-sqruff-dialect
+                     (unless (locate-dominating-file default-directory ".sqruff")
+                       (alist-get (bound-and-true-p sql-product)
+                                  my/sqruff-dialect-alist)))))
+      (list "--dialect" dialect)))
+
+  (flycheck-define-checker sql-sqruff
+    "A multi-dialect SQL linter using sqruff.
+
+See URL `https://github.com/quarylabs/sqruff'."
+    :command ("sqruff" "lint" "--parsing-errors"
+              (eval (my/sqruff-dialect-args))
+              "-")
+    :standard-input t
+    :error-patterns
+    ((error line-start "L:" (zero-or-more " ") line
+            " | P:" (zero-or-more " ") column
+            " | ???? | " (message (one-or-more not-newline)
+                                  (zero-or-more "\n" (one-or-more " ")
+                                                "| " (one-or-more not-newline)))
+            line-end)
+     (warning line-start "L:" (zero-or-more " ") line
+              " | P:" (zero-or-more " ") column
+              " | " (id (one-or-more (not (any " "))))
+              " | " (message (one-or-more not-newline)
+                             (zero-or-more "\n" (one-or-more " ")
+                                           "| " (one-or-more not-newline)))
+              line-end))
+    ;; sqruff reads `.sqruff' from the working directory only -- neither from
+    ;; the linted file's directory nor from any parent -- so run it where the
+    ;; config lives.
+    :working-directory
+    (lambda (_checker)
+      (let ((start (or (and buffer-file-name
+                            (file-name-directory buffer-file-name))
+                       default-directory)))
+        (or (locate-dominating-file start ".sqruff") start)))
+    :modes (sql-mode))
+
+  (add-to-list 'flycheck-checkers 'sql-sqruff)
   )
 
 (use-package flycheck-inline
