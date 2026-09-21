@@ -84,7 +84,7 @@
     # ollama - Currently broken on arm64. Using brew version instead
     mkcert
     prettierd # html formatter, used by emacs format-all 
-    # vscode-langservers-extracted # for html-mode
+    vscode-langservers-extracted # for html-mode and css-mode
     marksman
 
     # python
@@ -98,11 +98,20 @@
     # rust
     cargo-outdated
 
+    # javascript/typescript
+    # eglot's default server for js-ts-mode/typescript-ts-mode/tsx-ts-mode
+    # (.js/.mjs/.cjs/.jsx/.ts/.tsx). Bundles its own tsserver; the `typescript'
+    # package is not needed on PATH.
+    typescript-language-server
+
     # nix
     nixd # lsp server
 
     # c/c++
     clang # lsp server
+
+    # sql
+    sqruff # multi-dialect SQL linter/formatter (Rust); flycheck `sql-sqruff'
 
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
