@@ -1,24 +1,24 @@
-modelRoles: 
-  default: anthropic/claude-opus-5:high
+modelRoles:
+  default: anthropic/claude-opus-5-5:high
 symbolPreset: nerd
-theme: 
+theme:
   light: light-dunes
 setupVersion: 2
-statusLine: 
+statusLine:
   preset: default
   separator: pipe
   sessionAccent: true
   transparent: true
   compactThinkingLevel: false
-tui: 
+tui:
   textSizing: false
   tight: true
-startup: 
+startup:
   quiet: true
-terminal: 
+terminal:
   showImages: false
-bash: 
-  patterns: 
+bash:
+  patterns:
     - match: rm -rf /*
       approval: deny
     - match: curl *|*sh
@@ -29,5 +29,5 @@ bash:
       approval: deny
     - match: wget *|*sh *
       approval: deny
-display: 
+display:
   shimmer: disabled
