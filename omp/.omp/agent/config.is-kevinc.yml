@@ -11,9 +11,9 @@
 # Hand-edited only: /settings and `omp config set` write the SHARED base, and a
 # key pinned here keeps winning over what they write.
 modelRoles:
-  default: anthropic/claude-opus-5:high
-  plan: anthropic/claude-fable-5-1:high
-  vision: anthropic/claude-fable-5-1:medium
-  tiny: anthropic/claude-opus-5:small
+  default: anthropic/claude-opus-5-5:high
+  plan: anthropic/claude-opus-5-5:high
+  vision: anthropic/claude-opus-5-5:medium
+  tiny: anthropic/claude-opus-5-5:small
   # smol: <provider>/<model-id>
   # slow: <provider>/<model-id>
