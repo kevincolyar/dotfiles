@@ -148,8 +148,8 @@
     ".gnupg/gpg-agent.conf".text = ''
        allow-loopback-pinentry
        pinentry-program ${pkgs.pinentry-tty}/bin/pinentry-tty
-       default-cache-ttl 86400       # 24 hours
-       max-cache-ttl 604800          # 7 days (hard max)
+       default-cache-ttl 34560000    # 400 days: effectively never expire while agent runs
+       max-cache-ttl 34560000        # 400 days: hard cap, same as above
     '';
   };
 
