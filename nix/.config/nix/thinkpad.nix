@@ -7,7 +7,9 @@
   home.homeDirectory = "/home/kevincolyar";
 
   home.packages = with pkgs; [
+    signal-desktop
   ];
+
 
   imports = [
     ./home.nix
