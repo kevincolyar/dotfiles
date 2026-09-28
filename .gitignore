@@ -39,3 +39,4 @@ emacs/straight
 
 nvim/.config/nvim/undodir
 nvim/.config/nvim/spell
+/nix/.config/nix/result

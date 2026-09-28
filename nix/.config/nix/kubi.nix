@@ -15,6 +15,7 @@
     ghostty
     bitwarden-cli
     enscript
+    (pkgs.callPackage ./omp-bin.nix { })
   ];
 
   # programs.zsh = {

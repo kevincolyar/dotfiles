@@ -11,10 +11,9 @@ if [[ -z $TMUX && -n $SSH_CONNECTION && ${LC_TERMINAL:l} == termius* ]] && (( $+
   # Session-scoped bar: rose-pine nerd separators overflow Termius width and
   # wrap; 󰃰 at the end is the date icon. Desktop sessions keep rose-pine.
   exec tmux -u new-session -A -s termius \; \
-    set-option mouse on \; \
     set-option status-left-length 20 \; \
     set-option status-right-length 8 \; \
-    set-option status-left ' #S ' \; \
+    set-option status-left ' #h ' \; \
     set-option status-right ' %H:%M' \; \
     set-option -w window-status-format ' #I:#W ' \; \
     set-option -w window-status-current-format ' #I:#W ' \; \
@@ -155,6 +154,13 @@ if (( $+commands[fzf] )); then
     else
       source "$_fzf_tab"
     fi
+    # fzf-tab bails out when zsh wants to insert a longest-common-prefix
+    # (compstate[insert] == *unambiguous), so TAB1 silently extends the word and
+    # beeps; only TAB2 opens fzf. `docker kill <TAB>` on containers sharing a
+    # compose project prefix looked broken for exactly this reason. MENU_COMPLETE
+    # makes compstate[insert] == menu, so fzf opens on the first TAB. Guarded on
+    # the widget: without fzf-tab, MENU_COMPLETE would blindly insert match #1.
+    (( $+functions[fzf-tab-complete] )) && setopt MENU_COMPLETE
   fi
   unset _fzf_tab _fzf_tab_nomod
 fi
@@ -170,6 +176,13 @@ fi
 _keychain_zsh=${XDG_CONFIG_HOME:-$HOME/.config}/zsh/keychain.zsh
 [[ -r $_keychain_zsh ]] && source "$_keychain_zsh"
 unset _keychain_zsh
+
+# Per-machine omp settings: omp/.omp/agent/config.<short-hostname>.yml, layered
+# over the shared ~/.omp/agent/config.yml. Guarded because most hosts have no
+# such file and omp hard-errors on a PI_CONFIG_FILES path that does not exist.
+_omp_host_config=$HOME/.omp/agent/config.${HOST%%.*}.yml
+[[ -r $_omp_host_config ]] && export PI_CONFIG_FILES=$_omp_host_config
+unset _omp_host_config
 
 (( $+commands[direnv] )) && eval "$(direnv hook zsh)"
 

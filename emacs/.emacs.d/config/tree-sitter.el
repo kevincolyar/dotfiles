@@ -24,4 +24,5 @@
           bash-ts-mode
           lua-ts-mode
           c-ts-mode
-          c++-ts-mode))
+          c++-ts-mode
+          csharp-ts-mode))

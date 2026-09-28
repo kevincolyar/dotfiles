@@ -112,7 +112,7 @@
     enable = true;
     onActivation = {
       autoUpdate = true;
-      # cleanup = "zap";
+      cleanup = "zap";
     };
 
     casks = [
