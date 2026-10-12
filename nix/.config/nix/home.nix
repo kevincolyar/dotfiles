@@ -113,6 +113,18 @@
     # sql
     sqruff # multi-dialect SQL linter/formatter (Rust); flycheck `sql-sqruff'
 
+    # debug adapters (emacs/.emacs.d/config/dape.el)
+    # `codelldb': rust/c/c++ DAP server. Preferred over lldb-dap because it
+    # loads rustc's lldb_lookup.py formatters, so String/Vec/HashMap print as
+    # values. The extension itself is a vscode package; `.adapter' is the
+    # standalone binary.
+    vscode-extensions.vadimcn.vscode-lldb.adapter
+    # `js-debug': node/chrome DAP server (microsoft/vscode-js-debug).
+    vscode-js-debug
+    # python (debugpy) and ruby (rdbg) adapters are deliberately absent: both
+    # run inside the project's own interpreter/gemset, so they belong to the
+    # project (devenv, venv, Gemfile), not to this profile.
+
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
