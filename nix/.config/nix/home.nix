@@ -20,7 +20,7 @@
   home.packages = with pkgs; [
 
     (aspellWithDicts
-      (dicts: with dicts; [ en en-computers ]))
+      (dicts: with dicts; [ en ]))
     tree
     curl
     wget
