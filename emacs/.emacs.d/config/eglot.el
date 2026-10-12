@@ -16,14 +16,13 @@
   ;; and their hooks never run -- only the -ts-mode hook does. The fake
   ;; parents from `derived-mode-add-parents' make `provided-mode-derived-p'
   ;; report t (so `eglot-server-programs' keys still match), but
-  ;; `run-mode-hooks' skips them. Non-ts entries below are the languages
-  ;; with no enabled ts mode: rustic owns .rs, nix-mode has no ts variant.
+  ;; `run-mode-hooks' skips them. nix-mode is the one non-ts entry: it has no
+  ;; ts variant. Rust is absent on purpose: rustic owns .rs and calls
+  ;; `eglot-ensure' itself (`rustic-lsp-client' 'eglot, config/rust.el).
   ;; mhtml-ts-mode also runs html-ts-mode-hook and html-mode-hook, so one
   ;; entry covers .html.
   :hook ((
          python-ts-mode
-         rust-mode
-         rustic-mode
          ruby-ts-mode
          js-ts-mode
          mhtml-ts-mode
@@ -65,6 +64,7 @@
   (my/eglot-configure-servers
    '(((ruby-mode ruby-ts-mode) . ("ruby-lsp"))
      ((python-mode python-ts-mode) . ("ty" "server"))
+     ((nix-mode) . ("nixd"))
      ;; SQL is linted by sqruff through flycheck (config/flycheck.el), not by
      ;; an LSP server: every SQL server packaged in nixpkgs is PostgreSQL-only
      ;; (squawk) or ships no diagnostics (sqls), and `sqruff lsp' publishes

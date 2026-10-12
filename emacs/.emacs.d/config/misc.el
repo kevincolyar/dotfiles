@@ -19,7 +19,13 @@
   (git-gutter:update-all-windows)
   (git-gutter:update-interval 2))
 
+;; xclip shells out to pbcopy/xclip on the host Emacs runs on. Over SSH that
+;; is the remote machine's clipboard, not the client's: kills land somewhere
+;; invisible and `p' pastes stale remote text. clipetty (config/clipetty.el)
+;; already carries kills to the client terminal via OSC 52, so only use xclip
+;; locally. `my/ssh-session-p' comes from config/theme.el, loaded earlier.
 (use-package xclip
+  :if (not (my/ssh-session-p))
   :init
   (xclip-mode 1))
 

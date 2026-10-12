@@ -18,7 +18,7 @@
   :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package indent-bars
-  :hook (prog-mode .indent-bars-mode))
+  :hook (prog-mode . indent-bars-mode))
 
 ;; GUI Settings
 (if (display-graphic-p)
@@ -46,12 +46,5 @@
 ;; GUI frames ignore these slots and draw real borders instead.
 (when (fboundp 'standard-display-unicode-special-glyphs)
   (standard-display-unicode-special-glyphs))
-
-;; Enable undercurl support in terminal Emacs
-;; Set the undercurl sequence
-(define-coding-system-alias 'undercurl 'utf-8)
-
-;; Add terminal capabilities
-(define-key input-decode-map "\e[4:3m" [undercurl])
 
 ;;; ui.el ends here

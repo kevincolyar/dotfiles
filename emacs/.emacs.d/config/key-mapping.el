@@ -136,7 +136,6 @@
 (use-package which-key
   :straight nil
   :ensure nil
-  :diminish which-key-mode
   :config
   (which-key-mode)
   (setq which-key-idle-delay 0.1))

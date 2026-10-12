@@ -42,7 +42,6 @@
 (load "~/.emacs.d/config/marginalia.el")
 (load "~/.emacs.d/config/orderless.el")
 (load "~/.emacs.d/config/misc.el")
-(load "~/.emacs.d/config/projectile.el")
 (load "~/.emacs.d/config/tempel.el")
 (load "~/.emacs.d/config/corfu.el")
 

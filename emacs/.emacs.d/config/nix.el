@@ -1,11 +1,7 @@
 ;;; -*- lexical-binding: t; -*-
+;; The server entry lives with the others in config/eglot.el. No `:after
+;; eglot': that deferred `:mode' until eglot happened to load.
 (use-package nix-mode
-  :after eglot
-  :init
-  ;; Ensure `nil` is in your PATH.
-  
-;; (add-to-list 'eglot-server-programs '(nix-mode . ("nil")))
-  (add-to-list 'eglot-server-programs '(nix-mode . ("nixd")))
   :mode "\\.nix\\'")
 
 (use-package direnv

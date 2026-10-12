@@ -43,13 +43,15 @@
   :config
   
   ;; gptel, don't highlight context 
-  (set-face-attribute 'gptel-response-highlight nil :background "unspecified")
+  (set-face-attribute 'gptel-response-highlight nil :background 'unspecified)
 
   ;; Remove default gpt models
   ;; (setq  gptel--known-backends nil)
 
-  ;; Don't use proxy for localhost connections (e.g. Ollama, Llama.cpp)
-  (setenv "NO_PROXY" "localhost,127.0.0.1")
+  ;; Don't proxy localhost (Ollama, llama.cpp). curl's own `--noproxy' wins
+  ;; over `--proxy' and stays scoped to gptel's requests, unlike `setenv',
+  ;; which leaked NO_PROXY into every subprocess Emacs spawns.
+  (setq gptel-curl-extra-args '("--noproxy" "localhost,127.0.0.1"))
 
   ;; `:key' is resolved lazily: a bare `gptel-api-key-from-auth-source' call
   ;; signals at load time on hosts with no matching auth-source entry, which

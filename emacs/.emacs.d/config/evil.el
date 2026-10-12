@@ -108,8 +108,3 @@ ones, which must not move the cursor."
 (use-package evil-commentary
   :after evil
   :init (evil-commentary-mode))
-
-;;; Use escape to escape from everything
-(use-package evil-escape
-  :ensure
-  :after evil)
