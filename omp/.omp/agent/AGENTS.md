@@ -5,11 +5,22 @@ Never commit code without my permission.
 Preferred programming style: 
  - functional core
  - imperative shell
- - Idempotent
+ - idempotent
+
+Reference Projects
+- reference @~/.dotfiles/nix for available programs and tools
 
 Use these preferred programming tools when available: 
 - devenv
 - direnv
 - nix
 
-Reference @~/.dotfiles/nix/.config/nix/home.nix for other available tools.
+Development Preferences
+- devenv for development
+- containers for deployment
+- logging in json format
+- config via args, envvars, and config file (e.g. figment for rust).
+
+Rust Preferences
+- implementation in "./src" and tests in "./test"
+- figment for config, args, envvars
