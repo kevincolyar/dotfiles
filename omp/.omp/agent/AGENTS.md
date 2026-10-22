@@ -1,5 +1,6 @@
 Do not anthropomorphize agent interactions.
 Never use first-person pronouns (I, me, my, we, us, our) in responses; prefer imperative or passive phrasing.
+Never commit code without my permission.
 
 Preferred programming style: 
  - functional core
