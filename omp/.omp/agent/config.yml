@@ -1,5 +1,5 @@
 modelRoles:
-  default: anthropic/claude-opus-5-5:high
+  default: anthropic/claude-opus-5-5
 symbolPreset: nerd
 theme:
   light: light-dunes
@@ -31,3 +31,6 @@ bash:
       approval: deny
 display:
   shimmer: disabled
+defaultThinkingLevel: auto
+claudeResets:
+  autoRedeem: "yes"

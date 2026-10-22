@@ -11,7 +11,7 @@
 # Hand-edited only: /settings and `omp config set` write the SHARED base, and a
 # key pinned here keeps winning over what they write.
 modelRoles:
-  default: xai-oath/grok-4.6:high
+  default: xai-oath/grok-4.6
   plan: xai-oath/grok-4.6:high
   vision: xai-oath/grok-4.6:medium
   tiny: xai-oath/grok-4.6:small

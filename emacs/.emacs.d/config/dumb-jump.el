@@ -17,6 +17,4 @@
   :config
   (setq
    dumb-jump-prefer-searcher 'rg
-   dumb-jump-aggressive nil
-   dumb-jump-selector 'vertico)
-  (add-hook 'dumb-jump-after-jump-hook #'better-jumper-set-jump))
+   dumb-jump-aggressive nil))

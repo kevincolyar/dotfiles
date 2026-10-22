@@ -24,6 +24,33 @@ Disable OpenGL on older laptop, for wezterm
 systemctl --user unset-environment LIBGL_ALWAYS_SOFTWARE
 #+end_src
 
+* Per-machine omp settings
+
+Shared settings live in =omp/.omp/agent/config.yml=. Per-machine overrides live
+beside it, one file per machine, named for the short hostname:
+
+#+begin_src sh
+omp/.omp/agent/config.is-kevinc.yml
+#+end_src
+
+=zsh/.zshrc= exports the file matching =${HOST%%.*}= as =PI_CONFIG_FILES=.
+Precedence is defaults < shared base < project =<repo>/.omp/config.yml= < this
+file, so keep it to host-bound keys only. omp itself only auto-loads
+=config.yml=, so the other hosts' files are inert on any given machine.
+
+Adding a machine (hosts in =nix/.config/nix/flake.nix=: is-kevinc, mini,
+is-kevinc-ub, kubi, thinkpad) needs no new package, just a new file and a
+re-stow to link it:
+
+#+begin_src sh
+cd ~/.dotfiles
+cp omp/.omp/agent/config.is-kevinc.yml omp/.omp/agent/config.$(hostname -s).yml
+stow -R omp
+#+end_src
+
+Edit that file by hand. =/settings= and =omp config set= write the shared base, so
+a key pinned in the host file keeps overriding them on that machine.
+
 * MacOS
 
 Add terminal to Developer Tools for faster builds

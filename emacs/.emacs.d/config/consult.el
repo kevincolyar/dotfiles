@@ -3,14 +3,12 @@
 ;; Consult provides search and navigation commands based on the Emacs completion function completing-read.
 ;; Completion allows you to quickly select an item from a list of candidates.
 
-(defun get-project-root ()
-  (when (fboundp 'projectile-project-root)
-    (projectile-project-root)))
-
 ;; https://github.com/minad/consult/issues/399
+;; A nil DIR makes consult search `consult-project-function's root, which
+;; defaults to project.el -- the same root SPC p f / SPC p p use.
 (defun consult-ripgrep-symbol-at-point ()
   (interactive)
-  (consult-ripgrep (get-project-root) (thing-at-point 'symbol)))
+  (consult-ripgrep nil (thing-at-point 'symbol)))
 
 (defvar consult-find-file--dir nil
   "Search root of the running `consult-find-file'.
@@ -290,9 +288,8 @@ selected."
 
     "/"   'consult-ripgrep
     "*"   'consult-ripgrep-symbol-at-point
-    ;; "pf" 'consult-projectile
     "pf" 'project-find-file
-    "pp" 'consult-projectile-switch-project
+    "pp" 'project-switch-project
 
     "bb" 'consult-buffer
     "ce" 'consult-flycheck
@@ -303,7 +300,6 @@ selected."
     ))
 
 (use-package consult-dir :defer t)
-(use-package consult-projectile :defer t)
 (use-package consult-flycheck :defer t)
 (use-package consult-eglot :defer t)
 ;; (use-package consult-yasnippet :defer t)

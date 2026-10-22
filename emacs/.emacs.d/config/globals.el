@@ -15,7 +15,6 @@
 (global-hl-line-mode -1) ;; Disable Highlight cursor line
 (ido-mode -1) ; Disable ido mode
 (column-number-mode)
-(global-completion-preview-mode)
 
 ;; (global-display-line-numbers-mode 1)
 
@@ -66,8 +65,14 @@
 
 ;; (superword-mode 1)
 (setq evil-search-module 'isearch)
-(modify-syntax-entry ?- "w")
-(modify-syntax-entry ?_ "w")
+;; Treat - and _ as word constituents in every table that inherits from the
+;; standard one (text-mode, fundamental-mode, ...). Name the table: a bare
+;; `modify-syntax-entry' edits the *current buffer's* table, which only
+;; happened to be the standard one because init runs in *scratch* before
+;; `initial-major-mode' is applied (startup.el). Prog modes define their own
+;; entries for these characters and are unaffected either way.
+(modify-syntax-entry ?- "w" (standard-syntax-table))
+(modify-syntax-entry ?_ "w" (standard-syntax-table))
 
 (setq redisplay-skip-fontification-on-input t)
 
@@ -76,11 +81,16 @@
 ;; (wrong-type-argument listp comp).
 (setq warning-suppress-types '((comp)))
 
-;; Disable line numbers for some modes
+;; Disable line numbers for some modes. Named, not a lambda: `add-hook'
+;; dedupes by `equal', so reloading init (`reload-init-file') doesn't stack
+;; copies.
+(defun my/disable-line-numbers ()
+  (display-line-numbers-mode 0))
+
 (dolist (mode '(org-mode-hook
                 term-mode-hook
                 eshell-mode-hook))
-  (add-hook mode (lambda () (display-line-numbers-mode 0))))
+  (add-hook mode #'my/disable-line-numbers))
 
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)

@@ -5,7 +5,6 @@
 ;; Marginalia are marks or annotations placed at the margin of the page of a book or in this case helpful colorful annotations placed at the margin of the minibuffer for your completion candidates.
 
 (use-package marginalia
-  :defer t
   :after vertico
   :general
   (:keymaps 'minibuffer-local-map

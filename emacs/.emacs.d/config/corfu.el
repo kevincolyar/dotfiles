@@ -9,8 +9,11 @@
             "C-j" #'corfu-next
             "C-k" #'corfu-previous
             "C-u" #'corfu-scroll-up
-            "C-d" #'corfu-scroll-down
-            "C-[" #'corfu-quit)
+            "C-d" #'corfu-scroll-down)
+  ;; No "C-[" here: it *is* ESC, and binding it replaces corfu-map's ESC prefix
+  ;; map, killing every M- key there (M-SPC separator, M-h docs, M-g, M-n/p,
+  ;; M-TAB). ESC already quits: evil-collection-corfu binds <escape> in insert
+  ;; state to `evil-collection-corfu-quit-and-escape'.
   ;; `:general' emits autoloads for the commands it binds, which makes
   ;; use-package defer the package. Every binding above lives in `corfu-map',
   ;; which only exists while a popup is open, so nothing could ever trigger the
@@ -36,7 +39,6 @@
         )       ; Always have the same width
   :config
   (global-corfu-mode)
-  (setq completion-preview-sort-function corfu-sort-function)
   ;; Emacs 31 provides `tty-child-frames', which is what `corfu--popup-support-p'
   ;; checks, so the doc popup now renders in terminal frames too.
   (corfu-popupinfo-mode)
@@ -130,8 +132,10 @@
 ;; (unless (display-graphic-p)
 ;;   (corfu-terminal-mode +1))
 
+;; Every frame: the formatter emits nerd-font glyphs, which FiraCode Nerd Font
+;; (GUI) and the terminal font both carry. A `display-graphic-p' guard here
+;; is also evaluated once at init, which under a daemon is always a TTY answer.
 (use-package nerd-icons-corfu
-  :defer t)
-
-(unless (display-graphic-p)
+  :after corfu
+  :config
   (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
