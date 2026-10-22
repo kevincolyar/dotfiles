@@ -9,7 +9,24 @@
 (use-package magit
   :commands (magit-status magit-get-current-branch)
   :custom
-  (magic-display-buffer-function #'magic-display-buffer-same-window-except-diff-v1))
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1)
+  :config
+  ;; Magit only refreshes after its own git calls, so edits from outside Emacs
+  ;; (e.g. an agent in another tmux pane) never show up. Poll status buffers
+  ;; that are on screen; hidden ones cost nothing. Skipped while a minibuffer
+  ;; or transient is open so a refresh can't disturb pending input, and per
+  ;; buffer while a region (incl. evil visual) is active, since refreshing
+  ;; deactivates the mark and drops a multi-file staging selection.
+  (defun my/magit-refresh-visible-status ()
+    "Refresh Magit status buffers currently shown in a window."
+    (unless (or (active-minibuffer-window)
+                (bound-and-true-p transient--prefix))
+      (dolist (buf (delete-dups (mapcar #'window-buffer (window-list-1 nil 'nomini t))))
+        (with-current-buffer buf
+          (when (and (derived-mode-p 'magit-status-mode)
+                     (not (region-active-p)))
+            (magit-refresh-buffer))))))
+  (run-with-timer 3 3 #'my/magit-refresh-visible-status))
 
 (use-package git-gutter
   :config
