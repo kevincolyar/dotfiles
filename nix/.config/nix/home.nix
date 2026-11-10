@@ -15,12 +15,14 @@
   # release notes.
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
+  manual.html.enable = false;
+
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
 
-    (aspellWithDicts
-      (dicts: with dicts; [ en ]))
+    aspell
+    aspellDicts.en
     tree
     curl
     wget
@@ -28,8 +30,8 @@
     dust
     eza
     emacs31
-    # emacs-lsp-booster
-    emacs.pkgs.jinx
+    enchant.dev
+    pkg-config
     starship
     tmux
     fzf
@@ -114,11 +116,10 @@
     sqruff # multi-dialect SQL linter/formatter (Rust); flycheck `sql-sqruff'
 
     # debug adapters (emacs/.emacs.d/config/dape.el)
-    # `codelldb': rust/c/c++ DAP server. Preferred over lldb-dap because it
-    # loads rustc's lldb_lookup.py formatters, so String/Vec/HashMap print as
-    # values. The extension itself is a vscode package; `.adapter' is the
-    # standalone binary.
-    vscode-extensions.vadimcn.vscode-lldb.adapter
+    # `lldb-dap': rust/c/c++ DAP server, prebuilt in the binary cache
+    # (vscode-lldb/codelldb is compiled from source). Rust formatters are
+    # loaded by dape.el via rustc's lldb_lookup.py.
+    lldb
     # `js-debug': node/chrome DAP server (microsoft/vscode-js-debug).
     vscode-js-debug
     # python (debugpy) and ruby (rdbg) adapters are deliberately absent: both
