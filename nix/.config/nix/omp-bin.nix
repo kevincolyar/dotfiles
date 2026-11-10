@@ -7,7 +7,7 @@
 }:
 
 let
-  version = "18.12.6";
+  version = "18.18.6";
 
   # Prebuilt, self-contained Bun executables from GitHub Releases. Upstream's
   # flake advertises nix-community.cachix.org but its CI only runs
@@ -19,11 +19,11 @@ let
   assets = {
     aarch64-darwin = {
       asset = "omp-darwin-arm64";
-      hash = "sha256-z7teOM2PijvlXnEHAL5YfSh96qzcWMmwpmHFCGvM/lg=";
+      hash = "sha256-7S5j60OIjrdssUCbJFsdtFV8lN+tUtxUXJqsoB686C0=";
     };
     x86_64-darwin = {
       asset = "omp-darwin-x64";
-      hash = "sha256-Ytbm/Yi2+l3iyoKEKQbxUr8aoidVmx0Ls4byX21gYSM=";
+      hash = "sha256-g2/qV7Hfz1PCYFOu89V7bR+D7ANKf4sl14kCLFrbw2U=";
     };
     # Linux release assets are dynamically linked (the musl ones against
     # /lib/ld-musl-x86_64.so.1, which does not exist under Nix), so the glibc
@@ -31,11 +31,11 @@ let
     # need nothing beyond glibc; the C++ runtime is linked statically.
     aarch64-linux = {
       asset = "omp-linux-arm64";
-      hash = "sha256-7ujlhidM7y5yXCGLKyi0jKmWXUbdWPYJmMs0fspK0M8=";
+      hash = "sha256-qp1pOA997QmLzT2AI6Z+3Mj8PMBSk2Cpje3twhz6EBs=";
     };
     x86_64-linux = {
       asset = "omp-linux-x64";
-      hash = "sha256-hdna86Bfx26M1CWuGQTrV2r40hzIX89GkHQmJuB8z6Q=";
+      hash = "sha256-qAWbld5eq6Cz+29xgoQtZh/q4pyykxzb66KYbbR1Hss=";
     };
   };
 
