@@ -7,6 +7,10 @@ Preferred programming style:
  - imperative shell
  - idempotent
 
+Commenting guidelings:
+  - preferring short comments
+  - only allowing comments that explain things that may otherwise be unclear, never narration about what was done when a feature was implemented
+
 Reference Projects
 - reference @~/.dotfiles/nix for available programs and tools
 
@@ -18,7 +22,7 @@ Use these preferred programming tools when available:
 Development Preferences
 - devenv for development
 - containers for deployment
-- logging in json format
+- logging in json format when in staging and production
 - config via args, envvars, and config file (e.g. figment for rust).
 
 Rust Preferences

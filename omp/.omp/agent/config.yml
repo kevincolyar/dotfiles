@@ -3,7 +3,7 @@ modelRoles:
 symbolPreset: nerd
 theme:
   light: light-dunes
-setupVersion: 2
+setupVersion: 3
 statusLine:
   preset: default
   separator: pipe
