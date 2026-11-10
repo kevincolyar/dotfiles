@@ -21,8 +21,8 @@
   # environment.
   home.packages = with pkgs; [
 
-    (aspellWithDicts
-      (dicts: with dicts; [ en ]))
+    aspell
+    aspellDicts.en
     tree
     curl
     wget
