@@ -13,7 +13,7 @@
 ;;
 ;; Adapters come from two places, and which one is not a matter of taste:
 ;;
-;;   rust   codelldb  nix (nix/.config/nix/home.nix) -- standalone binary
+;;   rust   lldb-dap  nix (nix/.config/nix/home.nix) -- from the `lldb' package
 ;;   js     js-debug  nix (nix/.config/nix/home.nix) -- standalone binary
 ;;   python debugpy   the project: the interpreter that imports debugpy is
 ;;                    the one that runs the program, so a global copy would
@@ -25,7 +25,7 @@
 ;; orderless drive it); `SPC d D', or `C-u SPC d d', uses dape's own prompt,
 ;; where every key of a configuration can be amended, e.g.
 ;;
-;;   codelldb-rust compile "cargo test --no-run" :program "target/debug/deps/x"
+;;   lldb-dap-rust compile "cargo test --no-run" :program "target/debug/deps/x"
 ;;   rdbg-bundle -c "bundle exec rails server"
 ;;   js-debug-node :program "server.js" :args ["--port" "3000"]
 ;;
@@ -138,11 +138,11 @@ variable pointing at nixpkgs' apple-sdk, which ships headers and no
 LLDB.framework at all.  Every launch in such a shell then dies with
 \"executable doesn't exist: '(empty)'\" -- the empty name being the
 debugserver LLDB never resolved, not the program under debug.  nixpkgs'
-codelldb wrapper only defaults `LLDB_DEBUGSERVER_PATH' to a path inside
-Xcode.app, which a command-line-tools-only machine does not have.
+lldb does not build debugserver on macOS, so it has to come from the
+Xcode command line tools or Xcode.app.
 
-Not macOS: codelldb talks to its own bundled lldb-server and ignores the
-variable, so there is nothing to point at."
+Not macOS: LLDB spawns its own lldb-server and ignores the variable, so
+there is nothing to point at."
     (if (not (eq system-type 'darwin))
         ""
       (or (cl-loop for path in (list (getenv "LLDB_DEBUGSERVER_PATH")
@@ -201,13 +201,9 @@ the JSON on stdout."
 
   (defun my/dape-rust-lldb-lookup ()
     "Return `initCommands' that import rustc's own LLDB formatters.
-codelldb imports them itself, but only if the sysroot still carries
-`lib/rustlib/etc/lldb_commands'.  Rust deleted that file once
-`lldb_lookup.py' grew an `__lldb_init_module', so on every toolchain
-since 1.85 codelldb 1.12.2 prints \"Could not find LLDB data formatters
-in your Rust toolchain\" on stderr and String, Vec and HashMap show up as
-raw pointer/length structs.  Importing lldb_lookup.py is exactly what
-rust-lldb does, and it is harmless on the older layout.
+lldb-dap has no rust support of its own, so without this String, Vec and
+HashMap show up as raw pointer/length structs.  Importing lldb_lookup.py
+is exactly what rust-lldb does.
 
 An empty vector when rustc is absent or the file is missing: no
 formatters is still a working session, a failed `initCommands' is not."
@@ -249,43 +245,33 @@ containing spaces through a shell, so it has to stay one argument."
                        (plist-get config 'command-args))))
 
   (my/dape-configure
-   '((codelldb-rust
+   '((lldb-dap-rust
       modes (rust-mode rust-ts-mode rustic-mode)
       ensure dape-ensure-command
-      ;; codelldb serves a single session on --port and exits with it, which
-      ;; is exactly dape's lifecycle.
-      command "codelldb"
-      command-args ("--port" :autoport)
-      port :autoport
+      ;; lldb-dap speaks DAP over stdio, one session per process.
+      command "lldb-dap"
       ;; The adapter inherits the buffer's direnv environment, which is what
       ;; puts cargo and rustc on PATH and, on macOS, what breaks LLDB's own
       ;; debugserver lookup; see `my/dape-lldb-debugserver'.
       command-env (:LLDB_DEBUGSERVER_PATH my/dape-lldb-debugserver)
       command-cwd my/dape-cargo-cwd
       compile "cargo build"
-      :type "lldb"
+      :type "lldb-dap"
       :request "launch"
       :cwd my/dape-cargo-cwd
       :program my/dape-cargo-program
-      ;; `sourceLanguages ["rust"]' is deliberately absent: codelldb's
-      ;; lang_support/rust.py does nothing but load these same formatters,
-      ;; and on current toolchains it only prints "Could not find LLDB data
-      ;; formatters in your Rust toolchain" while doing so. String, Vec and
-      ;; HashMap print as values rather than raw pointer/length structs once
-      ;; lldb_lookup.py is imported, which is what this does. The file is
+      ;; String, Vec and HashMap print as values rather than raw
+      ;; pointer/length structs once lldb_lookup.py is imported. The file is
       ;; located with `rustc --print sysroot', so rustc has to be on PATH --
       ;; direnv-mode (config/nix.el) supplies the per-project toolchain.
       :initCommands my/dape-rust-lldb-lookup
       :args []
-      ;; codelldb's default terminal, "integrated", asks dape to run the
-      ;; program through `codelldb-launch' in a comint buffer, and dape parks
-      ;; that `*dape-shell*' in a bottom side window at slot 0 -- the slot
-      ;; which-key and every other bottom popup want. "console" has codelldb
-      ;; run the program itself and relay its stdout/stderr as DAP output
-      ;; events, so the output lands in the REPL and the bottom row holds one
-      ;; dape window instead of two. Programs reading stdin want the terminal
-      ;; back.
-      :terminal "console")
+      ;; `runInTerminal' would have dape run the program in `*dape-shell*',
+      ;; a bottom side window at slot 0 -- the slot which-key and every other
+      ;; bottom popup want. Without it lldb-dap relays stdout/stderr as DAP
+      ;; output events, so the output lands in the REPL. Programs reading
+      ;; stdin want the terminal back.
+      :runInTerminal :json-false)
 
      ;; Debugging the test that fails is the common python case, and pytest
      ;; swallows `breakpoint()', so run pytest as a module under the adapter.
@@ -383,12 +369,9 @@ containing spaces through a shell, so it has to stay one argument."
                                       modes))))
 
   ;; dape's stock `lldb-dap' and `lldb-vscode' claim every rust mode while
-  ;; launching `:program "a.out"', which no cargo project produces. devenv's
-  ;; clang toolchain puts lldb-dap on PATH, so the entry passes `ensure' and
-  ;; `dape' has two candidates for a rust buffer -- and it only prefills the
-  ;; "Run adapter: " prompt when exactly one config is suggested, so every
-  ;; session had to be typed out. codelldb-rust supersedes them for rust; C
-  ;; and C++ keep them.
+  ;; launching `:program "a.out"', which no cargo project produces, and
+  ;; `dape' only prefills the "Run adapter: " prompt when exactly one config
+  ;; is suggested. lldb-dap-rust supersedes them for rust; C and C++ keep them.
   (dolist (name '(lldb-dap lldb-vscode))
     (my/dape-update-config
      name 'modes
