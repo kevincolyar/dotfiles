@@ -1,0 +1,197 @@
+#!/usr/bin/env bash
+# Bring every host in line with the dotfiles repo.
+#
+#   ./update [HOST...]            sync HOSTs (default: all) to the lockfiles
+#   ./update --upgrade [HOST...]  upgrade the lockfiles here, commit and push
+#                                 them, then sync the other HOSTs
+#   ./update --local [--upgrade]  this machine only; what ssh runs remotely
+#
+# Sync = git pull, nix switch, then emacs packages checked out at the versions
+# in emacs/.emacs.d/straight/versions/default.el. Safe to rerun.
+#
+# Upgrading happens once, on the machine running the script: one
+# `nix flake update', one run of every nix/.config/nix/<pkg>.update (which
+# repins the hand-pinned <pkg>.nix, e.g. omp-bin), one `straight-pull-all',
+# all committed, then every other host syncs to that. Pulling upstream on
+# each host would leave each one on whatever upstream was at that moment.
+#
+# Hosts run one after another (darwin-rebuild asks for a sudo password); a
+# failed host is reported at the end and does not stop the rest. Remote hosts
+# need this script committed and pushed: they `git pull' before running it.
+set -euo pipefail
+
+# Configuration names in nix/.config/nix/flake.nix.
+all_hosts=(is-kevinc mini is-kevinc-ub kubi thinkpad)
+
+ssh_destination() {
+  case "$1" in
+    mini|kubi|thinkpad) echo "$1.lan" ;; # ~/.ssh/config: *.lan via wireproxy
+    *) echo "$1" ;;
+  esac
+}
+
+usage() {
+  echo "usage: ${0##*/} [--upgrade] [HOST...] | ${0##*/} --local [--upgrade] [HOST]" >&2
+  exit 2
+}
+
+local_only=false
+upgrade=false
+hosts=()
+for arg in "$@"; do
+  case "$arg" in
+    --local) local_only=true ;;
+    --upgrade) upgrade=true ;;
+    -*) usage ;;
+    *) hosts+=("$arg") ;;
+  esac
+done
+
+dotfiles="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+flake="$dotfiles/nix/.config/nix"
+# Files `--upgrade' rewrites. A hand-pinned <pkg>.nix is repinned by the
+# executable <pkg>.update next to it.
+updaters=()
+lockfiles=(nix/.config/nix/flake.lock emacs/.emacs.d/straight/versions/default.el)
+for updater in "$flake"/*.update; do
+  [[ -x "$updater" ]] || continue
+  updaters+=("$updater")
+  lockfiles+=("nix/.config/nix/$(basename "${updater%.update}").nix")
+done
+this_host="$(hostname -s)"
+
+step() { printf '\n==> %s\n' "$*"; }
+
+# Sync (or upgrade) the machine this runs on as configuration $1.
+apply_here() {
+  local host="$1"
+
+  step "[$host] git pull"
+  # --ff-only: a diverged or dirty checkout stops here instead of merging.
+  git -C "$dotfiles" pull --ff-only
+
+  if $upgrade; then
+    step "[$host] nix flake update"
+    nix flake update --flake "$flake"
+    local updater
+    # ${a[@]+...}: bash 3.2 (stock macOS) treats an empty array as unset.
+    for updater in ${updaters[@]+"${updaters[@]}"}; do
+      step "[$host] $(basename "$updater")"
+      "$updater"
+    done
+  fi
+
+  case "$(uname -s)" in
+    Darwin)
+      step "[$host] darwin-rebuild switch"
+      # sudo's secure_path does not include /run/current-system/sw/bin.
+      sudo "$(command -v darwin-rebuild)" switch --flake "$flake#$host"
+      ;;
+    Linux)
+      step "[$host] home-manager switch"
+      home-manager switch --flake "$flake#$host"
+      ;;
+    *)
+      echo "unsupported OS: $(uname -s)" >&2
+      return 1
+      ;;
+  esac
+
+  # After the switch, so it runs the freshly installed emacs. Loading init.el
+  # also clones packages added to the config since the last run.
+  local elisp
+  if $upgrade; then
+    step "[$host] emacs: straight pull, build, freeze"
+    # Force skips freeze's push of local package commits.
+    elisp='(progn (straight-pull-all) (straight-check-all) (straight-freeze-versions t))'
+  else
+    step "[$host] emacs: straight thaw, build"
+    elisp='(progn (straight-thaw-versions) (straight-check-all))'
+  fi
+  sync_straight_submodules
+  emacs --batch -l "$HOME/.emacs.d/init.el" --eval "$elisp"
+  sync_straight_submodules
+}
+
+# straight moves a repo's commit but never its submodules, so after a pull or
+# thaw the recorded submodule commit (gptel's `test') no longer matches the
+# checkout. straight then calls the repo dirty and prompts, which aborts a
+# batch run. Real edits elsewhere in a repo still stop the run.
+sync_straight_submodules() {
+  local repo
+  for repo in "$HOME/.emacs.d/straight/repos"/*/; do
+    [[ -f "$repo.gitmodules" ]] || continue
+    git -C "$repo" submodule --quiet update --init --recursive
+  done
+}
+
+# Sync configuration $1 on its own machine over ssh.
+apply_remote() {
+  local host="$1" remote
+  step "[$host] ssh $(ssh_destination "$host")"
+  # Login shell for the darwin system PATH (/etc/zshenv). Ubuntu's nix hook
+  # lives in /etc/zsh/zshrc, which only interactive shells read, so source
+  # the nix profile script directly as well.
+  # Pull first so the remote runs this revision of the script.
+  remote='for f in /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh /etc/profile.d/nix.sh; do [ -r "$f" ] && . "$f"; done'
+  remote+="; cd ~/.dotfiles && git pull --ff-only && ./update --local $(printf %q "$host")"
+  # -t: darwin-rebuild's sudo needs a terminal for its password prompt.
+  ssh -t -o ConnectTimeout=10 "$(ssh_destination "$host")" \
+    "exec \"\$SHELL\" -lc $(printf %q "$remote")"
+}
+
+# Commit and push the lockfiles `--upgrade' rewrote, after confirmation.
+publish_lockfiles() {
+  if git -C "$dotfiles" diff --quiet -- "${lockfiles[@]}"; then
+    step "lockfiles unchanged"
+    return 0
+  fi
+  step "lockfiles changed"
+  git -C "$dotfiles" diff --stat -- "${lockfiles[@]}"
+  local answer
+  read -r -p "Commit and push these lockfiles, then sync the other hosts? [y/N] " answer
+  [[ "$answer" == [yY]* ]] || return 1
+  git -C "$dotfiles" commit -m "Updates nix and emacs package versions" -- "${lockfiles[@]}"
+  git -C "$dotfiles" push
+}
+
+if $local_only; then
+  (( ${#hosts[@]} <= 1 )) || usage
+  apply_here "${hosts[0]:-$this_host}"
+  exit
+fi
+
+(( ${#hosts[@]} > 0 )) || hosts=("${all_hosts[@]}")
+
+# Each host runs as its own `--local' process: `set -e' is suspended inside
+# a function called from `cmd || ...', so a failed step would not stop it.
+upgraded=""
+if $upgrade; then
+  case " ${all_hosts[*]} " in
+    *" $this_host "*) ;;
+    *) echo "--upgrade runs here, but '$this_host' is not one of: ${all_hosts[*]}" >&2; exit 1 ;;
+  esac
+  "$dotfiles/update" --local --upgrade "$this_host"
+  if ! publish_lockfiles; then
+    echo "lockfiles left uncommitted; other hosts not synced" >&2
+    exit 1
+  fi
+  upgraded="$this_host"
+fi
+
+failed=()
+for host in "${hosts[@]}"; do
+  if [[ "$host" == "$upgraded" ]]; then
+    continue
+  elif [[ "$host" == "$this_host" ]]; then
+    "$dotfiles/update" --local "$host" || failed+=("$host")
+  else
+    apply_remote "$host" || failed+=("$host")
+  fi
+done
+
+if (( ${#failed[@]} > 0 )); then
+  step "failed: ${failed[*]}"
+  exit 1
+fi
+step "all hosts up to date: ${hosts[*]}"
