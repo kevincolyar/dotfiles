@@ -116,9 +116,35 @@ apply_here() {
     elisp='(progn (straight-thaw-versions) (straight-check-all))'
   fi
   sync_straight_submodules
-  emacs --batch -l "$HOME/.emacs.d/init.el" --eval "$elisp"
+  emacs --batch -l "$HOME/.emacs.d/init.el" \
+    --eval "$retarget_straight_remotes" --eval "$elisp"
   sync_straight_submodules
 }
+
+# A package that moves upstream (autothemer: jasonm23 -> ocodo) gets a new
+# recipe URL, but existing clones keep the old origin. straight then prompts
+# to fix the remote, which aborts a batch run. Point origin at the recipe's
+# URL first, which is what that prompt offers; the clone keeps its commits
+# and the next fetch uses the new URL.
+retarget_straight_remotes='
+(maphash
+ (lambda (_package recipe)
+   (let ((repo (plist-get recipe :repo))
+         (local-repo (plist-get recipe :local-repo)))
+     (when (and (eq (plist-get recipe :type) (quote git)) repo local-repo
+                (file-directory-p (straight--repos-dir local-repo)))
+       (let* ((dir (straight--repos-dir local-repo))
+              (remote straight-vc-git-default-remote-name)
+              (want (straight-vc-git--encode-url
+                     repo (plist-get recipe :host) (plist-get recipe :protocol)))
+              (have (car (ignore-errors
+                           (process-lines "git" "-C" dir "config" "--get"
+                                          (format "remote.%s.url" remote))))))
+         (when (and have (not (straight-vc-git--urls-compatible-p have want)))
+           (message "straight: %s %s -> %s" local-repo have want)
+           (call-process "git" nil nil nil "-C" dir
+                         "remote" "set-url" remote want))))))
+ straight--recipe-cache)'
 
 # straight moves a repo's commit but never its submodules, so after a pull or
 # thaw the recorded submodule commit (gptel's `test') no longer matches the
