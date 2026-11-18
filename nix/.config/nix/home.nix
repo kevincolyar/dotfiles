@@ -87,7 +87,9 @@
     mkcert
     prettierd # html formatter, used by emacs format-all 
     vscode-langservers-extracted # for html-mode and css-mode
-    marksman
+    # markdown LSP (emacs config/eglot.el). Not marksman: it needs dotnet-runtime,
+    # and when Hydra hasn't cached that for aarch64-darwin, switch builds .NET from source.
+    markdown-oxide
 
     # python
     # black
