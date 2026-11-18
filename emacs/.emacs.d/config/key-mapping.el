@@ -60,6 +60,38 @@
   "cr"  'xref-find-references
   "cR"  'eglot-rename
 
+  ;; Debugging (dape, config/dape.el). Mirrors `dape-global-map' (C-x C-a)
+  ;; rather than inventing a second set of mnemonics.
+  "d"   '(:ignore t :which-key "debug")
+  ;; `my/dape' picks the configuration with `completing-read' (vertico);
+  ;; `dape' itself keeps its own prompt, which completes config keys and
+  ;; file names. `C-u SPC d d' goes from the first to the second.
+  "dd"  '(my/dape :which-key "start")
+  "dD"  '(dape :which-key "start (dape prompt)")
+  "dr"  'dape-restart
+  "dk"  'dape-kill
+  "dq"  'dape-quit
+
+  "db"  'dape-breakpoint-toggle
+  "dB"  'dape-breakpoint-remove-all
+  "dl"  'dape-breakpoint-log
+  "de"  'dape-breakpoint-expression
+  "dh"  'dape-breakpoint-hits
+
+  "dc"  'dape-continue
+  "dn"  'dape-next
+  "di"  'dape-step-in
+  "do"  'dape-step-out
+  "du"  'dape-until
+  "dp"  'dape-pause
+
+  "dw"  'dape-watch-dwim
+  "dx"  'dape-evaluate-expression
+  "dI"  'dape-info
+  "dR"  'dape-repl
+  "dt"  'dape-select-thread
+  "ds"  'dape-select-stack
+
   "xe"  'eval-last-sexp
 
   "h"  '(:ignore t :which-key "help")
@@ -104,7 +136,6 @@
 (use-package which-key
   :straight nil
   :ensure nil
-  :diminish which-key-mode
   :config
   (which-key-mode)
   (setq which-key-idle-delay 0.1))

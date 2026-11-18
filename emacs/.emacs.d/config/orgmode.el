@@ -1,4 +1,8 @@
 ;;; -*- lexical-binding: t; -*-
+(defun my/org-tab-width ()
+  "Org requires `tab-width' 8; named so reloads don't stack hook copies."
+  (setq tab-width 8))
+
 (use-package org
   :straight nil
   :ensure nil
@@ -6,7 +10,7 @@
   :hook
   (org-mode . org-indent-mode)
   (org-mode . visual-line-mode) ;; Word wrap
-  (org-mode . (lambda () (setq tab-width 8)))
+  (org-mode . my/org-tab-width)
   :config
   (setq
    org-refile-targets '((org-agenda-files :maxlevel . 3))
@@ -57,20 +61,17 @@
              "e"  'org-export-dispatch
              "t"  'org-todo
              "r"  'org-refile
-             ;; "#"  'org-update-statistics-cookies
-             "ds" 'org-schedule
-             "e"  'org-export-dispatch
-             "t"  'org-todo
              "T"  'org-show-todo-tree
-             "r"  'org-refile
-             ;; "#"  'org-update-statistics-cookies
              "c"  'org-toggle-checkbox
              "h"  'consult-org-heading
              )
   )
 
+;; Global mode that only affects agenda views: enable once when the agenda
+;; loads, rather than re-toggling it from every org buffer's hook.
 (use-package org-super-agenda
-  :hook (org-mode . org-super-agenda-mode))
+  :after org-agenda
+  :config (org-super-agenda-mode))
 
 ;; (use-package org-modern
 ;;   :hook (org-mode . org-modern-mode))

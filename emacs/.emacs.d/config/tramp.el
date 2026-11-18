@@ -25,6 +25,8 @@
         (expand-file-name "tramp-auto-save" user-emacs-directory))
   (setq tramp-persistency-file-name
         (expand-file-name "tramp-connection-history" user-emacs-directory))
+  ;; Deliberate: cache sudo/ssh passwords for the life of the session rather
+  ;; than re-prompting every 16s. `password-reset' clears them on demand.
   (setq password-cache-expiry nil)
   (setq tramp-use-ssh-controlmaster-options nil)
   (setq remote-file-name-inhibit-cache nil)

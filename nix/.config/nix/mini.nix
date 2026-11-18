@@ -15,6 +15,7 @@
     yt-dlp
     ffmpeg
     dvdauthor
+    cloudflared
     (pkgs.callPackage ./omp-bin.nix { })
   ];
 

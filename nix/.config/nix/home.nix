@@ -15,12 +15,14 @@
   # release notes.
   home.stateVersion = "24.05"; # Please read the comment before changing.
 
+  manual.html.enable = false;
+
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
 
-    (aspellWithDicts
-      (dicts: with dicts; [ en en-computers ]))
+    aspell
+    aspellDicts.en
     tree
     curl
     wget
@@ -28,8 +30,8 @@
     dust
     eza
     emacs31
-    # emacs-lsp-booster
-    emacs.pkgs.jinx
+    enchant.dev
+    pkg-config
     starship
     tmux
     fzf
@@ -85,7 +87,9 @@
     mkcert
     prettierd # html formatter, used by emacs format-all 
     vscode-langservers-extracted # for html-mode and css-mode
-    marksman
+    # markdown LSP (emacs config/eglot.el). Not marksman: it needs dotnet-runtime,
+    # and when Hydra hasn't cached that for aarch64-darwin, switch builds .NET from source.
+    markdown-oxide
 
     # python
     # black
@@ -112,6 +116,17 @@
 
     # sql
     sqruff # multi-dialect SQL linter/formatter (Rust); flycheck `sql-sqruff'
+
+    # debug adapters (emacs/.emacs.d/config/dape.el)
+    # `lldb-dap': rust/c/c++ DAP server, prebuilt in the binary cache
+    # (vscode-lldb/codelldb is compiled from source). Rust formatters are
+    # loaded by dape.el via rustc's lldb_lookup.py.
+    lldb
+    # `js-debug': node/chrome DAP server (microsoft/vscode-js-debug).
+    vscode-js-debug
+    # python (debugpy) and ruby (rdbg) adapters are deliberately absent: both
+    # run inside the project's own interpreter/gemset, so they belong to the
+    # project (devenv, venv, Gemfile), not to this profile.
 
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.

@@ -13,10 +13,11 @@
     # pkgs.llama-cpp
     # pkgs.llama-swap
     pkgs.claude-code
-    pkgs.opencode
-    pkgs.fabric-ai
-    pkgs.pi-coding-agent
-    pkgs.nodejs-slim
+    # pkgs.opencode
+    # pkgs.fabric-ai
+    # pkgs.pi-coding-agent
+    # pkgs.nodejs-slim
+    pkgs.glab
     (pkgs.callPackage ./omp-bin.nix { })
 
     # Docker stuff

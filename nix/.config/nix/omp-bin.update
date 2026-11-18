@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Point omp-bin.nix at the latest oh-my-pi release: version plus the SRI hash
+# of every platform asset, from the release's SHA256SUMS.txt. No change when
+# already on the latest release. `../../../update --upgrade' runs this; the
+# following switch downloads and verifies the asset for that host.
+set -euo pipefail
+
+cd "$(dirname "${BASH_SOURCE[0]}")"
+file=omp-bin.nix
+repo=can1357/oh-my-pi
+
+tag=$(curl -fsSL "https://api.github.com/repos/$repo/releases/latest" | jq -r .tag_name)
+sums=$(curl -fsSL "https://github.com/$repo/releases/download/$tag/SHA256SUMS.txt")
+
+current=$(sed -n 's/^ *version = "\([^"]*\)";.*/\1/p' "$file")
+echo "omp-bin: $current -> ${tag#v}"
+
+perl -pi -e "s/^(\s*version = \")[^\"]*/\${1}${tag#v}/" "$file"
+# Every asset named in the file must be in this release's checksums.
+for asset in $(sed -n 's/^ *asset = "\([^"]*\)";.*/\1/p' "$file"); do
+  hex=$(awk -v a="$asset" '$2 == a { print $1 }' <<<"$sums")
+  [[ -n "$hex" ]] || { echo "omp-bin: $asset missing from $tag SHA256SUMS.txt" >&2; exit 1; }
+  sri=$(nix hash convert --hash-algo sha256 --to sri "$hex")
+  perl -0pi -e "s|(asset = \"\Q$asset\E\";\s*hash = \")[^\"]*|\${1}$sri|" "$file"
+done

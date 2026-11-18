@@ -18,7 +18,7 @@
   :hook (prog-mode . rainbow-delimiters-mode))
 
 (use-package indent-bars
-  :hook (prog-mode .indent-bars-mode))
+  :hook (prog-mode . indent-bars-mode))
 
 ;; GUI Settings
 (if (display-graphic-p)
@@ -47,11 +47,22 @@
 (when (fboundp 'standard-display-unicode-special-glyphs)
   (standard-display-unicode-special-glyphs))
 
-;; Enable undercurl support in terminal Emacs
-;; Set the undercurl sequence
-(define-coding-system-alias 'undercurl 'utf-8)
-
-;; Add terminal capabilities
-(define-key input-decode-map "\e[4:3m" [undercurl])
+;; Emacs turns on xterm's modifyOtherKeys (`\e[>4;1m', term/xterm.el), so tmux
+;; reports S-SPC as `\e[27;2;32~'. xterm.el only decodes S-RET and S-TAB under
+;; `\e[27;2;', so that sequence fell apart and its tail was inserted as text:
+;; typing "TODO " with shift still held gave "TODO2~". Decode SPC with every
+;; modifier combination. The parameter is 1 + a bit mask: shift 1, meta 2,
+;; control 4. Unbound shifted keys fall back to their unshifted binding, so
+;; S-SPC still self-inserts a space, and can be bound on its own.
+;;
+;; `xterm-function-map' rather than `input-decode-map': `terminal-init-xterm'
+;; copies it into each new terminal's decode map, so every TTY frame
+;; (emacsclient included) picks this up. The map is only modified after
+;; term/xterm loads, which happens before that copy.
+(with-eval-after-load 'term/xterm
+  (dolist (mods '((2 shift) (3 meta) (4 meta shift) (5 control)
+                  (6 control shift) (7 control meta) (8 control meta shift)))
+    (define-key xterm-function-map (format "\e[27;%d;32~" (car mods))
+                (vector (event-convert-list (append (cdr mods) '(?\s)))))))
 
 ;;; ui.el ends here

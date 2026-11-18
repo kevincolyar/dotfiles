@@ -3,7 +3,6 @@
 ;; https://github.com/minad/vertico
 ;; https://kristofferbalintona.me/posts/202202211546/
 (use-package vertico
-  :diminish
   :general
   (:keymaps 'vertico-map
             "<tab>" #'vertico-insert  ; Insert selected candidate into text area

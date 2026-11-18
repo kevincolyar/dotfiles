@@ -15,8 +15,9 @@
   :general
   (:keymaps 'tempel-map
             "C-j" #'tempel-next
-            "C-k" #'tempel-previous
-            "C-[" #'tempel-done)
+            "C-k" #'tempel-previous)
+  ;; No "C-[": it is ESC, so binding it wipes tempel-map's M- keys, and a lone
+  ;; ESC never reached it anyway -- evil turns it into <escape> first.
   :init
 
   ;; Setup completion at point
@@ -40,15 +41,6 @@
   ;; either locally or globally. `expand-abbrev' is bound to C-x '.
   ;; (add-hook 'prog-mode-hook #'tempel-abbrev-mode)
   ;; (global-tempel-abbrev-mode)
-
-  (defun my/eglot-capf ()
-    (setq-local completion-at-point-functions
-                (list (cape-capf-super
-                       #'eglot-completion-at-point
-                       #'tempel-expand
-                       #'cape-file))))
-
-  (add-hook 'eglot-managed-mode-hook #'my/eglot-capf)
 )
 
 ;; Optional: Add tempel-collection.
