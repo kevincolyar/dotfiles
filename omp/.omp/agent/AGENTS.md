@@ -6,8 +6,9 @@ Preferred programming style:
  - functional core
  - imperative shell
  - idempotent
+ - orthogonal 
 
-Commenting guidelings:
+Commenting guidelines:
   - preferring short comments
   - only allowing comments that explain things that may otherwise be unclear, never narration about what was done when a feature was implemented
 
@@ -28,3 +29,6 @@ Development Preferences
 Rust Preferences
 - implementation in "./src" and tests in "./test"
 - figment for config, args, envvars
+
+Python Preferences
+- uv for package management
