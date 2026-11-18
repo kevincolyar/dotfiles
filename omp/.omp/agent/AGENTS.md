@@ -11,6 +11,8 @@ Preferred programming style:
 Commenting guidelines:
   - preferring short comments
   - only allowing comments that explain things that may otherwise be unclear, never narration about what was done when a feature was implemented
+  - Follow idiomatic comment length and style
+  - preferring short comments
 
 Reference Projects
 - reference @~/.dotfiles/nix for available programs and tools
