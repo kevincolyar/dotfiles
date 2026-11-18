@@ -43,7 +43,14 @@ for arg in "$@"; do
     --local) local_only=true ;;
     --upgrade) upgrade=true ;;
     -*) usage ;;
-    *) hosts+=("$arg") ;;
+    *) hosts+=("${arg%%.*}") ;;
+  esac
+done
+
+for host in ${hosts[@]+"${hosts[@]}"}; do
+  case " ${all_hosts[*]} " in
+    *" $host "*) ;;
+    *) echo "unknown host '$host'; one of: ${all_hosts[*]}" >&2; exit 2 ;;
   esac
 done
 
