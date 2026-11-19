@@ -10,6 +10,23 @@ git clone git://github.com/kevincolyar/dotfiles ~/.dotfiles
 stow
 #+end_src
 
+* Updating
+
+Sync every host (default: all of =is-kevinc mini is-kevinc-ub kubi
+thinkpad=, or the ones named) to the repo over ssh, one at a time: git pull,
+nix switch, and the emacs packages pinned in
+=emacs/.emacs.d/straight/versions/default.el=.
+
+#+begin_src sh
+~/.dotfiles/update [HOST...]
+#+end_src
+
+=--upgrade= first moves this machine to newer versions (=nix flake update=,
+every hand-pinned package's =nix/.config/nix/<pkg>.update= such as
+=omp-bin.update=, and straight pull and freeze), asks before committing and
+pushing the changed files, then syncs the other hosts to them. =--local=
+updates only this machine.
+
 * Notes
 
 Startup
