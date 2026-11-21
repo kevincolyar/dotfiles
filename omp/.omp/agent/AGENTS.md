@@ -9,10 +9,10 @@ Preferred programming style:
  - orthogonal 
 
 Commenting guidelines:
-  - preferring short comments
-  - only allowing comments that explain things that may otherwise be unclear, never narration about what was done when a feature was implemented
-  - Follow idiomatic comment length and style
-  - preferring short comments
+  - only allow comments that explain things that may otherwise be unclear, never narration about what was done when a feature was implemented
+  - prefer short comments
+  - follow idiomatic comment length and style
+  - provide idiomatic comments for use with editor tools (e.g. lsp, eglot)
 
 Reference Projects
 - reference @~/.dotfiles/nix for available programs and tools
@@ -34,3 +34,5 @@ Rust Preferences
 
 Python Preferences
 - uv for package management
+
+When I request to notify me, use ntfy.sh with $NTFY_ADDR
