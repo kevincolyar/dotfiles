@@ -187,6 +187,7 @@
   home.sessionVariables = {
     EDITOR = "emacs -nw";
     COLORTERM="truecolor";
+    JS_DEBUG_DAP_SERVER = "${pkgs.vscode-js-debug}/lib/node_modules/js-debug/dist/src/dapDebugServer.js";
   };
 
   programs.starship.enable = true;

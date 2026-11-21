@@ -80,8 +80,11 @@ if [[ -d /usr/local/Homebrew ]]; then
   eval "$(/usr/local/Homebrew/bin/brew shellenv)"
 fi
 
-export EDITOR="emacs -nw"
-export COLORTERM="truecolor"
+# home.sessionVariables (EDITOR, COLORTERM, JS_DEBUG_DAP_SERVER, ...).
+# Standalone home-manager, then the nix-darwin module's per-user profile.
+_zsh_source_first \
+  $HOME/.nix-profile/etc/profile.d/hm-session-vars.sh \
+  /etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh
 # Client light/dark for remote Emacs/omp. sshd AcceptEnv LC_*; Ghostty does
 # not set COLORFGBG. Index < 8 = dark bg. Stale in long-lived shells -- DSR
 # 996 is the live signal; this is the SSH fallback when tmux's pane theme is
