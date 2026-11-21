@@ -1,20 +1,10 @@
 local wezterm = require 'wezterm'
 
-local wezterm = require('wezterm')
-local theme = wezterm.plugin.require('https://github.com/neapsix/wezterm').moon
-
 return {
    check_for_updates = false,
    enable_tab_bar = false,
    window_decorations = "RESIZE",
-   colors = theme.colors(),
-   -- color_scheme = 'oxocarbon',
-   -- color_scheme = 'DoomOne',
-   -- color_scheme = 'tokyonight',
-   -- color_scheme = "Catppuccin Mocha",
-   -- color_scheme = 'Dracula (Gogh)',
-   -- color_scheme = "Gigavolt (base16)",
-   -- color_scheme = "Later This Evening",
+   color_scheme = 'rose-pine-moon',
    font = wezterm.font('FiraCode Nerd Font'),
    -- font = wezterm.font('FuraMono Nerd Font'),
    -- font = wezterm.font('SauceCode Pro Nerd Font Regular'),
