@@ -81,17 +81,24 @@
     direnv
     devenv
     jq
+    gh # also enables omp's github tool
+    sqlite
     nil
     grex
     # ollama - Currently broken on arm64. Using brew version instead
     mkcert
     prettierd # html formatter, used by emacs format-all 
     vscode-langservers-extracted # for html-mode and css-mode
-    # markdown LSP (emacs config/eglot.el). Not marksman: it needs dotnet-runtime,
-    # and when Hydra hasn't cached that for aarch64-darwin, switch builds .NET from source.
-    markdown-oxide
+    marksman
+    yaml-language-server
 
-    # python
+    # shell
+    bash-language-server
+    shellcheck
+
+    # python (python3 also backs omp's `eval' Python kernel)
+    python3
+    uv
     # black
     # poetry
     ruff
@@ -100,6 +107,7 @@
     # pyright
 
     # rust
+    rust-analyzer
     cargo-outdated
 
     # javascript/typescript
@@ -112,7 +120,8 @@
     nixd # lsp server
 
     # c/c++
-    clang # lsp server
+    clang
+    clang-tools # clangd lsp server
 
     # sql
     sqruff # multi-dialect SQL linter/formatter (Rust); flycheck `sql-sqruff'
@@ -122,7 +131,8 @@
     # (vscode-lldb/codelldb is compiled from source). Rust formatters are
     # loaded by dape.el via rustc's lldb_lookup.py.
     lldb
-    # `js-debug': node/chrome DAP server (microsoft/vscode-js-debug).
+    # `js-debug': node/chrome DAP server (microsoft/vscode-js-debug). omp finds
+    # it through JS_DEBUG_DAP_SERVER below.
     vscode-js-debug
     # python (debugpy) and ruby (rdbg) adapters are deliberately absent: both
     # run inside the project's own interpreter/gemset, so they belong to the
@@ -187,6 +197,7 @@
   home.sessionVariables = {
     EDITOR = "emacs -nw";
     COLORTERM="truecolor";
+    JS_DEBUG_DAP_SERVER = "${pkgs.vscode-js-debug}/lib/node_modules/js-debug/dist/src/dapDebugServer.js";
   };
 
   programs.starship.enable = true;

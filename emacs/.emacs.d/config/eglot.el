@@ -66,8 +66,7 @@
    '(((ruby-mode ruby-ts-mode) . ("ruby-lsp"))
      ((python-mode python-ts-mode) . ("ty" "server"))
      ((nix-mode) . ("nixd"))
-     ;; Built-in default is marksman, dropped from home.nix (needs .NET).
-     ((markdown-mode markdown-ts-mode) . ("markdown-oxide"))
+     ((markdown-mode markdown-ts-mode) . ("marksman"))
      ;; SQL is linted by sqruff through flycheck (config/flycheck.el), not by
      ;; an LSP server: every SQL server packaged in nixpkgs is PostgreSQL-only
      ;; (squawk) or ships no diagnostics (sqls), and `sqruff lsp' publishes
