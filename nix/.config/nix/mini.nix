@@ -78,6 +78,7 @@
       "adobe-creative-cloud"
       "airfoil"
       "backblaze"
+      "backblaze-restore"
       "blender"
       "brave-browser"
       "carbon-copy-cloner"
@@ -89,6 +90,8 @@
       "thunderbird"
       "vlc"
       "ghostty"
+      "rustdesk"
+      "visual-studio-code"
     ];
   };
 }
