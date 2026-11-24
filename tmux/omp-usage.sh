@@ -5,7 +5,8 @@
 # so far (used / elapsed), so it is noisy right after a reset.  Gold at <=25%
 # remaining, love (red) at <=10%, colors taken from rose-pine.tmux.  The
 # provider is that of omp's default model role, so per-host config overlays
-# are followed.
+# are followed; if that provider reports no usage (e.g. xai-oath), the first
+# provider that does is shown instead.
 #
 # tmux redraws every second (the omp spinner in status-bar.sh needs it), but
 # this segment only changes per minute, so the rendered segment is cached for
@@ -25,17 +26,18 @@ mkdir -p "$(dirname "$cache")"
 
 # Temp file + mv: concurrent clients never read a half-written cache.
 render() {
-    provider=$(omp config get modelRoles --json 2>/dev/null \
+    want=$(omp config get modelRoles --json 2>/dev/null \
         | jq -r '.value.default // empty | split("/")[0]' 2>/dev/null)
-    [ -n "$provider" ] || return 0
     # capacity pools all accounts; providers without it fall back to the
     # per-account reports, averaged per window.  A window's reset is its
     # earliest resetsAt across accounts.  Windows with no measurable pace sort
     # last (1e18 ms); ties go to the lowest remaining.
     read -r w p reset <<EOF
-$(omp usage --json --provider "$provider" 2>/dev/null \
-    | jq -r --arg p "$provider" '
+$(omp usage --json 2>/dev/null \
+    | jq -r --arg want "$want" '
         (now * 1000) as $now
+        | [.reports[].provider] as $have
+        | (if $have | index($want) then $want else $have[0] end) as $p
         | [.reports[] | select(.provider == $p) | .limits[]] as $lim
         | ($lim | group_by(.window.id)
             | map({key: .[0].window.id, value: {
